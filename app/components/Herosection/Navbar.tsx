@@ -20,7 +20,7 @@ export default function Navbar(): JSX.Element {
   ];
 
   return (
-    <header className="w-full">
+    <header className="w-full bg-black">
       <div className="max-w-[1825px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-[56px]">
           {/* Left: mobile menu button + desktop links */}

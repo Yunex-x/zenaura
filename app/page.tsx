@@ -1,51 +1,46 @@
-import React from "react";
-import Navbar from "./components/navbar";
-import HeroHeading from "./components/HeroHeading";
-import ImageShowcase from "./components/ImageShowcase";
-import ProductCard from "./components/ProductCard";
-import ZenSwitch from "./components/ZenSwitch";
+import React, { JSX } from "react";
+import Navbar from "./components/Herosection/Navbar";
+import HeroSection from "./components/Herosection/HeroSection";
+import PopulairSection from "./components/Populairproduct/PopulairSection";
 
 /**
- * MainSectionFrame - composes Navbar + HeroHeading + ImageShowcase + ProductCard
- * - All positioning and styling use Tailwind utilities
+ * app/page.tsx — renders Navbar, HeroSection, then PopulairSection as a separate section below the hero.
+ * - Navbar remains reusable and client-side (ensure components/Herosection/Navbar.tsx starts with "use client";)
+ * - HeroSection is rendered inside a relatively positioned hero wrapper to preserve absolute children
+ * - PopulairSection is rendered after the hero in its own section so it appears below
  */
-type Props = {
-  children?: React.ReactNode;
-  className?: string;
-};
-
-export default function MainSectionFrame({ children, className = "" }: Props) {
+export default function Page(): JSX.Element {
   return (
-    <section
-      aria-label="Zenaur main frame"
-      className={`relative bg-[#0D0D0D] overflow-hidden w-full min-h-screen ${className}`}
-    >
-      <div className="relative max-w-[1920px] w-full mx-auto">
-        {/* Navbar */}
-        <div className="absolute inset-x-0 top-4 md:top-[40px] pointer-events-auto z-50">
-          <Navbar />
+    <>
+      {/* Navbar (reusable client component) */}
+      <header className="relative z-50">
+        <Navbar />
+      </header>
+
+      {/* Hero wrapper: provides relative context for absolutely-positioned hero children */}
+      <section className="relative bg-[#0D0D0D] overflow-hidden w-full min-h-screen">
+        <div className="relative max-w-[1920px] w-full mx-auto">
+          <HeroSection />
         </div>
+      </section>
 
-        {/* Hero heading (above the big background word) */}
-        <HeroHeading />
+      {/* PopulairSection as a separate section below the hero */}
+      <section className="bg-[#0D0D0D] w-full">
+        <div className="relative max-w-[1920px] w-full mx-auto">
+          <PopulairSection />
+        </div>
+      </section>
 
-        {/* Place ZenSwitch BEFORE the ImageShowcase and give it lower z so it sits behind */}
-        <ZenSwitch />
-
-        {/* Hero image (ImageShowcase) with higher z so it displays in front */}
-        <ImageShowcase />
-
-        {/* Product card (positioned from spec, hidden on small screens) */}
-        <ProductCard />
-
-        {/* Decorative purple blurred ellipse (hidden on small screens), sits between hero and main content */}
-        <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-[432px] w-[446px] h-[664px] rounded-full bg-[rgba(170,106,255,0.37)] filter blur-[200px] z-10" />
-
-        {/* Main content area - ensure it's above background word and below navbar as needed */}
-        <main className="pt-[420px] md:pt-[520px] relative z-30">
-          {children}
-        </main>
-      </div>
-    </section>
+      {/* Main content area (below PopulairSection) */}
+      <main className="bg-[#0D0D0D]">
+        <div className="max-w-[1200px] mx-auto px-4 py-16">
+          {/* Replace with your real page sections */}
+          <section>
+            <h2 className="font-poppins text-[28px] text-white mb-6">Features</h2>
+            <p className="text-white/80">Your content goes here...</p>
+          </section>
+        </div>
+      </main>
+    </>
   );
 }
