@@ -28,10 +28,11 @@ export default function ProductCard(): JSX.Element {
         "
       >
         <Image
-          src="/1.png"
+          src="/herosection/1.png"
           alt="Product thumbnail"
           width={130}
           height={146}
+          style={{ width: "auto", height: "auto" }}
           className="object-contain"
           priority
         />
