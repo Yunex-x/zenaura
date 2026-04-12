@@ -5,6 +5,9 @@ import PopulairSection from "./components/Populairproduct/PopulairSection";
 import FeaturesSection from "./components/FeaturesSection/FeaturesSection";
 import LovedSection from "./components/LovedSection/LovedSection";
 import ShowcaseSection from "./components/ShowcaseSection/ShowcaseSection";
+import AboutSection from "./components/AboutSection/AboutSection";
+import ExploreMore from "./components/ExploreMore/ExploreMore";
+import Footer from "./components/Footer/Footer";
 
 /**
  * app/page.tsx — renders the full page:
@@ -48,6 +51,21 @@ export default function Page(): JSX.Element {
       <section className="bg-[#0D0D0D] w-full">
         <div className="relative max-w-[1920px] w-full mx-auto">
           <ShowcaseSection />
+        </div>
+      </section>
+      <section className="bg-[#0D0D0D] w-full ">
+        <div className="relative max-w-[1920px]  w-full mx-auto">
+          <AboutSection />
+        </div>
+      </section>
+      <section className="bg-[#0D0D0D] w-full">
+        <div className="relative max-w-[1920px] w-full mx-auto">
+          <ExploreMore />
+        </div>
+      </section>
+        <section className="bg-[#0D0D0D] w-full">
+        <div className="relative max-w-[1920px] w-full mx-auto">
+      <Footer />
         </div>
       </section>
     </>
