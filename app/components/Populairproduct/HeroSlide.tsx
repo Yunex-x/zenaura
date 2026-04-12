@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 type Product = {
   id: string;
@@ -19,7 +20,7 @@ type Props = {
 };
 
 /* ── Stagger container for left text ── */
-const textContainerVariants = {
+const textContainerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -30,7 +31,7 @@ const textContainerVariants = {
 };
 
 /* ── Individual text element variants ── */
-const textItemVariants = {
+const textItemVariants: Variants = {
   hidden: (dir: number) => ({
     opacity: 0,
     x: dir * -40,
@@ -52,7 +53,7 @@ const textItemVariants = {
 };
 
 /* ── CTA button variants ── */
-const ctaVariants = {
+const ctaVariants: Variants = {
   hidden: { opacity: 0, y: 20, scale: 0.9 },
   visible: {
     opacity: 1,
@@ -68,7 +69,7 @@ const ctaVariants = {
 };
 
 /* ── Image variants ── */
-const imageVariants = {
+const imageVariants: Variants = {
   hidden: (dir: number) => ({
     opacity: 0,
     x: dir * 80,
