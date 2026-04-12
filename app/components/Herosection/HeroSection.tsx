@@ -5,31 +5,33 @@ import ProductCard from "./ProductCard";
 import ZenSwitch from "./ZenSwitch";
 import StatsBar from "./StatsBar";
 
-/**
- * HeroSection
- * - Contains the hero area only (no Navbar)
- * - Includes: HeroHeading, ZenSwitch (bg word), ImageShowcase, ProductCard, StatsBar
- * - Intended to be rendered inside a relative page wrapper (MainSectionFrame)
- */
 export default function HeroSection(): JSX.Element {
   return (
     <>
-      {/* Hero heading (above the big background word) */}
+      {/* Hero heading */}
       <HeroHeading />
 
-      {/* Large faint background word behind the hero */}
+      {/* Large faint background word */}
       <ZenSwitch />
 
-      {/* Hero image (on top of ZenSwitch) */}
+      {/* Hero image */}
       <ImageShowcase />
 
-      {/* Product card (positioned from spec; hidden on small inside component) */}
+      {/* Product card (hidden below lg) */}
       <ProductCard />
 
       {/* Decorative purple blurred ellipse (hidden on small screens) */}
-      <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-[432px] w-[446px] h-[664px] rounded-full bg-[rgba(170,106,255,0.37)] filter blur-[200px] z-10" />
+      <div
+        className="
+          hidden md:block absolute left-1/2 -translate-x-1/2
+          top-[300px] md:top-[380px] lg:top-[432px]
+          w-[250px] md:w-[350px] lg:w-[446px]
+          h-[400px] md:h-[530px] lg:h-[664px]
+          rounded-full bg-[rgba(170,106,255,0.37)] filter blur-[200px] z-10
+        "
+      />
 
-      {/* Stats bar (placed under hero) */}
+      {/* Stats bar */}
       <StatsBar />
     </>
   );

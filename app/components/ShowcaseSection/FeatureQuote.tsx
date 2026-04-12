@@ -8,12 +8,18 @@ export default function FeatureQuote({
   cta?: string;
 }) {
   return (
-    <div className="max-w-[335.73px]">
-      <div className="font-poppins font-medium text-[22px] leading-[33px] text-white/80 -tracking-[1px]">
+    <div className="max-w-full sm:max-w-[335px]">
+      <div
+        className="font-poppins font-medium text-white/80 tracking-[-0.5px] sm:-tracking-[1px]"
+        style={{
+          fontSize: "clamp(16px, 1.8vw, 22px)",
+          lineHeight: "1.5",
+        }}
+      >
         {quote}
       </div>
       {cta && (
-        <div className="mt-4">
+        <div className="mt-3 sm:mt-4">
           <button className="text-white underline font-poppins font-medium text-sm">
             {cta}
           </button>

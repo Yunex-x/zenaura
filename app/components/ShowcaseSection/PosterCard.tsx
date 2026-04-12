@@ -10,7 +10,9 @@ export default function PosterCard({
 }) {
   return (
     <div
-      className={`relative h-full w-full rounded-sm overflow-hidden bg-[#0B0B0B] ${active ? "shadow-[0_30px_60px_rgba(0,0,0,0.6)]" : ""}`}
+      className={`relative h-full w-full rounded-sm overflow-hidden bg-[#0B0B0B] ${
+        active ? "shadow-[0_30px_60px_rgba(0,0,0,0.6)]" : ""
+      }`}
     >
       {/* Poster image */}
       <div className="absolute inset-0">
@@ -18,38 +20,57 @@ export default function PosterCard({
           src={item.image}
           alt={item.tag ?? ""}
           fill
-          sizes="(min-width: 1280px) 428px, (min-width: 768px) 360px, 300px"
+          sizes="(min-width:1280px) 428px, (min-width:768px) 360px, 80vw"
           className="object-cover"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
       </div>
 
-      {/* tag pill top-left */}
-      <div className="absolute left-4 top-4">
-        <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-[12px] text-white/80 font-medium">
+      {/* Tag pill top-left */}
+      <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
+        <span
+          className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-white/10 text-white/80 font-medium"
+          style={{ fontSize: "clamp(10px, 1vw, 12px)" }}
+        >
           {item.tag}
         </span>
       </div>
 
-      {/* translucent centered play button */}
+      {/* Centered play button */}
       <button
         aria-label="Play testimonial"
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[72px] h-[72px] rounded-full bg-black/40 border border-white/10 flex items-center justify-center backdrop-blur-sm"
+        className="
+          absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+          w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] lg:w-[72px] lg:h-[72px]
+          rounded-full bg-black/40 border border-white/10
+          flex items-center justify-center backdrop-blur-sm
+        "
       >
-        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <div className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full bg-white/20 flex items-center justify-center">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden className="sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4">
             <path d="M8 5v14l11-7-11-7z" fill="white" />
           </svg>
         </div>
       </button>
 
-      {/* bottom quote + CTA */}
-      <div className="absolute left-6 right-6 bottom-6 text-left">
-        <p className="text-[20px] leading-[28px] text-white/90 font-medium mb-3">
+      {/* Bottom quote + CTA */}
+      <div className="absolute left-3 right-3 bottom-3 sm:left-4 sm:right-4 sm:bottom-4 lg:left-6 lg:right-6 lg:bottom-6 text-left">
+        <p
+          className="text-white/90 font-medium mb-1.5 sm:mb-2 lg:mb-3"
+          style={{
+            fontSize: "clamp(13px, 1.6vw, 20px)",
+            lineHeight: "1.4",
+          }}
+        >
           {item.quote}
         </p>
-        <button className="text-sm text-white underline font-medium">{item.cta}</button>
+        <button
+          className="text-white underline font-medium"
+          style={{ fontSize: "clamp(11px, 1.1vw, 14px)" }}
+        >
+          {item.cta}
+        </button>
       </div>
     </div>
   );

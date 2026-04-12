@@ -1,11 +1,6 @@
 import React, { JSX } from "react";
 import HeroCarousel from "./HeroCarousel";
 
-/**
- * PopulairSection - page hero wrapper with decorative background and the dynamic carousel.
- * - This component is a server component but includes the client HeroCarousel.
- * - It provides a centered container and background vignette similar to Image 2.
- */
 export default function PopulairSection(): JSX.Element {
   return (
     <section className="relative w-full bg-[#0D0D0D] overflow-hidden">
@@ -27,8 +22,8 @@ export default function PopulairSection(): JSX.Element {
         style={{ background: "rgba(130,80,242,0.18)" }}
       />
 
-      <div className="relative max-w-[1280px] mx-auto px-6 py-[80px]">
-        {/* Carousel (handles slides and product visuals) */}
+      {/* Full-width container — no max-w constraint */}
+      <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-10 sm:py-14 md:py-16 lg:py-[80px]">
         <HeroCarousel />
       </div>
     </section>

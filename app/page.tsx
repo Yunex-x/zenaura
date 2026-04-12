@@ -9,65 +9,26 @@ import AboutSection from "./components/AboutSection/AboutSection";
 import ExploreMore from "./components/ExploreMore/ExploreMore";
 import Footer from "./components/Footer/Footer";
 
-/**
- * app/page.tsx — renders the full page:
- * Navbar -> HeroSection -> PopulairSection -> LovedSection -> FeaturesSection
- */
 export default function Page(): JSX.Element {
   return (
-    <>
-      {/* Navbar */}
-      <header className="relative z-50">
+    <div className="w-full overflow-x-hidden">
+      <header className="relative z-50 w-full">
         <Navbar />
       </header>
 
-      {/* Hero wrapper */}
-      <section className="relative bg-[#0D0D0D] overflow-hidden w-full min-h-screen">
-        <div className="relative max-w-[1920px] w-full mx-auto">
+      <section className="relative bg-[#0D0D0D] overflow-hidden w-full h-[700px] sm:h-[900px] md:h-[1100px] lg:h-[1400px] xl:h-[1500px]">
+        <div className="relative w-full h-full mx-auto">
           <HeroSection />
         </div>
       </section>
 
-      {/* Populair / popular products section */}
-      <section className="bg-[#0D0D0D] w-full">
-        <div className="relative max-w-[1920px] w-full mx-auto">
-          <PopulairSection />
-        </div>
-      </section>
-
-      {/* Most loved products */}
-      <section className="bg-[#0D0D0D] w-full">
-        <div className="relative max-w-[1920px] w-full mx-auto">
-          <LovedSection />
-        </div>
-      </section>
-
-      {/* Features section (new) */}
-      <section className="bg-[#0D0D0D] w-full">
-        <div className="relative max-w-[1920px] w-full mx-auto">
-          <FeaturesSection />
-        </div>
-      </section>
-      <section className="bg-[#0D0D0D] w-full">
-        <div className="relative max-w-[1920px] w-full mx-auto">
-          <ShowcaseSection />
-        </div>
-      </section>
-      <section className="bg-[#0D0D0D] w-full ">
-        <div className="relative max-w-[1920px]  w-full mx-auto">
-          <AboutSection />
-        </div>
-      </section>
-      <section className="bg-[#0D0D0D] w-full">
-        <div className="relative max-w-[1920px] w-full mx-auto">
-          <ExploreMore />
-        </div>
-      </section>
-        <section className="bg-[#0D0D0D] w-full">
-        <div className="relative max-w-[1920px] w-full mx-auto">
+      <PopulairSection />
+      <LovedSection />
+      <FeaturesSection />
+      <ShowcaseSection />
+      <AboutSection />
+      <ExploreMore />
       <Footer />
-        </div>
-      </section>
-    </>
+    </div>
   );
 }
