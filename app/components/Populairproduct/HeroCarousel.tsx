@@ -11,7 +11,7 @@ const PRODUCTS = [
     subtitle:
       "Tune out the noise and accelerate your productivity with the first official earplugs of McLaren Racing.",
     description: "",
-    image: "/product-1.png",
+    image: "/populair/product-1.png",
     ctaLabel: "Buy Now",
   },
   {
@@ -20,7 +20,7 @@ const PRODUCTS = [
     subtitle:
       "Designed for all-day comfort and crisp clarity — engineered with advanced noise reduction.",
     description: "",
-    image: "/product-2.png",
+    image: "/populair/product-2.png",
     ctaLabel: "Buy Now",
   },
   {
@@ -29,7 +29,7 @@ const PRODUCTS = [
     subtitle:
       "A studio-grade listening experience tuned for focused work and distraction-free environments.",
     description: "",
-    image: "/product-3.png",
+    image: "/populair/product-3.png",
     ctaLabel: "Buy Now",
   },
 ];
@@ -164,26 +164,6 @@ export default function HeroCarousel(): JSX.Element {
           <ArrowRightSvg />
         </motion.button>
 
-        {/* Pager dots with scale animation */}
-        <div className="ml-1 sm:ml-2 lg:ml-4 flex items-center gap-1.5 sm:gap-2">
-          {PRODUCTS.map((p, i) => (
-            <motion.button
-              key={p.id}
-              onClick={() => {
-                if (i === index) return;
-                setDirection(i > index ? 1 : -1);
-                setIndex(i);
-              }}
-              aria-label={`Go to slide ${i + 1}`}
-              animate={{
-                scale: i === index ? 1.3 : 1,
-                backgroundColor: i === index ? "#FFFFFF" : "rgba(255,255,255,0.3)",
-              }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="w-2 h-2 sm:w-2.5 sm:h-2.5 lg:w-3 lg:h-3 rounded-full"
-            />
-          ))}
-        </div>
       </div>
     </div>
   );
