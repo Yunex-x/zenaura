@@ -65,7 +65,7 @@ function ArrowSolid({ onClick }: { onClick: () => void }) {
 const ITEMS: Item[] = [
   {
     id: "blur-left",
-    image: "/ExploreMore/explore-4.png",
+    image: "/HomePage/ExploreMore/explore-4.png",
     title: "Earplugs for Sleeping",
     subtitle: "Lorem ipsum dolor sit amet",
     size: "small",
@@ -73,28 +73,28 @@ const ITEMS: Item[] = [
   },
   {
     id: "left",
-    image: "/ExploreMore/explore-1.png",
+    image: "/HomePage/ExploreMore/explore-1.png",
     title: "Earplugs for Sleeping",
     subtitle: "Lorem ipsum dolor sit amet",
     size: "medium",
   },
   {
     id: "center",
-    image: "/ExploreMore/explore-2.png",
+    image: "/HomePage/ExploreMore/explore-2.png",
     title: "Earplugs for Sleeping",
     subtitle: "Lorem ipsum dolor sit amet",
     size: "large",
   },
   {
     id: "right",
-    image: "/ExploreMore/explore-3.png",
+    image: "/HomePage/ExploreMore/explore-3.png",
     title: "Earplugs for Sleeping",
     subtitle: "Lorem ipsum dolor sit amet",
     size: "medium",
   },
   {
     id: "blur-right",
-    image: "/ExploreMore/explore-5.png",
+    image: "/HomePage/ExploreMore/explore-5.png",
     title: "Earplugs for Sleeping",
     subtitle: "Lorem ipsum dolor sit amet",
     size: "small",

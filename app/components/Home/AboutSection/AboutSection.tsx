@@ -122,7 +122,7 @@ export default function AboutSection(): JSX.Element {
           "
         >
           <Image
-            src="/AboutSection/about-left.png"
+            src="/HomePage/AboutSection/about-left.png"
             alt="product showcase"
             fill
             className="object-cover object-center"
