@@ -145,20 +145,6 @@ export default function LovedCarousel({ products }: { products?: Product[] }) {
         </div>
       </div>
 
-      {/* Pager dots — mobile only */}
-      <div className="lg:hidden flex items-center justify-center gap-2 mt-4">
-        {items.map((p, i) => (
-          <button
-            key={p.id}
-            onClick={() => {
-              setDirection(i > index ? 1 : -1);
-              setIndex(i);
-            }}
-            aria-label={`Go to card ${i + 1}`}
-            className={`w-2.5 h-2.5 rounded-full transition ${i === index ? "bg-white" : "bg-white/30"}`}
-          />
-        ))}
-      </div>
 
       {/* Arrows — ExploreMore style, centered below cards */}
       <div className="relative mt-6 sm:mt-8 md:mt-10 lg:mt-12 w-full flex items-center justify-center">

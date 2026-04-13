@@ -190,20 +190,7 @@ export default function ExploreMore(): JSX.Element {
             </AnimatePresence>
           </div>
 
-          {/* Dots */}
-          <div className="mt-5 flex justify-center gap-2">
-            {ITEMS.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => {
-                  setDirection(i > selectedIndex ? 1 : -1);
-                  setSelectedIndex(i);
-                }}
-                aria-label={`Go to ${i + 1}`}
-                className={`w-2.5 h-2.5 rounded-full transition ${i === selectedIndex ? "bg-white" : "bg-white/30"}`}
-              />
-            ))}
-          </div>
+         
         </div>
 
         {/* ===== TABLET (md, < lg): horizontal scroll row ===== */}

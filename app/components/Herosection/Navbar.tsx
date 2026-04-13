@@ -17,19 +17,19 @@ export default function Navbar(): JSX.Element {
     <header className="w-full bg-black">
       <div className="max-w-[1825px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-[48px] md:h-[52px] lg:h-[56px]">
-          {/* Left: mobile menu button + desktop links */}
+          {/* Left: mobile/md menu button + desktop links */}
           <div className="flex items-center gap-4">
-            {/* Mobile toggle */}
+            {/* Mobile + md toggle (visible below lg) */}
             <button
-              className="md:hidden inline-flex items-center justify-center p-2 text-white/90"
+              className="lg:hidden inline-flex items-center justify-center p-2 text-white/90"
               aria-label={open ? "Close menu" : "Open menu"}
               onClick={() => setOpen((s) => !s)}
             >
               {open ? <X size={22} /> : <Menu size={22} />}
             </button>
 
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-3 lg:gap-6">
+            {/* Desktop nav (visible at lg+) */}
+            <nav className="hidden lg:flex items-center gap-3 lg:gap-6">
               <div className="flex items-center gap-2">
                 <a
                   href="#"
@@ -88,9 +88,9 @@ export default function Navbar(): JSX.Element {
           </div>
         </div>
 
-        {/* Mobile dropdown */}
+        {/* Mobile + md dropdown (visible below lg) */}
         {open && (
-          <div className="md:hidden mt-2 bg-[#0D0D0D] border-t border-white/6 py-4 z-40">
+          <div className="lg:hidden mt-2 bg-[#0D0D0D] border-t border-white/6 py-4 z-40">
             <div className="flex flex-col items-center gap-3">
               {links.map((l) => {
                 const isHome = l.label === "Home";

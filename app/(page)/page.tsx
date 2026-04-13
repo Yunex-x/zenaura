@@ -1,13 +1,13 @@
 import React, { JSX } from "react";
-import Navbar from "./components/Herosection/Navbar";
-import HeroSection from "./components/Herosection/HeroSection";
-import PopulairSection from "./components/Populairproduct/PopulairSection";
-import FeaturesSection from "./components/FeaturesSection/FeaturesSection";
-import LovedSection from "./components/LovedSection/LovedSection";
-import ShowcaseSection from "./components/ShowcaseSection/ShowcaseSection";
-import AboutSection from "./components/AboutSection/AboutSection";
-import ExploreMore from "./components/ExploreMore/ExploreMore";
-import Footer from "./components/Footer/Footer";
+import Navbar from "../components/Herosection/Navbar";
+import HeroSection from "../components/Herosection/HeroSection";
+import PopulairSection from "../components/Populairproduct/PopulairSection";
+import FeaturesSection from "../components/FeaturesSection/FeaturesSection";
+import LovedSection from "../components/LovedSection/LovedSection";
+import ShowcaseSection from "../components/ShowcaseSection/ShowcaseSection";
+import AboutSection from "../components/AboutSection/AboutSection";
+import ExploreMore from "../components/ExploreMore/ExploreMore";
+import Footer from "../components/Footer/Footer";
 
 export default function Page(): JSX.Element {
   return (

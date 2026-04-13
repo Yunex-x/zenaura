@@ -142,20 +142,6 @@ export default function PosterCarousel({ items = ITEMS }: { items?: typeof ITEMS
           </AnimatePresence>
         </div>
 
-        {/* Pager dots */}
-        <div className="mt-6 flex justify-center gap-2">
-          {data.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                setDirection(i > index ? 1 : -1);
-                setIndex(i);
-              }}
-              aria-label={`Go to ${i + 1}`}
-              className={`w-2.5 h-2.5 rounded-full transition ${i === index ? "bg-white" : "bg-white/30"}`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* ── DESKTOP (lg+): all cards in a row ── */}

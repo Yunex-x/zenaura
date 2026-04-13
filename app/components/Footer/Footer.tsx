@@ -63,143 +63,124 @@ const socialLinks = [
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className="relative w-screen max-w-full overflow-hidden bg-[#0D0D0D] text-white">
+    <footer className="relative w-full overflow-hidden bg-black text-white">
+      {/* =========================
+          LAYER 1: DECORATIVE BACKGROUND
+      ========================== */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        {/* top dark panel */}
+        <div className="absolute inset-x-0 top-0 h-[140px] bg-[#0D0D0D] min-[420px]:h-[160px] sm:h-[190px] md:h-[220px] lg:h-[260px] xl:h-[464px]" />
 
-      {/* ══════ Decorative background layer ══════ */}
-      <div className="pointer-events-none absolute inset-0">
-        {/* Purple glow */}
-        <div
-          className="
-            absolute left-[-12%] top-[-18%] rotate-[35deg] rounded-full
-            bg-[#AA6AFF]/16 blur-[120px] sm:blur-[140px] lg:blur-[160px]
-          "
-          style={{
-            width: "clamp(200px, 28vw, 520px)",
-            height: "clamp(500px, 80vw, 1450px)",
-          }}
-        />
+        {/* glow */}
+        <div className="absolute left-[-30%] top-[-12%] h-[420px] w-[220px] rotate-[35deg] rounded-full bg-[#AA6AFF]/16 blur-[90px] min-[420px]:h-[500px] min-[420px]:w-[260px] sm:h-[620px] sm:w-[300px] sm:blur-[110px] md:h-[760px] md:w-[360px] md:blur-[130px] lg:h-[900px] lg:w-[420px] lg:blur-[150px] xl:left-[-12%] xl:top-[-18%] xl:h-[1450px] xl:w-[520px] xl:blur-[160px]" />
 
-        {/* Background text "YOUR VOLUME" */}
-        <div className="absolute inset-x-0 top-[50px] sm:top-[60px] md:top-[70px] lg:top-[90px] xl:top-[110px] overflow-hidden flex justify-center">
+        {/* background text */}
+        <div className="absolute inset-x-0 top-[22px] flex justify-center overflow-hidden min-[420px]:top-[28px] sm:top-[36px] md:top-[46px] lg:top-[60px] xl:top-[110px]">
           <span
-            className="select-none whitespace-nowrap font-space-grotesk font-bold uppercase leading-none tracking-[-0.04em] text-white/[0.035]"
-            style={{ fontSize: "clamp(60px, 16vw, 320px)" }}
+            className="
+              select-none whitespace-nowrap font-space-grotesk font-bold uppercase
+              leading-none tracking-[-0.04em] text-white/[0.035]
+              text-[56px]
+              min-[420px]:text-[68px]
+              sm:text-[86px]
+              md:text-[112px]
+              lg:text-[150px]
+              xl:text-[320px]
+            "
           >
             YOUR VOLUME
           </span>
         </div>
+      </div>
 
-        {/* Product image — centered, scales */}
-        <div className="absolute z-40 inset-x-0 top-[10px] sm:top-[15px] md:top-[20px] xl:top-[30px] flex justify-center">
-          <div
-            className="relative"
-            style={{
-              width: "clamp(220px, 50vw, 760px)",
-              height: "clamp(220px, 50vw, 760px)",
-            }}
-          >
-            <Image
-              src="/footer/earpods-footer.png"
-              alt="Zenaura earplugs"
-              fill
-              priority
-              className="object-contain"
-              sizes="(min-width:1280px) 760px, 50vw"
-            />
-          </div>
+      {/* =========================
+          LAYER 2: EARPODS IMAGE ABOVE EVERYTHING
+      ========================== */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[30] flex justify-center overflow-visible">
+        <div
+          className="
+            relative
+            h-[190px] w-[190px]
+            min-[420px]:h-[220px] min-[420px]:w-[220px]
+            sm:h-[260px] sm:w-[260px]
+            md:h-[360px] md:w-[360px]
+            lg:h-[520px] lg:w-[520px]
+            xl:h-[760px] xl:w-[760px]
+          "
+        >
+          <Image
+            src="/footer/earpods-footer.png"
+            alt="Zenaura earplugs"
+            fill
+            priority
+            className="object-contain"
+            sizes="(min-width:1280px) 760px, (min-width:1024px) 520px, (min-width:768px) 360px, (min-width:640px) 260px, 220px"
+          />
         </div>
       </div>
 
-      {/* ══════ Layout frame ══════ */}
-      <div
-        className="relative z-10"
-        style={{ minHeight: "clamp(700px, 80vw, 1168px)" }}
-      >
-        {/* Push footer content to the bottom */}
-        <div
-          className="flex items-end"
-          style={{ minHeight: "clamp(700px, 80vw, 1168px)" }}
-        >
+      {/* =========================
+          LAYER 3: CONTENT
+      ========================== */}
+      <div className="relative z-10">
+        <div className="pt-[180px] min-[420px]:pt-[210px] sm:pt-[250px] md:pt-[330px] lg:pt-[470px] xl:pt-[620px]">
           <div className="w-full bg-black">
-            <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
-              <div className="pt-16 sm:pt-20 md:pt-24 lg:pt-[110px] xl:pt-[156px] pb-0">
-
-                {/* ── Main content: left block + right links ── */}
-                <div className="flex flex-col gap-10 sm:gap-12 lg:gap-16 xl:flex-row xl:items-start xl:justify-between xl:gap-12">
-
+            <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+              <div className="pb-0">
+                <div className="flex flex-col gap-12 xl:flex-row xl:items-start xl:justify-between xl:gap-12">
                   {/* Left block */}
-                  <div className="w-full xl:max-w-[748px] flex-shrink-0">
-                    {/* Logo */}
+                  <div className="w-full xl:max-w-[780px] xl:flex-shrink-0">
                     <div className="mb-5 sm:mb-6 lg:mb-8">
                       <Image
                         src="/logo.svg"
                         alt="Zenaura"
                         width={233}
                         height={80}
-                        className="h-auto w-[140px] sm:w-[170px] md:w-[190px] lg:w-[233px]"
                         priority
+                        className="h-auto w-[150px] sm:w-[170px] md:w-[190px] lg:w-[210px] xl:w-[233px]"
                       />
                     </div>
 
-                    {/* Tagline */}
                     <p
-                      className="mb-8 sm:mb-10 lg:mb-14 max-w-[360px] font-space-grotesk font-medium uppercase leading-[1.2] tracking-[-0.01em] text-white/60"
-                      style={{ fontSize: "clamp(13px, 1.3vw, 16px)" }}
+                      className="mb-8 max-w-[380px] font-space-grotesk font-medium uppercase leading-[1.2] tracking-[-0.01em] text-white/60 sm:mb-10 lg:mb-14"
+                      style={{ fontSize: "clamp(14px, 1.2vw, 16px)" }}
                     >
                       Premium earplugs for life&apos;s loud moments.
                     </p>
 
-                    {/* Email form */}
-                    <form className="flex w-full max-w-[748px] flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
+                    <form className="flex w-full max-w-[748px] flex-col gap-3 sm:flex-row sm:items-center">
                       <input
                         id="footer-email"
                         type="email"
                         placeholder="Enter your email address"
                         aria-label="Enter your email address"
-                        className="
-                          w-full rounded-[14px] border border-transparent
-                          bg-white/[0.08] px-4 sm:px-5
-                          font-poppins text-white placeholder:text-white/40
-                          outline-none focus:border-white/20
-                          transition
-                        "
+                        className="w-full rounded-[14px] border border-transparent bg-white/[0.08] px-4 font-poppins text-white placeholder:text-white/40 outline-none transition focus:border-white/20 sm:px-5"
                         style={{
-                          height: "clamp(48px, 5vw, 64px)",
+                          height: "clamp(52px, 5vw, 64px)",
                           fontSize: "clamp(14px, 1.3vw, 16px)",
                         }}
                       />
 
                       <button
                         type="submit"
-                        className="
-                          w-full sm:w-auto rounded-[50px] bg-[#882EFF]
-                          font-poppins font-semibold text-white
-                          transition hover:opacity-95
-                          flex-shrink-0
-                        "
+                        className="flex h-[52px] w-full flex-shrink-0 items-center justify-center rounded-[50px] bg-[#882EFF] font-poppins font-semibold text-white transition hover:opacity-95 sm:w-auto"
                         style={{
-                          height: "clamp(48px, 5vw, 64px)",
-                          minWidth: "clamp(140px, 16vw, 233px)",
-                          fontSize: "clamp(15px, 1.5vw, 20px)",
+                          minWidth: "clamp(160px, 16vw, 233px)",
+                          height: "clamp(52px, 5vw, 64px)",
+                          fontSize: "clamp(16px, 1.5vw, 20px)",
                         }}
                       >
                         Submit
                       </button>
                     </form>
 
-                    {/* Social links */}
-                    <div className="mt-8 sm:mt-10 lg:mt-[44px] flex items-center gap-3 sm:gap-4">
+                    <div className="mt-8 flex items-center gap-3 sm:mt-10 sm:gap-4 lg:mt-[44px]">
                       {socialLinks.map((item) => (
                         <a
                           key={item.label}
                           href={item.href}
                           aria-label={item.label}
-                          className="
-                            flex items-center justify-center rounded-full
-                            border border-white/30 text-white transition
-                            hover:border-white/60 hover:text-white
-                            w-[36px] h-[36px] sm:w-[40px] sm:h-[40px] lg:w-[44px] lg:h-[44px]
-                          "
+                          className="flex h-[36px] w-[36px] items-center justify-center rounded-full border border-white/30 text-white transition hover:border-white/60 hover:text-white sm:h-[40px] sm:w-[40px] lg:h-[44px] lg:w-[44px]"
                         >
                           {item.icon}
                         </a>
@@ -207,27 +188,27 @@ export default function Footer(): JSX.Element {
                     </div>
                   </div>
 
-                  {/* Right block — link columns */}
+                  {/* Right block */}
                   <div className="w-full xl:flex xl:justify-end">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 xl:gap-[76px]">
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 sm:gap-x-10 lg:gap-x-12 xl:gap-x-[76px]">
                       {footerLinks.map((group) => (
                         <div key={group.title}>
                           <h3
-                            className="mb-4 sm:mb-6 lg:mb-8 font-space-grotesk font-bold uppercase leading-none tracking-[-0.01em] text-white"
-                            style={{ fontSize: "clamp(18px, 1.8vw, 24px)" }}
+                            className="mb-4 font-space-grotesk font-bold uppercase leading-none tracking-[-0.01em] text-white sm:mb-6 lg:mb-8"
+                            style={{ fontSize: "clamp(18px, 1.6vw, 24px)" }}
                           >
                             {group.title}
                           </h3>
 
-                          <ul>
+                          <ul className="space-y-3 sm:space-y-4">
                             {group.links.map((link) => (
                               <li key={link}>
                                 <a
                                   href="#"
                                   className="font-space-grotesk font-medium tracking-[-0.01em] text-white/60 transition hover:text-white"
                                   style={{
-                                    fontSize: "clamp(15px, 1.5vw, 20px)",
-                                    lineHeight: "2.2",
+                                    fontSize: "clamp(15px, 1.3vw, 20px)",
+                                    lineHeight: "1.35",
                                   }}
                                 >
                                   {link}
@@ -241,30 +222,28 @@ export default function Footer(): JSX.Element {
                   </div>
                 </div>
 
-                {/* Divider */}
-                <div className="mt-8 sm:mt-10 lg:mt-[50px] border-t border-white/[0.16]" />
+                <div className="mt-10 border-t border-white/[0.16] sm:mt-12 lg:mt-[50px]" />
 
-                {/* Bottom bar — copyright + legal links */}
-                <div className="flex flex-col gap-2 sm:gap-3 py-4 sm:py-5 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col gap-3 py-4 sm:py-5 md:flex-row md:items-center md:justify-between">
                   <p
                     className="font-space-grotesk font-medium tracking-[-0.01em] text-white/40"
                     style={{
-                      fontSize: "clamp(12px, 1.2vw, 16px)",
-                      lineHeight: "2",
+                      fontSize: "clamp(12px, 1.1vw, 16px)",
+                      lineHeight: "1.8",
                     }}
                   >
                     © 2026 Zenaura. All rights reserved.
                   </p>
 
-                  <div className="flex flex-wrap items-center gap-x-6 sm:gap-x-8 lg:gap-x-10 gap-y-1 md:justify-end">
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-1 sm:gap-x-8 lg:gap-x-10 md:justify-end">
                     {["Privacy", "Terms", "Cookies"].map((label) => (
                       <a
                         key={label}
                         href="#"
                         className="font-space-grotesk font-medium tracking-[-0.01em] text-white/40 transition hover:text-white"
                         style={{
-                          fontSize: "clamp(12px, 1.2vw, 16px)",
-                          lineHeight: "2",
+                          fontSize: "clamp(12px, 1.1vw, 16px)",
+                          lineHeight: "1.8",
                         }}
                       >
                         {label}
@@ -272,7 +251,6 @@ export default function Footer(): JSX.Element {
                     ))}
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
