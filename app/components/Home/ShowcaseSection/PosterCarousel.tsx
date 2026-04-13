@@ -5,11 +5,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import PosterCard from "./PosterCard";
 
 const ITEMS = [
-  { id: "1", tag: "ZEN QUITE 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/ShowcaseSection/showcase-poster.png" },
-  { id: "2", tag: "ZEN SWITCH 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/ShowcaseSection/showcase-poster.png" },
-  { id: "3", tag: "ZEN DREAM", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/ShowcaseSection/showcase-poster.png" },
-  { id: "4", tag: "ZEN QUITE 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/ShowcaseSection/showcase-poster.png" },
-  { id: "5", tag: "ZEN SWITCH 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/ShowcaseSection/showcase-poster.png" },
+  { id: "1", tag: "ZEN QUITE 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
+  { id: "2", tag: "ZEN SWITCH 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
+  { id: "3", tag: "ZEN DREAM", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
+  { id: "4", tag: "ZEN QUITE 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
+  { id: "5", tag: "ZEN SWITCH 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
 ];
 
 /* ── Arrow components matching ExploreMore style ── */
@@ -166,8 +166,8 @@ export default function PosterCarousel({ items = ITEMS }: { items?: typeof ITEMS
                   width: isCenter
                     ? "clamp(300px, 24vw, 428px)"
                     : isNear
-                    ? "clamp(250px, 20vw, 360px)"
-                    : "clamp(200px, 16vw, 300px)",
+                      ? "clamp(250px, 20vw, 360px)"
+                      : "clamp(200px, 16vw, 300px)",
                   aspectRatio: "428 / 715",
                   zIndex: isCenter ? 40 : 10,
                 }}

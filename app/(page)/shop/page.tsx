@@ -3,6 +3,12 @@ import ShopHero from "../../components/Shop/ShopHero";
 import ShopFilterBar from "../../components/Shop/ShopFilterBar";
 import Navbar from "@/app/components/ui/Navbar";
 import Footer from "@/app/components/ui/Footer";
+import AllProductsSection from "@/app/components/Shop/AllProductsSection";
+import BundleSection from "@/app/components/Shop/BundleSection";
+import ZenExperienceSection from "@/app/components/Shop/ZenExperienceSection";
+import ZenQuietSection from "@/app/components/Shop/ZenQuietSection";
+import ZeenSleepSection from "@/app/components/Shop/ZeenSleepSection";
+import ZenSwitchSection from "@/app/components/Shop/ZenSwitchSection";
 
 export default function ShopPage(): JSX.Element {
   return (
@@ -20,14 +26,14 @@ export default function ShopPage(): JSX.Element {
         <ShopFilterBar />
       </section>
 
-      {/* Product Grid (placeholder) */}
-      <section
-        id="products"
-        className="relative w-full bg-[#0D0D0D] min-h-[400px]"
-      >
-        <div className="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-[113px] py-12 sm:py-16 lg:py-[80px]">
-          {/* Product cards will go here */}
-        </div>
+      {/* All Products Carousel */}
+      <section id="products" className="relative w-full bg-[#0D0D0D]">
+        <AllProductsSection />
+        <BundleSection />
+        <ZenExperienceSection />
+        <ZenSwitchSection />
+        <ZenQuietSection />
+        <ZeenSleepSection />
       </section>
 
       {/* Footer */}

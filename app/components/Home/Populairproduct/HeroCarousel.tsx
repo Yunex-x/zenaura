@@ -11,7 +11,7 @@ const PRODUCTS = [
     subtitle:
       "Tune out the noise and accelerate your productivity with the first official earplugs of McLaren Racing.",
     description: "",
-    image: "/populair/product-1.png",
+    image: "/HomePage/populair/product-1.png",
     ctaLabel: "Buy Now",
   },
   {
@@ -20,7 +20,7 @@ const PRODUCTS = [
     subtitle:
       "Designed for all-day comfort and crisp clarity — engineered with advanced noise reduction.",
     description: "",
-    image: "/populair/product-2.png",
+    image: "/HomePage/populair/product-2.png",
     ctaLabel: "Buy Now",
   },
   {
@@ -29,7 +29,7 @@ const PRODUCTS = [
     subtitle:
       "A studio-grade listening experience tuned for focused work and distraction-free environments.",
     description: "",
-    image: "/populair/product-3.png",
+    image: "/HomePage/populair/product-3.png",
     ctaLabel: "Buy Now",
   },
 ];

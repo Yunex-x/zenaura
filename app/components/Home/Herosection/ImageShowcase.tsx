@@ -14,7 +14,7 @@ export default function ImageShowcase(): JSX.Element {
     >
       <div className="relative w-full h-full">
         <Image
-          src="/herosection/heroimg.svg"
+          src="/HomePage/herosection/heroimg.svg"
           alt="Hero image"
           fill
           className="object-cover"

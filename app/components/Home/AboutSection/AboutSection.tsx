@@ -50,7 +50,7 @@ export default function AboutSection(): JSX.Element {
         {/* Image — full width, aspect-ratio preserved */}
         <div className="relative w-full aspect-[645/967] max-w-[500px] mx-auto mb-8 sm:mb-10 md:mb-12 overflow-hidden rounded-sm">
           <Image
-            src="/AboutSection/about-left.png"
+            src="/HomePage/AboutSection/about-left.png"
             alt="product showcase"
             fill
             className="object-cover"

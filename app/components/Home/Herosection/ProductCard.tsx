@@ -27,7 +27,7 @@ export default function ProductCard(): JSX.Element {
         "
       >
         <Image
-          src="/herosection/1.png"
+          src="/HomePage/herosection/1.png"
           alt="Product thumbnail"
           width={130}
           height={146}

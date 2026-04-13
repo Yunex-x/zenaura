@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function ExplodedView({
-  src = "/featuresSection/exploded.png",
+  src = "/HomePage/featuresSection/exploded.png",
   alt = "exploded product",
 }: {
   src?: string;
