@@ -1,69 +1,113 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
-const contacts = [
+type ContactItem = {
+  title: string;
+  email: string;
+  icon: string; // 🔥 path بدل SVG
+  size?: number; // optional (business icon bigger)
+};
+
+const contacts: ContactItem[] = [
   {
     title: "Collaborations",
     email: "ambassadors@zenearplugs.com",
+    icon: "/icons/collaborations.png",
   },
   {
     title: "Partnerships",
     email: "partnerships@zenearplugs.com",
+    icon: "/icons/partnership.svg",
   },
   {
     title: "Business",
     email: "business@zenearplugs.com",
+    icon: "/icons/business.svg",
+    size: 48, // 🔥 bigger icon (كان 104px فـ Figma)
   },
   {
     title: "Press",
     email: "press@zenearplugs.com",
+    icon: "/icons/press.svg",
   },
 ];
 
 export default function OtherContacts() {
   return (
-    <section className="w-full flex justify-center py-20 sm:py-24 lg:py-28">
-      <div className="w-full max-w-[1520px] px-4 flex flex-col items-center gap-16 sm:gap-20">
-
-        {/* TITLE */}
-        <h2
-          className="text-center font-montserrat font-[700] bg-clip-text text-transparent"
-          style={{
-            backgroundImage:
-              "linear-gradient(90deg, #FFFFFF 63.39%, rgba(62,62,62,0.21) 143.55%)",
-            fontSize: "clamp(28px,5vw,64px)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Other ways to reach us
-        </h2>
-
-        {/* GRID */}
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-          {contacts.map((item, i) => (
-            <div
-              key={i}
-              className="bg-[#1B1A1A] rounded-[12px] h-[200px] sm:h-[220px] flex flex-col items-center justify-center gap-6 hover:bg-[#222] transition cursor-pointer"
+    <section className="flex w-full justify-center py-[80px] lg:py-[120px]">
+      <div className="w-full max-w-[1520px] px-4 sm:px-6 lg:px-0">
+        <div className="flex flex-col items-center gap-[56px] lg:gap-[88px]">
+          
+          {/* TITLE */}
+          <div className="flex w-full justify-center">
+            <h2
+              className="text-center font-montserrat font-[700] bg-clip-text text-transparent"
+              style={{
+                width: "min(496px, 100%)",
+                backgroundImage:
+                  "linear-gradient(90deg, #FFFFFF 63.39%, rgba(62, 62, 62, 0.21) 143.55%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                fontSize: "clamp(30px, 5vw, 64px)",
+                lineHeight: "1.875",
+                letterSpacing: "-0.02em",
+              }}
             >
-              {/* ICON */}
-              <div className="w-[70px] h-[70px] rounded-[12px] bg-[#845CF2] flex items-center justify-center">
-                <div className="w-[24px] h-[24px] bg-white/80 rounded-sm" />
-              </div>
+              Other Contacts
+            </h2>
+          </div>
 
-              {/* TEXT */}
-              <div className="flex flex-col items-center text-center gap-2">
-                <h3 className="text-white text-[18px] sm:text-[20px] font-medium">
-                  {item.title}
-                </h3>
+          {/* GRID */}
+          <div className="grid w-full grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 xl:grid-cols-4">
+            {contacts.map((item, i) => (
+              <article
+                key={i}
+                className="group w-full max-w-[362px] h-[262px] bg-[#1B1A1A] transition-colors duration-300 hover:bg-[#222]"
+              >
+                <div className="flex h-full flex-col items-center px-6 pt-[30px]">
+                  
+                  {/* ICON */}
+                  <div className="flex h-[70px] w-[70px] items-center justify-center ">
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      width={item.size || 32}
+                      height={item.size || 32}
+                      className="object-contain"
+                    />
+                  </div>
 
-                <p className="text-white/60 text-[13px] sm:text-[14px] tracking-[0.02em]">
-                  {item.email}
-                </p>
-              </div>
-            </div>
-          ))}
+                  {/* TEXT */}
+                  <div className="mt-[50px] flex flex-col items-center gap-[24px] text-center">
+                    <h3
+                      className="font-poppins text-white"
+                      style={{
+                        fontSize: "24px",
+                        lineHeight: "36px",
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+
+                    <p
+                      className="font-poppins text-white/60"
+                      style={{
+                        fontSize: "16px",
+                        lineHeight: "24px",
+                        letterSpacing: "0.02em",
+                      }}
+                    >
+                      {item.email}
+                    </p>
+                  </div>
+
+                </div>
+              </article>
+            ))}
+          </div>
 
         </div>
       </div>

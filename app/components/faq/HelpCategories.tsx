@@ -1,62 +1,130 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
-const items = [
-  { title: "Products", subtitle: "11 Categories | 12 Articles" },
-  { title: "How-to", subtitle: "5 Articles" },
-  { title: "Shipping", subtitle: "8 Articles" },
-  { title: "Orders", subtitle: "17 Articles" },
-  { title: "Partnerships", subtitle: "3 categories" },
-  { title: "B2B", subtitle: "8 Articles" },
-  { title: "Klarna", subtitle: "7 Articles" },
-  { title: "Zen Circle", subtitle: "4 categories 12 articles" },
+type Item = {
+  title: string;
+  subtitle: string;
+  icon: string; // 🔥 بدل ReactNode → path
+};
+
+const items: Item[] = [
+  {
+    title: "Products",
+    subtitle: "11 Categories | 12 Articles",
+    icon: "/icons/products.svg",
+  },
+  {
+    title: "How-to",
+    subtitle: "5 Articles",
+    icon: "/icons/howto.svg",
+  },
+  {
+    title: "Shipping",
+    subtitle: "8 Articles",
+    icon: "/icons/shipping.svg",
+  },
+  {
+    title: "Orders",
+    subtitle: "17 Articles",
+    icon: "/icons/orders.svg",
+  },
+  {
+    title: "Partnerships",
+    subtitle: "3 categories",
+    icon: "/icons/partnerships.svg",
+  },
+  {
+    title: "B2B",
+    subtitle: "8 Articles",
+    icon: "/icons/b2b.svg",
+  },
+  {
+    title: "Klarna",
+    subtitle: "7 Articles",
+    icon: "/icons/klarna.svg",
+  },
+  {
+    title: "Zen Circle",
+    subtitle: "4 categories 12 articles",
+    icon: "/icons/zen.svg",
+  },
 ];
 
 export default function HelpCategories() {
   return (
-    <section className="w-full flex justify-center py-16 sm:py-20 lg:py-24">
-      <div className="w-full max-w-[1400px] px-4">
-
+    <section className="w-full flex justify-center py-[80px] lg:py-[120px]">
+      <div className="w-full max-w-[1520px] px-4 sm:px-6 lg:px-0">
         {/* TITLE */}
-        <h2
-          className="text-center font-montserrat font-[700] uppercase bg-clip-text text-transparent mb-12 sm:mb-16"
-          style={{
-            backgroundImage:
-              "linear-gradient(90deg, #FFFFFF 63.39%, rgba(62,62,62,0.21) 143.55%)",
-            fontSize: "clamp(24px, 4vw, 48px)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          How we can help you
-        </h2>
+        <div className="flex justify-center">
+          <h2
+            className="text-center font-montserrat font-[700] uppercase bg-clip-text text-transparent"
+            style={{
+              width: "min(695px, 100%)",
+              backgroundImage:
+                "linear-gradient(90deg, #FFFFFF 63.39%, rgba(62, 62, 62, 0.21) 143.55%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              fontSize: "clamp(30px, 5vw, 64px)",
+              lineHeight: "1.875",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            How we can help you
+          </h2>
+        </div>
 
         {/* GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
+        <div className="mt-[56px] grid grid-cols-1 justify-items-center gap-[24px] sm:grid-cols-2 xl:grid-cols-4">
           {items.map((item, i) => (
-            <div
+            <article
               key={i}
-              className="bg-[#1B1A1A] rounded-[12px] h-[200px] sm:h-[220px] flex flex-col items-center justify-center gap-5 hover:bg-[#222] transition cursor-pointer"
+              className="group w-full max-w-[362px] h-[232px] bg-[#1B1A1A] transition-colors duration-300 hover:bg-[#222222]"
             >
-              {/* ICON */}
-              <div className="w-[60px] h-[60px] rounded-full border border-[#845CF2] flex items-center justify-center">
-                <div className="w-[24px] h-[24px] bg-[#845CF2] rounded-sm" />
-              </div>
+              <div className="flex h-full flex-col items-center justify-center px-6 text-center">
+                
+                {/* ICON */}
+                <div className="mb-[24px] flex h-[70px] w-[70px] items-center justify-center">
+                  <Image
+                    src={item.icon}
+                    alt={item.title}
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
 
-              {/* TEXT */}
-              <div className="flex flex-col items-center text-center gap-2">
-                <h3 className="text-white text-[18px] sm:text-[20px] font-medium">
-                  {item.title}
-                </h3>
+                {/* TEXT */}
+                <div className="flex flex-col items-center gap-[24px]">
+                  <h3
+                    className="text-white font-poppins font-normal"
+                    style={{
+                      fontSize: "24px",
+                      lineHeight: "36px",
+                      textAlign: "center",
+                    }}
+                  >
+                    {item.title}
+                  </h3>
 
-                <p className="text-white/60 text-[13px] sm:text-[14px] tracking-[0.02em]">
-                  {item.subtitle}
-                </p>
+                  <p
+                    className="font-poppins font-normal text-white/60"
+                    style={{
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      letterSpacing: "0.02em",
+                      textAlign: "center",
+                    }}
+                  >
+                    {item.subtitle}
+                  </p>
+                </div>
+
               </div>
-            </div>
+            </article>
           ))}
-
         </div>
       </div>
     </section>
