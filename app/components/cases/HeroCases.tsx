@@ -13,7 +13,8 @@ export default function ShopHero(): JSX.Element {
           ========================= */}
       <div className="relative mx-auto block min-h-[650px] w-full max-w-[1440px] xl:hidden">
         {/* text block */}
-<div className="absolute left-1/2 -translate-x-1/2 top-[86px] flex flex-col items-center gap-[30px] w-[353px]">          <div className="flex h-[140px] w-[353px] flex-col items-start gap-2 self-stretch">
+        <div className="absolute left-1/2 top-[86px] flex w-[353px] -translate-x-1/2 flex-col items-center gap-[30px]">
+          <div className="flex h-[140px] w-[353px] flex-col items-start gap-2 self-stretch">
             <h1 className="w-[353px] bg-[linear-gradient(93.31deg,#FFFFFF_40.77%,#98979C_83.66%)] bg-clip-text text-center font-[Montserrat] text-[32px] font-bold uppercase leading-[42px] tracking-[-0.03em] text-transparent">
               Earplugs for noise sensitivity
             </h1>
@@ -30,7 +31,8 @@ export default function ShopHero(): JSX.Element {
         </div>
 
         {/* image + labels */}
-<div className="absolute left-1/2 -translate-x-1/2 top-[334px] h-[269px] w-[352px]">          <div className="absolute left-1/2 top-0 h-[269px] w-[269px] -translate-x-1/2">
+        <div className="absolute left-1/2 top-[334px] h-[269px] w-[352px] -translate-x-1/2">
+          <div className="absolute left-1/2 top-0 h-[269px] w-[269px] -translate-x-1/2">
             <Image
               src="/use-cases/earplugs.png"
               alt="Earplugs"
@@ -53,27 +55,27 @@ export default function ShopHero(): JSX.Element {
       {/* =========================
           DESKTOP XL+
           ========================= */}
-      <div className="mx-auto hidden min-h-[860px] w-full max-w-[1440px] px-16 xl:flex xl:items-center xl:justify-between">
+      <div className="mx-auto hidden min-h-[700px] w-full max-w-[1280px] px-10 xl:flex xl:items-center xl:justify-between">
         {/* left content */}
-        <div className="relative z-10 max-w-[560px]">
-          <h1 className="bg-gradient-to-r from-white via-white to-[#98979C] bg-clip-text text-[88px] font-bold uppercase leading-[1.08] tracking-[-0.03em] text-transparent">
+        <div className="relative z-10 max-w-[470px]">
+          <h1 className="bg-gradient-to-r from-white via-white to-[#98979C] bg-clip-text text-[72px] font-bold uppercase leading-[1.04] tracking-[-0.03em] text-transparent">
             Earplugs for
             <br />
             Noise Sensitivity
           </h1>
 
-          <p className="mt-6 max-w-[470px] text-[20px] leading-[36px] text-white/60">
+          <p className="mt-5 max-w-[390px] text-[18px] leading-[30px] text-white/60">
             Earplugs with noise reduction, designed for noise sensitivity and all
             day comfort
           </p>
 
-          <button className="mt-8 h-[64px] w-[313px] rounded-[40px] bg-[#845CF2] text-[20px] font-semibold text-white">
+          <button className="mt-7 h-[56px] w-[260px] rounded-[40px] bg-[#845CF2] text-[18px] font-semibold text-white">
             Explore Products
           </button>
         </div>
 
         {/* right image */}
-        <div className="relative h-[620px] w-[760px]">
+        <div className="relative h-[500px] w-[600px]">
           <Image
             src="/use-cases/earplugs.png"
             alt="Earplugs"
@@ -83,17 +85,17 @@ export default function ShopHero(): JSX.Element {
           />
 
           {/* top callout */}
-          <div className="absolute right-[-24%] top-[10%] flex items-center gap-4">
-            <div className="w-[190px] border-t border-dashed border-white/35" />
-            <span className="whitespace-nowrap bg-gradient-to-r from-white to-[#7D7D7D] bg-clip-text text-[16px] text-transparent">
+          <div className="absolute right-[-14%] top-[12%] flex items-center gap-3">
+            <div className="w-[140px] border-t border-dashed border-white/35" />
+            <span className="whitespace-nowrap bg-gradient-to-r from-white to-[#7D7D7D] bg-clip-text text-[14px] text-transparent">
               12hrs comfortable wear
             </span>
           </div>
 
           {/* bottom callout */}
-          <div className="absolute right-[-26%] top-[40%] flex items-center gap-4">
-            <div className="w-[420px] border-t border-dashed border-white/35" />
-            <span className="whitespace-nowrap bg-gradient-to-r from-white to-[#7D7D7D] bg-clip-text text-[16px] text-transparent">
+          <div className="absolute right-[-16%] top-[42%] flex items-center gap-3">
+            <div className="w-[300px] border-t border-dashed border-white/35" />
+            <span className="whitespace-nowrap bg-gradient-to-r from-white to-[#7D7D7D] bg-clip-text text-[14px] text-transparent">
               25 DB Noise Cancellation
             </span>
           </div>
