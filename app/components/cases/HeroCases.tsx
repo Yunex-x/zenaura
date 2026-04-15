@@ -15,7 +15,7 @@ export default function ShopHero(): JSX.Element {
         {/* text block */}
         <div className="absolute left-1/2 top-[86px] flex w-[353px] -translate-x-1/2 flex-col items-center gap-[30px]">
           <div className="flex h-[140px] w-[353px] flex-col items-start gap-2 self-stretch">
-            <h1 className="w-[353px] bg-[linear-gradient(93.31deg,#FFFFFF_40.77%,#98979C_83.66%)] bg-clip-text text-center font-[Montserrat] text-[32px] font-bold uppercase leading-[42px] tracking-[-0.03em] text-transparent">
+            <h1 className="w-[353px] bg-[linear-gradient(93.31deg,#FFFFFF_40.77%,#98979C_83.66%)] bg-clip-text text-center font-[Montserrat] text-[32px] font-bold uppercase leading-[42px] tracking-[0.03em] text-transparent">
               Earplugs for noise sensitivity
             </h1>
 
@@ -55,21 +55,23 @@ export default function ShopHero(): JSX.Element {
       {/* =========================
           DESKTOP XL+
           ========================= */}
-      <div className="mx-auto hidden min-h-[700px] w-full max-w-[1280px] px-10 xl:flex xl:items-center xl:justify-between">
+      <div className="mx-auto hidden min-h-[700px] whitespace-nowrap w-full max-w-[1280px] px-10 xl:flex xl:items-center xl:justify-between">
         {/* left content */}
-        <div className="relative z-10 max-w-[470px]">
-          <h1 className="bg-gradient-to-r from-white via-white to-[#98979C] bg-clip-text text-[72px] font-bold uppercase leading-[1.04] tracking-[-0.03em] text-transparent">
+        <div className="relative z-10 max-w-[580px]">
+          <h1 className="bg-gradient-to-r from-white via-white to-[#98979C] bg-clip-text text-[58px] font-bold uppercase leading-[1.04] tracking-[0.03em] text-transparent">
             Earplugs for
             <br />
             Noise Sensitivity
           </h1>
 
-          <p className="mt-5 max-w-[390px] text-[18px] leading-[30px] text-white/60">
-            Earplugs with noise reduction, designed for noise sensitivity and all
+          <p className="mt-5 max-w-[390px] text-[18px] mb-8 leading-[30px] text-white/60">
+            Earplugs with noise reduction, designed for 
+            <br />
+            noise sensitivity and all
             day comfort
           </p>
 
-          <button className="mt-7 h-[56px] w-[260px] rounded-[40px] bg-[#845CF2] text-[18px] font-semibold text-white">
+          <button className="mt-16 h-[56px] w-[260px] rounded-[40px] bg-[#845CF2] text-[18px] font-semibold text-white">
             Explore Products
           </button>
         </div>

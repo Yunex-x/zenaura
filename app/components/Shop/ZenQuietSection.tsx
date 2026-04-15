@@ -82,22 +82,36 @@ function ArrowRightSvg() {
   );
 }
 
-function ArrowOutline({ onClick, children }: any) {
+function ArrowOutline({
+  onClick,
+  children,
+}: {
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className="w-[110px] h-[44px] sm:w-[160px] sm:h-[56px] lg:w-[233px] lg:h-[80px] rounded-[89px] border border-white/20 flex items-center justify-center text-white/60 hover:border-white/35 hover:text-white transition"
+      className="flex h-[42px] w-[96px] items-center justify-center rounded-full border border-white/20 text-white/60 transition hover:border-white/35 hover:text-white sm:h-[50px] sm:w-[130px] lg:h-[64px] lg:w-[180px] xl:h-[80px] xl:w-[233px]"
     >
       {children}
     </button>
   );
 }
 
-function ArrowSolid({ onClick, children }: any) {
+function ArrowSolid({
+  onClick,
+  children,
+}: {
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className="w-[110px] h-[44px] sm:w-[160px] sm:h-[56px] lg:w-[233px] lg:h-[80px] rounded-[89px] bg-white flex items-center justify-center text-[#845CF2]"
+      className="flex h-[42px] w-[96px] items-center justify-center rounded-full bg-white text-[#845CF2] transition sm:h-[50px] sm:w-[130px] lg:h-[64px] lg:w-[180px] xl:h-[80px] xl:w-[233px]"
     >
       {children}
     </button>
@@ -105,30 +119,26 @@ function ArrowSolid({ onClick, children }: any) {
 }
 
 export default function QuietSection() {
-  const { index, direction, next, prev, getPosition, isActive } =
-    useCarousel({
-      length: quietProducts.length,
-      initialIndex: 1,
-    });
+  const { index, direction, next, prev, getPosition, isActive } = useCarousel({
+    length: quietProducts.length,
+    initialIndex: 1,
+  });
 
   return (
-    <section className="w-full bg-[#0D0D0D] py-20">
-      <div className="max-w-[1800px] mx-auto px-6 lg:px-12">
-
-        {/* HEADER */}
-        <div className="flex justify-between items-center mb-12">
+    <section className="w-full overflow-x-hidden bg-[#0D0D0D] py-14 sm:py-16 lg:py-20">
+      <div className="mx-auto w-full max-w-[1800px] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
+        <div className="mb-8 flex flex-col gap-5 sm:mb-10 sm:flex-row sm:items-center sm:justify-between lg:mb-12">
           <h2
-            className="font-montserrat font-[700] uppercase bg-clip-text text-transparent"
+            className="font-montserrat bg-clip-text text-[28px] font-[700] uppercase leading-[1.05] text-transparent sm:text-[40px] md:text-[52px] lg:text-[64px]"
             style={{
               backgroundImage:
                 "linear-gradient(93.31deg, #FFFFFF 40.77%, #98979C 83.66%)",
-              fontSize: "clamp(28px,5vw,64px)",
             }}
           >
             Zen Quiet
           </h2>
 
-          <div className="flex gap-4">
+          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
             <ArrowOutline onClick={prev}>
               <ArrowLeftSvg />
             </ArrowOutline>
@@ -139,14 +149,15 @@ export default function QuietSection() {
           </div>
         </div>
 
-        {/* MOBILE */}
-        <div className="lg:hidden flex justify-center">
+        <div className="flex justify-center lg:hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={quietProducts[index].id}
-              initial={{ opacity: 0, x: direction * 60 }}
+              initial={{ opacity: 0, x: direction * 50 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -direction * 60 }}
+              exit={{ opacity: 0, x: -direction * 50 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="w-full max-w-[420px]"
             >
               <LovedCard
                 product={quietProducts[index]}
@@ -157,8 +168,7 @@ export default function QuietSection() {
           </AnimatePresence>
         </div>
 
-        {/* DESKTOP */}
-        <div className="hidden lg:grid grid-cols-4 gap-6">
+        <div className="hidden lg:grid lg:grid-cols-4 lg:gap-5 xl:gap-6">
           {quietProducts.map((p, i) => {
             const active = isActive(i);
 
@@ -166,10 +176,12 @@ export default function QuietSection() {
               <motion.div
                 key={p.id}
                 animate={{
-                  scale: active ? 1.05 : 0.94,
-                  y: active ? -18 : 0,
-                  opacity: active ? 1 : 0.85,
+                  scale: active ? 1.03 : 0.96,
+                  y: active ? -14 : 0,
+                  opacity: active ? 1 : 0.88,
                 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="min-w-0"
               >
                 <LovedCard
                   product={p}

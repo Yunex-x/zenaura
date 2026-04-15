@@ -4,15 +4,17 @@ export default function StatsBar(): JSX.Element {
   return (
     <div
       className="
-        absolute left-3 right-3 sm:left-4 sm:right-4 md:left-[5%] md:right-[5%] lg:left-[5%] lg:right-[5%] xl:left-[200px] xl:right-[200px]
-        bottom-3 sm:bottom-4 md:bottom-6 lg:bottom-[40px] xl:bottom-[60px]
-        bg-[rgba(36,36,36,0.11)]
-        rounded-[12px] sm:rounded-[16px] md:rounded-[20px] lg:rounded-[24px]
-        py-3 sm:py-4 lg:py-0 lg:h-[90px]
-        px-3 sm:px-4 md:px-6
-        z-30
-        flex items-center justify-around
-      "
+  absolute left-2 right-2 sm:left-3 sm:right-3 md:left-[4%] md:right-[4%] lg:left-[4%] lg:right-[4%] xl:left-[160px] xl:right-[160px]
+  bottom-3 sm:bottom-4 md:bottom-6 lg:bottom-[40px] xl:bottom-[60px]
+  border border-white/10 bg-white/8 backdrop-blur-xl supports-[backdrop-filter]:bg-white/1
+  rounded-[12px] sm:rounded-[16px] md:rounded-[20px] lg:rounded-[24px]
+  py-3 sm:py-4 lg:py-0 lg:h-[90px]
+  px-3 sm:px-4 md:px-6
+  shadow-[0_8px_30px_rgba(0,0,0,0.18)]
+  z-30
+  flex items-center justify-around
+"
+      
       role="region"
       aria-label="Statistics"
     >

@@ -20,8 +20,7 @@ export default function Navbar(): JSX.Element {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header className="w-full bg-black">
-      <div className="max-w-[1825px] mx-auto px-4 sm:px-6 lg:px-8">
+<header className="fixed top-0 z-[100] w-full border-b border-white/10 bg-black/30 backdrop-blur-xl supports-[backdrop-filter]:bg-black/20">      <div className="max-w-[1825px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-[48px] md:h-[52px] lg:h-[56px]">
           {/* Left */}
           <div className="flex items-center gap-4">

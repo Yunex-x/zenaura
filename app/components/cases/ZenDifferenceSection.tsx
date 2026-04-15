@@ -12,66 +12,33 @@ const rows = [
 ];
 
 export default function ZenDifferenceSection(): JSX.Element {
-  /* ================= CONTROLS ================= */
-
-  const topImage = {
-    right: "-360px",
-    top: "-240px",
-    width: 650,
-    height: 650,
-  };
-
-  const bottomImage = {
-    left: "-280px",
-    bottom: "-300px",
-    width: 748,
-    height: 748,
-  };
-
-  const table = {
-    padding: "64px",
-    radius: "32px",
-  };
-
-  const gapBetweenCols = "111px";
-
-  const checkGap = "58px";
-
-  /* =========================================== */
-
   return (
-    <section className="w-full bg-black py-16 lg:py-24 overflow-hidden">
-      <div className="mx-auto w-full max-w-[1920px] mb-16 px-5 md:px-8 lg:px-[150px]">
-        <div className="relative mx-auto max-w-[1262px]">
-          
+    <section className="w-full overflow-hidden bg-black py-14 md:py-16 lg:py-20">
+      <div className="mx-auto w-full max-w-[1440px] px-4 md:px-6 lg:px-10 xl:px-16">
+        <div className="relative mx-auto max-w-[1180px]">
           {/* TITLE */}
-          <h2 className="
-            text-center
-            font-bold tracking-[0.02em]
-
-            text-[36px] leading-[44px]
-            md:text-[48px] md:leading-[58px]
-            lg:text-[64px] lg:leading-[76px]
-
-            bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)]
-            bg-clip-text text-transparent
-          ">
+          <h2
+            className="
+              text-center font-bold tracking-[-0.02em]
+              text-[28px] leading-[1.15]
+              md:text-[40px] md:leading-[1.15]
+              lg:text-[52px] lg:leading-[1.12]
+              xl:text-[58px] xl:leading-[1.1]
+              bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)]
+              bg-clip-text text-transparent
+            "
+          >
             The Zen Difference
           </h2>
 
-          {/* WRAPPER (images tied here) */}
-          <div className="relative mt-10 lg:mt-[88px]">
+          <div className="relative mt-8 md:mt-10 lg:mt-14">
+            {/* =======================
+                DECORATIVE IMAGES
+                always behind table
+                ======================= */}
 
-            {/* ===== TOP RIGHT IMAGE ===== */}
-            <div
-              className="absolute hidden lg:block pointer-events-none"
-              style={{
-                right: topImage.right,
-                top: topImage.top,
-                width: topImage.width,
-                height: topImage.height,
-              }}
-            >
+            {/* top right */}
+            <div className="pointer-events-none absolute -right-[18px] -top-[42px] z-0 h-[90px] w-[90px] sm:h-[100px] sm:w-[100px] lg:-right-[110px] lg:-top-[90px] lg:h-[210px] lg:w-[210px] xl:-right-[130px] xl:-top-[110px] xl:h-[250px] xl:w-[250px]">
               <Image
                 src="/use-cases/zen-diff-top.png"
                 alt=""
@@ -80,50 +47,99 @@ export default function ZenDifferenceSection(): JSX.Element {
               />
             </div>
 
-            {/* ===== BOTTOM LEFT IMAGE ===== */}
-            <div
-              className="absolute hidden lg:block pointer-events-none"
-              style={{
-                left: bottomImage.left,
-                bottom: bottomImage.bottom,
-                width: bottomImage.width,
-                height: bottomImage.height,
-              }}
-            >
+            {/* bottom left */}
+            <div className="pointer-events-none absolute -bottom-[34px] -left-[28px] z-0 h-[70px] w-[70px] sm:h-[80px] sm:w-[80px] lg:-bottom-[70px] lg:-left-[55px] lg:h-[110px] lg:w-[110px] xl:-bottom-[90px] xl:-left-[70px] xl:h-[140px] xl:w-[140px]">
               <Image
                 src="/use-cases/zen-diff-bottom.png"
                 alt=""
                 fill
-                className="object-contain "
+                className="object-contain"
               />
             </div>
 
-            {/* ===== TABLE ===== */}
-            <div
-              className="relative z-20 bg-[#1B1A1A]"
-              style={{
-                borderRadius: table.radius,
-                padding: table.padding,
-              }}
-            >
-              <div
-                className="hidden lg:grid"
-                style={{
-                  gridTemplateColumns: "411px 300px 160px",
-                  columnGap: gapBetweenCols,
-                }}
-              >
+            {/* =======================
+                MOBILE / TABLET
+                ======================= */}
+            <div className="relative z-20 rounded-[16px] bg-[#1B1A1A] px-3 pb-4 pt-12 sm:px-4 lg:hidden">
+              {/* headers */}
+              <div className="absolute left-3 right-3 top-4 z-30 grid grid-cols-[1fr_98px_76px] items-center sm:left-4 sm:right-4">
+                <div className="bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)] bg-clip-text font-['Space_Grotesk'] text-[14px] font-medium tracking-[-0.02em] text-transparent sm:text-[15px]">
+                  Features
+                </div>
+
+                <div className="text-center bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)] bg-clip-text font-['Space_Grotesk'] text-[14px] font-medium tracking-[-0.02em] text-transparent sm:text-[15px]">
+                  The Zen
+                </div>
+
+                <div className="text-center bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)] bg-clip-text font-['Space_Grotesk'] text-[14px] font-medium tracking-[-0.02em] text-transparent sm:text-[15px]">
+                  Foamies
+                </div>
+              </div>
+
+              <div className="relative z-20 grid grid-cols-[1fr_98px_76px] gap-0">
+                {/* purple middle column background */}
+                <div className="pointer-events-none absolute bottom-0 left-[calc(100%-174px)] top-0 z-0 w-[98px] rounded-[16px] bg-[#845CF2]/[0.04]" />
+
+                {rows.map((row, index) => (
+                  <div key={row} className="contents">
+                    {/* feature text */}
+                    <div
+                      className={`relative z-20 flex min-h-[62px] items-center border-b border-[rgba(93,93,93,0.16)] pr-3 ${
+                        index === rows.length - 1 ? "border-b-0" : ""
+                      }`}
+                    >
+                      <p className="max-w-[132px] font-[Poppins] text-[14px] font-medium leading-[22px] text-white sm:max-w-[160px]">
+                        {row}
+                      </p>
+                    </div>
+
+                    {/* zen check */}
+                    <div
+                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${
+                        index === rows.length - 1 ? "border-b-0" : ""
+                      }`}
+                    >
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#882EFF]">
+                        <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />
+                      </div>
+                    </div>
+
+                    {/* foamies check */}
+                    <div
+                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${
+                        index === rows.length - 1 ? "border-b-0" : ""
+                      }`}
+                    >
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
+                        <Check
+                          className="h-3.5 w-3.5 text-black/60"
+                          strokeWidth={3}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* =======================
+                DESKTOP LG / XL
+                ======================= */}
+            <div className="relative z-20 hidden rounded-[24px] bg-[#1B1A1A] px-8 py-8 lg:block xl:rounded-[28px] xl:px-10 xl:py-10">
+              <div className="grid grid-cols-[minmax(320px,1fr)_220px_120px] gap-8 xl:grid-cols-[minmax(360px,1fr)_250px_140px] xl:gap-10">
                 {/* LEFT */}
-                <div className="flex flex-col gap-[64px]">
-                  <h3 className="text-[32px] leading-[44px] bg-gradient-to-r from-white to-[#3E3E3E] bg-clip-text text-transparent">
+                <div>
+                  <h3 className="bg-gradient-to-r from-white to-[#3E3E3E] bg-clip-text text-[22px] leading-[1.2] text-transparent xl:text-[26px]">
                     The Zen Difference
                   </h3>
 
-                  <div className="flex flex-col gap-[32px]">
-                    {rows.map((row) => (
+                  <div className="mt-8 flex flex-col gap-0 xl:mt-10">
+                    {rows.map((row, index) => (
                       <div
                         key={row}
-                        className="border-b border-black/20 pb-4 text-[24px] font-semibold text-white"
+                        className={`border-b border-black/20 py-5 text-[18px] font-semibold text-white xl:py-6 xl:text-[20px] ${
+                          index === rows.length - 1 ? "border-b-0 pb-0" : ""
+                        }`}
                       >
                         {row}
                       </div>
@@ -133,21 +149,18 @@ export default function ZenDifferenceSection(): JSX.Element {
 
                 {/* MIDDLE */}
                 <div>
-                  <h3 className="text-center text-[32px] bg-gradient-to-r from-white to-[#3E3E3E] bg-clip-text text-transparent">
+                  <h3 className="text-center bg-gradient-to-r from-white to-[#3E3E3E] bg-clip-text text-[22px] leading-[1.2] text-transparent xl:text-[26px]">
                     The Zen Difference
                   </h3>
 
-                  <div className="mt-10 rounded-[16px] bg-[#845CF2]/5 py-6">
-                    <div
-                      className="flex flex-col items-center"
-                      style={{ gap: checkGap }}
-                    >
+                  <div className="mt-8 rounded-[16px] bg-[#845CF2]/5 py-6 xl:mt-10 xl:py-7">
+                    <div className="flex flex-col items-center gap-[36px] xl:gap-[40px]">
                       {rows.map((row) => (
                         <div
                           key={row}
-                          className="flex h-8 w-8 items-center justify-center rounded-full bg-[#882EFF]"
+                          className="flex h-7 w-7 items-center justify-center rounded-full bg-[#882EFF] xl:h-8 xl:w-8"
                         >
-                          <Check className="h-4 w-4 text-black" />
+                          <Check className="h-3.5 w-3.5 text-black xl:h-4 xl:w-4" />
                         </div>
                       ))}
                     </div>
@@ -156,47 +169,26 @@ export default function ZenDifferenceSection(): JSX.Element {
 
                 {/* RIGHT */}
                 <div>
-                  <h3 className="text-center text-[32px] bg-gradient-to-r from-white to-[#3E3E3E] bg-clip-text text-transparent">
+                  <h3 className="text-center bg-gradient-to-r from-white to-[#3E3E3E] bg-clip-text text-[22px] leading-[1.2] text-transparent xl:text-[26px]">
                     Foamies
                   </h3>
 
-                  <div className="mt-10">
-                    <div
-                      className="flex flex-col items-center"
-                      style={{ gap: checkGap }}
-                    >
+                  <div className="mt-8 xl:mt-10">
+                    <div className="flex flex-col items-center gap-[36px] xl:gap-[40px]">
                       {rows.map((row) => (
                         <div
                           key={row}
-                          className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20"
+                          className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 xl:h-8 xl:w-8"
                         >
-                          <Check className="h-4 w-4 text-black/60" />
+                          <Check className="h-3.5 w-3.5 text-black/60 xl:h-4 xl:w-4" />
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* MOBILE VERSION */}
-              <div className="grid grid-cols-[1fr_60px_60px] gap-4 lg:hidden">
-                {rows.map((row) => (
-                  <div key={row} className="contents">
-                    <div className="border-b border-black/20 py-3 text-[16px] text-white">
-                      {row}
-                    </div>
-
-                    <div className="flex items-center justify-center border-b border-black/20">
-                      <div className="h-6 w-6 rounded-full bg-[#882EFF]" />
-                    </div>
-
-                    <div className="flex items-center justify-center border-b border-black/20">
-                      <div className="h-6 w-6 rounded-full bg-white/20" />
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
+            {/* end desktop */}
           </div>
         </div>
       </div>

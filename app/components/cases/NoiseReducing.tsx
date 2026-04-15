@@ -28,13 +28,15 @@ export default function ZenQuietSection(): JSX.Element {
 
           sm:max-w-[420px] sm:text-[32px] sm:leading-[42px]
 
-          md:max-w-[520px] md:text-[44px] md:leading-[54px]
+          md:max-w-[520px] md:text-[34px] md:leading-[54px]
 
-          lg:max-w-[700px] lg:text-[56px] lg:leading-[70px]
+          lg:max-w-[700px] lg:text-[46px] lg:leading-[60px]
 
-          xl:max-w-[786px] xl:text-[64px] xl:leading-[84px]
+          xl:max-w-[786px] xl:text-[44px] xl:leading-[64px]
         ">
-          Noise-reducing earplugs for sensitive hearing
+          Noise-reducing earplugs
+          <br />
+           for sensitive hearing
         </h2>
 
         {/* Content */}
@@ -84,17 +86,17 @@ export default function ZenQuietSection(): JSX.Element {
 
   text-[15px] leading-[24px]
   text-white/80
-
+-mt-16
   sm:text-[16px] sm:leading-[26px]
 
   md:text-[18px] md:leading-[30px]
 
-  lg:text-[22px] lg:leading-[34px]
+  lg:text-[22px] lg:leading-[39px]
 
-  xl:text-[28px] xl:leading-[42px]
+  xl:text-[28px] xl:leading-[48px]
 "
 >
-  <span className="text-white font-medium">
+  <span className="text-white font-medium ">
     The world is full of noise—from conversations
   </span>{" "}
   and commutes to traffic, cafés, and parks. For people sensitive to

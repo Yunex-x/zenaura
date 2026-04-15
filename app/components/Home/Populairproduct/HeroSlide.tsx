@@ -104,74 +104,69 @@ export default function HeroSlide({ product, direction }: Props) {
         custom={direction}
       >
         {/* Title — split into lines for staggered entrance */}
-        <motion.h1
-          custom={direction}
-          variants={textItemVariants}
-          className="font-montserrat font-[700] text-white tracking-[0.02em] whitespace-pre-line"
-          style={{
-            fontSize: "clamp(28px, 4.5vw, 72px)",
-            lineHeight: "1.15",
-          }}
-        >
-          {product.title}
-        </motion.h1>
+<motion.h1
+  custom={direction}
+  variants={textItemVariants}
+  className="
+    font-montserrat
+    font-[600]
+    whitespace-pre-line
+    tracking-[-0.02em]
+    bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)]
+    bg-clip-text
+    text-transparent
+    max-w-[589px]
+  "
+  style={{
+    fontSize: "clamp(34px, 4.1vw, 64px)",
+    lineHeight: "clamp(42px, 4.8vw, 78px)",
+  }}
+>
+  {product.title}
+</motion.h1>
 
-        {product.subtitle && (
-          <motion.p
-            custom={direction}
-            variants={textItemVariants}
-            className="mt-4 sm:mt-5 lg:mt-6 font-poppins text-white/70 max-w-[540px]"
-            style={{
-              fontSize: "clamp(14px, 1.4vw, 18px)",
-              lineHeight: "1.65",
-            }}
-          >
-            {product.subtitle}
-          </motion.p>
-        )}
 
-        {product.description && (
-          <motion.p
-            custom={direction}
-            variants={textItemVariants}
-            className="mt-4 lg:mt-6 font-poppins text-white/60 max-w-[520px]"
-            style={{
-              fontSize: "clamp(13px, 1.2vw, 16px)",
-              lineHeight: "1.75",
-            }}
-          >
-            {product.description}
-          </motion.p>
-        )}
-
+{product.subtitle && (
+  <motion.p
+    custom={direction}
+    variants={textItemVariants}
+className="mt-4 sm:mt-5 lg:mt-6 font-poppins text-white/70 max-w-[760px]"style={{
+  fontSize: "18px",
+  lineHeight: "44px",
+  letterSpacing: "0.02em",
+}}  >
+    {product.subtitle}
+  </motion.p>
+)}
         {/* CTA — springs in with glow */}
         <motion.div
           variants={ctaVariants}
           initial="hidden"
           animate="visible"
-          className="mt-6 sm:mt-7 lg:mt-8"
+          className="mt-6 sm:mt-7 lg:mt-16 mb-[150px]"
         >
-          <motion.a
-            href="#buy"
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 40px rgba(132,92,242,0.5), 0 0 80px rgba(132,92,242,0.2)",
-            }}
-            whileTap={{ scale: 0.96 }}
-            className="
-              inline-block bg-[#845CF2] text-white
-              font-montserrat font-[700]
-              rounded-[36px]
-              shadow-[0_0_20px_rgba(132,92,242,0.25)]
-              transition-shadow duration-300
-            "
-            style={{
-              fontSize: "clamp(14px, 1.3vw, 16px)",
-              padding: "clamp(12px, 1.3vw, 16px) clamp(24px, 2.8vw, 32px)",
-            }}
-          >
-            {product.ctaLabel ?? "Buy Now"}
-          </motion.a>
+ <motion.a
+  href="#buy"
+  whileHover={{ scale: 1.03 }}
+  whileTap={{ scale: 0.97 }}
+  className="
+    inline-flex items-center justify-center
+    rounded-full
+    font-montserrat font-[700]
+    text-white
+    bg-[linear-gradient(90deg,#9667FF_0%,#7B5AF5_100%)]
+    shadow-[0_8px_24px_rgba(132,92,242,0.28)]
+    transition-all duration-300
+  "
+  style={{
+    width: "clamp(180px, 14vw, 211px)",
+    height: "clamp(58px, 4.8vw, 68px)",
+    fontSize: "clamp(18px, 1.7vw, 22px)",
+    lineHeight: "1",
+  }}
+>
+  Buy Now
+</motion.a>
         </motion.div>
       </motion.div>
 

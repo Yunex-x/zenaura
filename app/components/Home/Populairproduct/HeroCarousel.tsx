@@ -123,12 +123,12 @@ export default function HeroCarousel(): JSX.Element {
       {/* Controls — ExploreMore style */}
       <div
         className="
-          relative md:absolute md:left-0 lg:left-2 md:bottom-6 lg:bottom-10
-          mt-4 sm:mt-5 md:mt-0
-          flex items-center justify-center md:justify-start
-          gap-3 sm:gap-4 lg:gap-5
-          z-40 w-full md:w-auto
-        "
+  relative md:absolute md:left-0 lg:left-12 md:bottom-2 lg:bottom-4 xl:bottom-6
+  mt-6 sm:mt-7 md:mt-0
+  flex items-center justify-center md:justify-start
+  gap-3 sm:gap-4 lg:gap-5
+  z-40 w-full md:w-auto
+"
       >
         <motion.button
           aria-label="Previous product"
