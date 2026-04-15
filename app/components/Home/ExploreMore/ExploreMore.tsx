@@ -152,13 +152,13 @@ export default function ExploreMore(): JSX.Element {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6">
           <div>
             <h2
-              className="text-white font-semibold tracking-[-0.02em]"
+              className="text-white font-semibold tracking-[0.02em]"
               style={{ fontSize: "clamp(28px, 4.2vw, 58px)", lineHeight: "1.15" }}
             >
               Explore more
             </h2>
             <h3
-              className="mt-1 sm:mt-2 font-semibold tracking-[-0.02em]"
+              className="mt-1 sm:mt-2 font-semibold tracking-[0.02em]"
               style={{ fontSize: "clamp(28px, 4.2vw, 58px)", lineHeight: "1.15" }}
             >
               <span className="text-white">ZENAURA</span>{" "}

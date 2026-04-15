@@ -10,7 +10,7 @@ export default function HeroHeading(): JSX.Element {
         w-[92%] max-w-[1280px] px-3 sm:px-4
         top-[100px] sm:top-[140px] md:top-[170px] lg:top-[218px]
         text-[clamp(32px,8vw,120px)] leading-[1.05]
-        tracking-[-0.03em]
+        tracking-[0.03em]
       "
       style={{
         background: "linear-gradient(93.31deg, #FFFFFF 40.77%, #98979C 83.66%)",

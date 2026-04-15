@@ -59,7 +59,7 @@ export default function ProductCard(): JSX.Element {
               bg-white text-[#1B1A1A]
               rounded-full
               text-[13px] lg:text-[14px] font-[600] uppercase
-              tracking-[-0.04em]
+              tracking-[0.04em]
               shadow-sm whitespace-nowrap
             "
             aria-label="Buy now"

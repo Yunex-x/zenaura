@@ -44,7 +44,7 @@ export default function FeatureStat({
       <div className="mt-3 sm:mt-4 lg:mt-5">
         {/* Title — Figma: Montserrat 600, 32px, tracking -0.03em */}
         <div
-          className="font-montserrat font-semibold text-white tracking-[-0.03em]"
+          className="font-montserrat font-semibold text-white tracking-[0.03em]"
           style={{
             fontSize: "clamp(18px, 2.2vw, 32px)",
             lineHeight: "1.22",
@@ -56,7 +56,7 @@ export default function FeatureStat({
         {/* Subtitle — Figma: Montserrat 400, 14px, tracking -0.01em, white/60 */}
         {subtitle && (
           <div
-            className="mt-2 sm:mt-2.5 lg:mt-3 font-montserrat font-normal text-white/60 tracking-[-0.01em]"
+            className="mt-2 sm:mt-2.5 lg:mt-3 font-montserrat font-normal text-white/60 tracking-[0.01em]"
             style={{
               fontSize: "clamp(12px, 1.1vw, 14px)",
               lineHeight: "1.43",

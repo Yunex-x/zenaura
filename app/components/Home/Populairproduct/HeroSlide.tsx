@@ -107,7 +107,7 @@ export default function HeroSlide({ product, direction }: Props) {
         <motion.h1
           custom={direction}
           variants={textItemVariants}
-          className="font-montserrat font-[700] text-white tracking-[-0.02em] whitespace-pre-line"
+          className="font-montserrat font-[700] text-white tracking-[0.02em] whitespace-pre-line"
           style={{
             fontSize: "clamp(28px, 4.5vw, 72px)",
             lineHeight: "1.15",

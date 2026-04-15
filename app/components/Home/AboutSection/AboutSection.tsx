@@ -97,7 +97,7 @@ export default function AboutSection(): JSX.Element {
             left-[848px] top-[200px]
             w-[590px]
             font-montserrat font-semibold
-            tracking-[-0.02em]
+            tracking-[0.02em]
             text-[64px] leading-[120px]
             bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)]
             bg-clip-text text-transparent
@@ -113,7 +113,7 @@ export default function AboutSection(): JSX.Element {
             left-[848px] top-[343px]
             w-[856px] h-[244px]
             font-montserrat font-medium
-            tracking-[-0.01em]
+            tracking-[0.01em]
             text-[40px] leading-[54px]
             text-white
           "

@@ -56,7 +56,7 @@ export default function McLarenSection(): JSX.Element {
             font-bold
             text-[64px]
             leading-[77px]
-            tracking-[-0.02em]
+            tracking-[0.02em]
 
             bg-gradient-to-r from-white to-[#7D7D7D]
             bg-clip-text

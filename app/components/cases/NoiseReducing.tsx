@@ -23,7 +23,7 @@ export default function ZenQuietSection(): JSX.Element {
           text-[28px]
           font-semibold
           leading-[36px]
-          tracking-[-0.02em]
+          tracking-[0.02em]
           text-transparent
 
           sm:max-w-[420px] sm:text-[32px] sm:leading-[42px]

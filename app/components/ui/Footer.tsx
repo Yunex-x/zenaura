@@ -79,7 +79,7 @@ export default function Footer(): JSX.Element {
           <span
             className="
               select-none whitespace-nowrap font-space-grotesk font-bold uppercase
-              leading-none tracking-[-0.04em] text-white/[0.035]
+              leading-none tracking-[0.04em] text-white/[0.035]
               text-[56px]
               min-[420px]:text-[68px]
               sm:text-[86px]
@@ -142,7 +142,7 @@ export default function Footer(): JSX.Element {
                     </div>
 
                     <p
-                      className="mb-8 max-w-[380px] font-space-grotesk font-medium uppercase leading-[1.2] tracking-[-0.01em] text-white/60 sm:mb-10 lg:mb-14"
+                      className="mb-8 max-w-[380px] font-space-grotesk font-medium uppercase leading-[1.2] tracking-[0.01em] text-white/60 sm:mb-10 lg:mb-14"
                       style={{ fontSize: "clamp(14px, 1.2vw, 16px)" }}
                     >
                       Premium earplugs for life&apos;s loud moments.
@@ -194,7 +194,7 @@ export default function Footer(): JSX.Element {
                       {footerLinks.map((group) => (
                         <div key={group.title}>
                           <h3
-                            className="mb-4 font-space-grotesk font-bold uppercase leading-none tracking-[-0.01em] text-white sm:mb-6 lg:mb-8"
+                            className="mb-4 font-space-grotesk font-bold uppercase leading-none tracking-[0.01em] text-white sm:mb-6 lg:mb-8"
                             style={{ fontSize: "clamp(18px, 1.6vw, 24px)" }}
                           >
                             {group.title}
@@ -205,7 +205,7 @@ export default function Footer(): JSX.Element {
                               <li key={link}>
                                 <a
                                   href="#"
-                                  className="font-space-grotesk font-medium tracking-[-0.01em] text-white/60 transition hover:text-white"
+                                  className="font-space-grotesk font-medium tracking-[0.01em] text-white/60 transition hover:text-white"
                                   style={{
                                     fontSize: "clamp(15px, 1.3vw, 20px)",
                                     lineHeight: "1.35",
@@ -226,7 +226,7 @@ export default function Footer(): JSX.Element {
 
                 <div className="flex flex-col gap-3 py-4 sm:py-5 md:flex-row md:items-center md:justify-between">
                   <p
-                    className="font-space-grotesk font-medium tracking-[-0.01em] text-white/40"
+                    className="font-space-grotesk font-medium tracking-[0.01em] text-white/40"
                     style={{
                       fontSize: "clamp(12px, 1.1vw, 16px)",
                       lineHeight: "1.8",
@@ -240,7 +240,7 @@ export default function Footer(): JSX.Element {
                       <a
                         key={label}
                         href="#"
-                        className="font-space-grotesk font-medium tracking-[-0.01em] text-white/40 transition hover:text-white"
+                        className="font-space-grotesk font-medium tracking-[0.01em] text-white/40 transition hover:text-white"
                         style={{
                           fontSize: "clamp(12px, 1.1vw, 16px)",
                           lineHeight: "1.8",

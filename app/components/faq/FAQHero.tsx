@@ -25,7 +25,7 @@ export default function FAQHero() {
           </h1>
 
           {/* SUBTITLE */}
-          <p className="max-w-[456px] text-white/60 text-[16px] sm:text-[18px] lg:text-[20px] leading-[1.8] tracking-[-0.02em]">
+          <p className="max-w-[456px] text-white/60 text-[16px] sm:text-[18px] lg:text-[20px] leading-[1.8] tracking-[0.02em]">
             Find quick answers about ZENAURA earplugs, orders, and support.
           </p>
         </div>

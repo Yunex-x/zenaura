@@ -103,13 +103,13 @@ export default function PosterCarousel({ items = ITEMS }: { items?: typeof ITEMS
         {/* Title */}
         <div>
           <h2
-            className="font-montserrat font-semibold text-white tracking-[-0.02em]"
+            className="font-montserrat font-semibold text-white tracking-[0.02em]"
             style={{ fontSize: "clamp(28px, 4.2vw, 58px)", lineHeight: "1.15" }}
           >
             Worn by You, Loved
           </h2>
           <h3
-            className="mt-1 sm:mt-2 font-montserrat font-semibold tracking-[-0.02em]"
+            className="mt-1 sm:mt-2 font-montserrat font-semibold tracking-[0.02em]"
             style={{ fontSize: "clamp(28px, 4.2vw, 58px)", lineHeight: "1.15" }}
           >
             <span className="text-white">by</span>{" "}
