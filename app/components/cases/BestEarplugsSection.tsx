@@ -8,13 +8,16 @@ export default function BestEarplugsSection(): JSX.Element {
             <div className="absolute left-[calc(50%-140px-522px)] top-[250px] w-[280px] h-[220px] bg-[#AA6AFF]/30 blur-[200px]" />
 
             {/* CONTAINER (IMPORTANT) */}
-            <div className="mx-auto w-full max-w-[1920px] px-5 md:px-8 lg:px-[150px]">
+            <div className="mx-auto w-full mt-16  max-w-[1920px] px-5 md:px-8 lg:px-[150px]">
                 {/* TITLE */}
                 <h2
                     className="
             w-full
             max-w-[786px]
-
+mb-0
+lg:-mb-28
+xl:-mb-34
+2xl:-mb-0
             text-[36px]
             leading-[46px]
             font-bold
@@ -89,7 +92,7 @@ tracking-[0.06em]
               md:max-w-none
               md:min-w-0
               md:text-[18px]
-              md:leading-[26px]
+              md:leading-[23px]
 lg:mt-16
               lg:w-[1200px]
               lg:text-[16px]

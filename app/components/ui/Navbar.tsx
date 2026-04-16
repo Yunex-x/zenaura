@@ -1,13 +1,15 @@
 "use client";
+
 import React, { JSX, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShoppingCart, Heart, User, Menu, X } from "lucide-react";
-
+import { useCart } from "@/app/context/cart-context";
 export default function Navbar(): JSX.Element {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { openCart } = useCart();
 
   const links = [
     { label: "Home", href: "/" },
@@ -20,13 +22,15 @@ export default function Navbar(): JSX.Element {
   const isActive = (href: string) => pathname === href;
 
   return (
-<header className="fixed top-0 z-[100] w-full border-b border-white/10 bg-black/30 backdrop-blur-xl supports-[backdrop-filter]:bg-black/20">      <div className="max-w-[1825px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-[48px] md:h-[52px] lg:h-[56px]">
+    <header className="fixed top-0 z-[100] w-full border-b border-white/10 bg-black/30 backdrop-blur-xl supports-[backdrop-filter]:bg-black/20">
+      <div className="mx-auto max-w-[1825px] px-4 sm:px-6 lg:px-8">
+        <div className="relative flex h-[48px] items-center justify-between md:h-[52px] lg:h-[56px]">
           {/* Left */}
           <div className="flex items-center gap-4">
             {/* Mobile toggle */}
             <button
-              className="lg:hidden inline-flex items-center justify-center p-2 text-white/90"
+              type="button"
+              className="inline-flex items-center justify-center p-2 text-white/90 lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               onClick={() => setOpen((s) => !s)}
             >
@@ -34,7 +38,7 @@ export default function Navbar(): JSX.Element {
             </button>
 
             {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-3 lg:gap-6">
+            <nav className="hidden items-center gap-3 lg:flex lg:gap-6">
               {links.map((link) => {
                 const active = isActive(link.href);
 
@@ -45,7 +49,7 @@ export default function Navbar(): JSX.Element {
                     className="relative inline-flex flex-col items-center justify-center whitespace-nowrap pt-1"
                   >
                     <span
-                      className={`font-poppins text-[16px] md:text-[18px] lg:text-[20px] leading-[30px] ${
+                      className={`font-poppins text-[16px] leading-[30px] md:text-[18px] lg:text-[20px] ${
                         active ? "font-[500] text-white" : "font-[300] text-white/70"
                       }`}
                     >
@@ -65,7 +69,7 @@ export default function Navbar(): JSX.Element {
           </div>
 
           {/* Logo */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 h-full flex items-center justify-center pointer-events-none">
+          <div className="pointer-events-none absolute left-1/2 top-0 flex h-full -translate-x-1/2 items-center justify-center">
             <div className="pointer-events-auto">
               <Link href="/" aria-label="Go to homepage">
                 <Image
@@ -73,7 +77,7 @@ export default function Navbar(): JSX.Element {
                   alt="ZENAURA logo"
                   width={163}
                   height={56}
-                  className="object-contain w-[110px] sm:w-[130px] md:w-[145px] lg:w-[163px] h-auto"
+                  className="h-auto w-[110px] object-contain sm:w-[130px] md:w-[145px] lg:w-[163px]"
                   priority
                 />
               </Link>
@@ -85,28 +89,37 @@ export default function Navbar(): JSX.Element {
             <Link
               href="/favorites"
               aria-label="Favorites"
-              className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-white/90"
+              className="flex h-7 w-7 items-center justify-center text-white/90 sm:h-8 sm:w-8"
             >
-              <Heart size={18} strokeWidth={1.5} className="sm:w-5 sm:h-5" />
+              <Heart size={18} strokeWidth={1.5} className="sm:h-5 sm:w-5" />
             </Link>
 
-            <Link
-              href="/cart"
+            <button
+              type="button"
               aria-label="Cart"
-              className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-white/90"
+              onClick={openCart}
+              className="flex h-7 w-7 items-center justify-center text-white/90 sm:h-8 sm:w-8"
             >
-              <ShoppingCart size={18} strokeWidth={1.5} className="sm:w-5 sm:h-5" />
-            </Link>
+              <ShoppingCart
+                size={18}
+                strokeWidth={1.5}
+                className="sm:h-5 sm:w-5"
+              />
+            </button>
 
             <Link
               href="/account"
-              className="hidden lg:flex items-center gap-3 px-3 h-[36px] lg:h-[40px] border border-white/20 rounded-full bg-transparent"
+              className="hidden h-[36px] items-center gap-3 rounded-full border border-white/20 bg-transparent px-3 lg:flex lg:h-[40px]"
               aria-label="Account"
             >
-              <div className="w-5 h-5 lg:w-6 lg:h-6 text-white/100">
-                <User size={16} strokeWidth={1.5} className="lg:w-[18px] lg:h-[18px]" />
+              <div className="h-5 w-5 text-white/100 lg:h-6 lg:w-6">
+                <User
+                  size={16}
+                  strokeWidth={1.5}
+                  className="lg:h-[18px] lg:w-[18px]"
+                />
               </div>
-              <span className="font-poppins font-[400] text-[15px] lg:text-[18px] leading-[27px] text-white">
+              <span className="font-poppins text-[15px] font-[400] leading-[27px] text-white lg:text-[18px]">
                 Account
               </span>
             </Link>
@@ -115,7 +128,7 @@ export default function Navbar(): JSX.Element {
 
         {/* Mobile menu */}
         {open && (
-          <div className="lg:hidden mt-2 bg-[#0D0D0D] border-t border-white/6 py-4 z-40">
+          <div className="z-40 mt-2 border-t border-white/6 bg-[#0D0D0D] py-4 lg:hidden">
             <div className="flex flex-col items-center gap-3">
               {links.map((l) => {
                 const active = isActive(l.href);
@@ -125,12 +138,12 @@ export default function Navbar(): JSX.Element {
                     key={l.label}
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="flex flex-col items-center justify-center w-full max-w-[320px] py-2"
+                    className="flex w-full max-w-[320px] flex-col items-center justify-center py-2"
                   >
                     <span
-                      className={`text-center font-poppins ${
+                      className={`font-poppins text-center text-[18px] leading-[28px] ${
                         active ? "font-[500] text-white" : "font-[300] text-white/70"
-                      } text-[18px] leading-[28px]`}
+                      }`}
                     >
                       {l.label}
                     </span>
@@ -145,13 +158,28 @@ export default function Navbar(): JSX.Element {
                 );
               })}
 
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  openCart();
+                }}
+                className="mt-1 flex items-center gap-2 px-4 py-2 text-white/90"
+                aria-label="Open cart"
+              >
+                <ShoppingCart size={16} strokeWidth={1.5} className="text-white" />
+                <span className="font-poppins text-[16px] font-[400] text-white">
+                  Cart
+                </span>
+              </button>
+
               <Link
                 href="/account"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-2 mt-2 px-4 py-2 border border-white/20 rounded-full"
+                className="mt-2 flex items-center gap-2 rounded-full border border-white/20 px-4 py-2"
               >
                 <User size={16} strokeWidth={1.5} className="text-white" />
-                <span className="font-poppins font-[400] text-[16px] text-white">
+                <span className="font-poppins text-[16px] font-[400] text-white">
                   Account
                 </span>
               </Link>

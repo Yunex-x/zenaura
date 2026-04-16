@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { JSX, useRef } from "react";
+import { JSX, useEffect, useMemo, useRef, useState } from "react";
 
 type BlogItem = {
   id: number;
@@ -43,21 +43,186 @@ const ITEMS: BlogItem[] = [
 
 export default function RelatedBlogsSection(): JSX.Element {
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const hasInitializedRef = useRef(false);
 
-  const scrollByAmount = (direction: "left" | "right"): void => {
-    if (!trackRef.current) return;
+  const loopedItems = useMemo(() => [...ITEMS, ...ITEMS, ...ITEMS], []);
+  const baseLength = ITEMS.length;
 
-    const card = trackRef.current.querySelector("[data-card]") as HTMLElement | null;
-    if (!card) return;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [centerIndex, setCenterIndex] = useState(baseLength);
 
-    const cardWidth = card.offsetWidth;
-    const gap = 24;
-    const amount = cardWidth + gap;
+  const getCards = (): HTMLElement[] => {
+    if (!trackRef.current) return [];
+    return Array.from(
+      trackRef.current.querySelectorAll("[data-card]")
+    ) as HTMLElement[];
+  };
 
-    trackRef.current.scrollBy({
-      left: direction === "left" ? -amount : amount,
-      behavior: "smooth",
+  const centerCard = (
+    card: HTMLElement,
+    behavior: ScrollBehavior = "smooth"
+  ): void => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const left = card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+
+    track.scrollTo({
+      left,
+      behavior,
     });
+  };
+
+  const centerByLoopedIndex = (
+    loopedIndex: number,
+    behavior: ScrollBehavior = "smooth"
+  ): void => {
+    const cards = getCards();
+    const target = cards[loopedIndex];
+    if (!target) return;
+    centerCard(target, behavior);
+  };
+
+  const getClosestCardIndex = (): number => {
+    const track = trackRef.current;
+    const cards = getCards();
+
+    if (!track || !cards.length) return 0;
+
+    const containerCenter = track.scrollLeft + track.clientWidth / 2;
+
+    let closestIndex = 0;
+    let smallestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.clientWidth / 2;
+      const distance = Math.abs(containerCenter - cardCenter);
+
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    return closestIndex;
+  };
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || hasInitializedRef.current) return;
+
+    const init = () => {
+      const middleStart = baseLength;
+      centerByLoopedIndex(middleStart, "auto");
+      setActiveIndex(0);
+      setCenterIndex(middleStart);
+      hasInitializedRef.current = true;
+    };
+
+    const id = requestAnimationFrame(init);
+    return () => cancelAnimationFrame(id);
+  }, [baseLength]);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let ticking = false;
+
+    const updateActiveAndLoop = () => {
+      const cards = getCards();
+      if (!cards.length || !track) return;
+
+      const containerCenter = track.scrollLeft + track.clientWidth / 2;
+
+      let closestIndex = 0;
+      let smallestDistance = Infinity;
+
+      cards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const distance = Math.abs(containerCenter - cardCenter);
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setCenterIndex(closestIndex);
+      setActiveIndex(closestIndex % baseLength);
+
+      const middleStart = baseLength;
+      const lastStart = baseLength * 2;
+
+      if (closestIndex < middleStart) {
+        const targetIndex = closestIndex + baseLength;
+        const target = cards[targetIndex];
+
+        if (target) {
+          const nextLeft =
+            target.offsetLeft - (track.clientWidth - target.clientWidth) / 2;
+
+          track.scrollTo({
+            left: nextLeft,
+            behavior: "auto",
+          });
+
+          setCenterIndex(targetIndex);
+          setActiveIndex(targetIndex % baseLength);
+        }
+      } else if (closestIndex >= lastStart) {
+        const targetIndex = closestIndex - baseLength;
+        const target = cards[targetIndex];
+
+        if (target) {
+          const nextLeft =
+            target.offsetLeft - (track.clientWidth - target.clientWidth) / 2;
+
+          track.scrollTo({
+            left: nextLeft,
+            behavior: "auto",
+          });
+
+          setCenterIndex(targetIndex);
+          setActiveIndex(targetIndex % baseLength);
+        }
+      }
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        updateActiveAndLoop();
+        ticking = false;
+      });
+    };
+
+    track.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", updateActiveAndLoop);
+
+    updateActiveAndLoop();
+
+    return () => {
+      track.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", updateActiveAndLoop);
+    };
+  }, [baseLength]);
+
+  const goToNext = (): void => {
+    const closestIndex = getClosestCardIndex();
+    centerByLoopedIndex(closestIndex + 1, "smooth");
+  };
+
+  const goToPrev = (): void => {
+    const closestIndex = getClosestCardIndex();
+    centerByLoopedIndex(closestIndex - 1, "smooth");
+  };
+
+  const goToDot = (index: number): void => {
+    centerByLoopedIndex(baseLength + index, "smooth");
   };
 
   return (
@@ -66,7 +231,6 @@ export default function RelatedBlogsSection(): JSX.Element {
 
       <div className="mx-auto w-full max-w-[1920px] px-5 md:px-8 lg:px-[150px]">
         <div className="mx-auto w-full max-w-[1529px]">
-          {/* Header */}
           <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <h2
               className="
@@ -81,104 +245,132 @@ export default function RelatedBlogsSection(): JSX.Element {
               Related Blogs
             </h2>
 
-            {/* Buttons */}
-            <div className="flex items-center gap-4 md:gap-6 self-start">
+            <div className="hidden lg:flex items-center gap-6 self-start">
               <button
                 type="button"
-                onClick={() => scrollByAmount("left")}
+                onClick={goToPrev}
                 aria-label="Previous slide"
                 className="
-                  relative flex h-[56px] w-[96px] items-center justify-center
+                  relative flex h-[80px] w-[233px] items-center justify-center
                   rounded-[89px] border border-white/20 bg-[rgba(0,0,0,0.004)]
                   transition hover:bg-white/[0.03]
-                  md:h-[64px] md:w-[140px]
-                  lg:h-[80px] lg:w-[233px]
                 "
               >
-                <span className="relative block h-0 w-[34px] md:w-[52px] lg:w-[80px]">
+                <span className="relative block h-0 w-[80px]">
                   <span className="absolute left-0 top-0 block w-full border-t-[2.5px] border-white/60" />
-                  <span className="absolute left-0 top-0 block h-[2.5px] w-[12px] -rotate-45 bg-white/60 origin-left md:w-[14px] lg:w-[18px]" />
-                  <span className="absolute left-0 top-0 block h-[2.5px] w-[12px] rotate-45 bg-white/60 origin-left md:w-[14px] lg:w-[18px]" />
+                  <span className="absolute left-0 top-0 block h-[2.5px] w-[18px] -rotate-45 bg-white/60 origin-left" />
+                  <span className="absolute left-0 top-0 block h-[2.5px] w-[18px] rotate-45 bg-white/60 origin-left" />
                 </span>
               </button>
 
               <button
                 type="button"
-                onClick={() => scrollByAmount("right")}
+                onClick={goToNext}
                 aria-label="Next slide"
                 className="
-                  relative flex h-[56px] w-[96px] items-center justify-center
+                  relative flex h-[80px] w-[233px] items-center justify-center
                   rounded-[89px] bg-white transition hover:opacity-95
-                  md:h-[64px] md:w-[140px]
-                  lg:h-[80px] lg:w-[233px]
                 "
               >
-                <span className="relative block h-0 w-[34px] md:w-[52px] lg:w-[80px]">
+                <span className="relative block h-0 w-[80px]">
                   <span className="absolute left-0 top-0 block w-full border-t-[2.5px] border-[#845CF2]" />
-                  <span className="absolute right-0 top-0 block h-[2.5px] w-[12px] rotate-45 bg-[#845CF2] origin-right md:w-[14px] lg:w-[18px]" />
-                  <span className="absolute right-0 top-0 block h-[2.5px] w-[12px] -rotate-45 bg-[#845CF2] origin-right md:w-[14px] lg:w-[18px]" />
+                  <span className="absolute right-0 top-0 block h-[2.5px] w-[18px] rotate-45 bg-[#845CF2] origin-right" />
+                  <span className="absolute right-0 top-0 block h-[2.5px] w-[18px] -rotate-45 bg-[#845CF2] origin-right" />
                 </span>
               </button>
             </div>
           </div>
 
-          {/* Carousel */}
           <div className="mt-12 lg:mt-[88px]">
             <div
               ref={trackRef}
               className="
-                flex gap-6 overflow-x-auto scroll-smooth
+                flex items-start gap-6 overflow-x-auto scroll-smooth
                 [scrollbar-width:none] [-ms-overflow-style:none]
                 [&::-webkit-scrollbar]:hidden
                 cursor-grab active:cursor-grabbing
               "
             >
-              {ITEMS.map((item) => (
-                <article
-                  key={item.id}
-                  data-card
-                  className="
-                    shrink-0
-                    w-[260px]
-                    sm:w-[300px]
-                    md:w-[340px]
-                    lg:w-[400px]
-                    xl:w-[464px]
-                  "
-                >
-                  <div className="flex flex-col items-start gap-6 md:gap-8">
-                    <div
-                      className="
-                        relative w-full overflow-hidden rounded-[20px]
-                        h-[220px]
-                        sm:h-[260px]
-                        md:h-[300px]
-                        lg:h-[360px]
-                        xl:h-[432px]
-                      "
-                    >
-                      <div className="absolute inset-0 bg-[url('/use-cases/checker.png')] bg-cover bg-center opacity-20" />
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 260px, (max-width: 768px) 300px, (max-width: 1024px) 340px, (max-width: 1280px) 400px, 464px"
-                      />
-                    </div>
+              {loopedItems.map((item, index) => {
+                const isCenter = index === centerIndex;
 
-                    <div className="w-full">
-                      <h3 className="font-[Montserrat] text-[20px] font-semibold leading-[130%] tracking-[0.04em] text-white md:text-[22px] xl:text-[24px]">
-                        {item.title}
-                      </h3>
+                return (
+                  <article
+                    key={`${item.id}-${index}`}
+                    data-card
+                    className={`
+                      shrink-0 transform transition-all duration-500 ease-out
+                      ${
+                        isCenter
+                          ? "w-[260px] sm:w-[300px] md:w-[360px] lg:w-[430px] xl:w-[494px] opacity-100"
+                          : "w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px] xl:w-[464px] opacity-70"
+                      }
+                    `}
+                  >
+                    <div className="flex flex-col items-start gap-6 md:gap-8">
+                      <div
+                        className={`
+                          relative w-full overflow-hidden rounded-[20px] transition-all duration-500 ease-out
+                          ${
+                            isCenter
+                              ? "h-[240px] sm:h-[280px] md:h-[320px] lg:h-[390px] xl:h-[462px]"
+                              : "h-[220px] sm:h-[260px] md:h-[300px] lg:h-[360px] xl:h-[432px]"
+                          }
+                        `}
+                      >
+                        <div className="absolute inset-0 bg-[url('/use-cases/checker.png')] bg-cover bg-center opacity-20" />
 
-                      <p className="mt-[10px] font-[Poppins] text-[14px] font-medium leading-[150%] tracking-[0.02em] text-white/60 md:text-[15px] xl:text-[16px]">
-                        {item.description}
-                      </p>
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 260px, (max-width: 768px) 300px, (max-width: 1024px) 360px, (max-width: 1280px) 430px, 494px"
+                        />
+                      </div>
+
+                      <div className="w-full transition-all duration-500 ease-out">
+                        <h3
+                          className={`
+                            font-[Montserrat] font-semibold leading-[130%] tracking-[0.04em] text-white transition-all duration-500 ease-out
+                            ${isCenter ? "text-[22px] md:text-[24px] xl:text-[26px]" : "text-[20px] md:text-[22px] xl:text-[24px]"}
+                          `}
+                        >
+                          {item.title}
+                        </h3>
+
+                        <p
+                          className={`
+                            mt-[10px] font-[Poppins] font-medium leading-[150%] tracking-[0.02em] transition-all duration-500 ease-out
+                            ${isCenter ? "text-white/75 text-[15px] xl:text-[16px]" : "text-white/60 text-[14px] xl:text-[16px]"}
+                          `}
+                        >
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-3 lg:hidden">
+              {ITEMS.map((item, index) => {
+                const isActive = activeIndex === index;
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    aria-label={`Go to slide ${index + 1}`}
+                    aria-current={isActive}
+                    onClick={() => goToDot(index)}
+                    className={`h-3 rounded-full transition-all duration-300 ${
+                      isActive ? "w-8 bg-white" : "w-3 bg-white/35"
+                    }`}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

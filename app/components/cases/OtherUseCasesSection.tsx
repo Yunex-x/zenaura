@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { JSX, useRef } from "react";
+import { JSX, useEffect, useMemo, useRef, useState } from "react";
 
 type UseCaseItem = {
   id: number;
@@ -34,28 +34,187 @@ const ITEMS: UseCaseItem[] = [
 
 export default function OtherUseCasesSection(): JSX.Element {
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const hasInitializedRef = useRef(false);
 
-  const scrollByAmount = (direction: "left" | "right"): void => {
-    if (!trackRef.current) return;
+  const loopedItems = useMemo(() => [...ITEMS, ...ITEMS, ...ITEMS], []);
+  const baseLength = ITEMS.length;
 
-    const card = trackRef.current.querySelector("[data-card]") as HTMLElement | null;
-    if (!card) return;
+  const [activeIndex, setActiveIndex] = useState(0);
 
-    const cardWidth = card.offsetWidth;
-    const gap = 24;
-    const amount = cardWidth + gap;
+  const getCards = (): HTMLElement[] => {
+    if (!trackRef.current) return [];
+    return Array.from(
+      trackRef.current.querySelectorAll("[data-card]")
+    ) as HTMLElement[];
+  };
 
-    trackRef.current.scrollBy({
-      left: direction === "left" ? -amount : amount,
-      behavior: "smooth",
+  const centerCard = (card: HTMLElement, behavior: ScrollBehavior = "smooth") => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const left = card.offsetLeft - (track.clientWidth - card.clientWidth) / 2;
+
+    track.scrollTo({
+      left,
+      behavior,
     });
+  };
+
+  const centerByLoopedIndex = (
+    loopedIndex: number,
+    behavior: ScrollBehavior = "smooth"
+  ) => {
+    const cards = getCards();
+    const target = cards[loopedIndex];
+    if (!target) return;
+    centerCard(target, behavior);
+  };
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || hasInitializedRef.current) return;
+
+    const init = () => {
+      const middleStart = baseLength;
+      const initialIndex = middleStart;
+
+      centerByLoopedIndex(initialIndex, "auto");
+      setActiveIndex(0);
+      hasInitializedRef.current = true;
+    };
+
+    const id = requestAnimationFrame(init);
+    return () => cancelAnimationFrame(id);
+  }, [baseLength]);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let ticking = false;
+
+    const updateActiveAndLoop = () => {
+      const cards = getCards();
+      if (!cards.length) return;
+
+      const containerCenter = track.scrollLeft + track.clientWidth / 2;
+
+      let closestIndex = 0;
+      let smallestDistance = Infinity;
+
+      cards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const distance = Math.abs(containerCenter - cardCenter);
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      const realIndex = closestIndex % baseLength;
+      setActiveIndex(realIndex);
+
+      const firstSetStart = 0;
+      const middleSetStart = baseLength;
+      const lastSetStart = baseLength * 2;
+
+      if (closestIndex < middleSetStart) {
+        const equivalentIndex = closestIndex + baseLength;
+        const equivalentCard = cards[equivalentIndex];
+        if (equivalentCard) {
+          const nextLeft =
+            equivalentCard.offsetLeft -
+            (track.clientWidth - equivalentCard.clientWidth) / 2;
+          track.scrollTo({ left: nextLeft, behavior: "auto" });
+        }
+      } else if (closestIndex >= lastSetStart) {
+        const equivalentIndex = closestIndex - baseLength;
+        const equivalentCard = cards[equivalentIndex];
+        if (equivalentCard) {
+          const nextLeft =
+            equivalentCard.offsetLeft -
+            (track.clientWidth - equivalentCard.clientWidth) / 2;
+          track.scrollTo({ left: nextLeft, behavior: "auto" });
+        }
+      }
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateActiveAndLoop();
+        ticking = false;
+      });
+    };
+
+    track.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", updateActiveAndLoop);
+
+    updateActiveAndLoop();
+
+    return () => {
+      track.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", updateActiveAndLoop);
+    };
+  }, [baseLength]);
+
+  const goToNext = () => {
+    const cards = getCards();
+    if (!cards.length || !trackRef.current) return;
+
+    const track = trackRef.current;
+    const containerCenter = track.scrollLeft + track.clientWidth / 2;
+
+    let closestIndex = 0;
+    let smallestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.clientWidth / 2;
+      const distance = Math.abs(containerCenter - cardCenter);
+
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    centerByLoopedIndex(closestIndex + 1, "smooth");
+  };
+
+  const goToPrev = () => {
+    const cards = getCards();
+    if (!cards.length || !trackRef.current) return;
+
+    const track = trackRef.current;
+    const containerCenter = track.scrollLeft + track.clientWidth / 2;
+
+    let closestIndex = 0;
+    let smallestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.clientWidth / 2;
+      const distance = Math.abs(containerCenter - cardCenter);
+
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    centerByLoopedIndex(closestIndex - 1, "smooth");
+  };
+
+  const goToDot = (index: number) => {
+    centerByLoopedIndex(baseLength + index, "smooth");
   };
 
   return (
     <section className="w-full overflow-hidden bg-black py-16 lg:py-24">
-      <div className="mx-auto w-full max-w-[1920px] px-5 md:px-8 lg:px-[150px] ">
+      <div className="mx-auto w-full max-w-[1920px] px-5 md:px-8 lg:px-[120px]">
         <div className="mx-auto w-full max-w-[2011px]">
-          {/* Header */}
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
             <h2
               className="
@@ -68,54 +227,51 @@ export default function OtherUseCasesSection(): JSX.Element {
                 leading-[1.1]
                 tracking-[0.03em]
                 text-transparent
-                md:text-[48px]
-                lg:text-[64px]
+                md:text-[38px]
+                lg:text-[43px]
                 lg:leading-[120px]
+                xl:text-[54px]
               "
             >
               Other Use Cases
             </h2>
 
-            {/* Buttons */}
-            <div className="flex items-center gap-6 self-start">
+            <div className="hidden items-center mt-6 gap-6 self-start lg:flex">
               <button
                 type="button"
-                onClick={() => scrollByAmount("left")}
+                onClick={goToPrev}
                 aria-label="Previous slide"
                 className="
-                  relative flex h-[64px] w-[110px] items-center justify-center
+                  relative flex h-[80px] w-[233px] lg:w-[100px] lg:h-[60px] xl:w-[233px] xl:h-[80px]   items-center justify-center
                   rounded-[89px] border border-white/20
                   bg-transparent transition hover:bg-white/[0.03]
-                  lg:h-[80px] lg:w-[233px]
                 "
               >
-                <span className="relative block h-0 w-[42px] lg:w-[80px]">
+                <span className="relative block h-0 w-[80px]">
                   <span className="absolute left-0 top-0 block w-full border-t-[2.5px] border-white/60" />
-                  <span className="absolute left-0 top-0 block h-[2.5px] w-[14px] -rotate-45 bg-white/60 origin-left lg:w-[18px]" />
-                  <span className="absolute left-0 top-0 block h-[2.5px] w-[14px] rotate-45 bg-white/60 origin-left lg:w-[18px]" />
+                  <span className="absolute left-0 top-0 block h-[2.5px] w-[18px] origin-left -rotate-45 bg-white/60" />
+                  <span className="absolute left-0 top-0 block h-[2.5px] w-[18px] origin-left rotate-45 bg-white/60" />
                 </span>
               </button>
 
               <button
                 type="button"
-                onClick={() => scrollByAmount("right")}
+                onClick={goToNext}
                 aria-label="Next slide"
                 className="
-                  relative flex h-[64px] w-[110px] items-center justify-center
+                  relative flex h-[80px] w-[233px] lg:w-[100px] lg:h-[60px] xl:w-[233px] xl:h-[80px] items-center justify-center
                   rounded-[89px] bg-white transition hover:opacity-95
-                  lg:h-[80px] lg:w-[233px]
                 "
               >
-                <span className="relative block h-0 w-[42px] lg:w-[80px]">
+                <span className="relative block h-0 w-[80px]">
                   <span className="absolute left-0 top-0 block w-full border-t-[2.5px] border-[#845CF2]" />
-                  <span className="absolute right-0 top-0 block h-[2.5px] w-[14px] rotate-45 bg-[#845CF2] origin-right lg:w-[18px]" />
-                  <span className="absolute right-0 top-0 block h-[2.5px] w-[14px] -rotate-45 bg-[#845CF2] origin-right lg:w-[18px]" />
+                  <span className="absolute right-0 top-0 block h-[2.5px] w-[18px] origin-right rotate-45 bg-[#845CF2]" />
+                  <span className="absolute right-0 top-0 block h-[2.5px] w-[18px] origin-right -rotate-45 bg-[#845CF2]" />
                 </span>
               </button>
             </div>
           </div>
 
-          {/* Carousel */}
           <div className="mt-12 lg:mt-[88px]">
             <div
               ref={trackRef}
@@ -126,21 +282,40 @@ export default function OtherUseCasesSection(): JSX.Element {
                 cursor-grab active:cursor-grabbing
               "
             >
-              {ITEMS.map((item, index) => {
-                const isMiddle = index === 1;
+              {loopedItems.map((item, index) => {
+                const isActive = index % baseLength === activeIndex;
 
                 return (
                   <div
-                    key={item.id}
+                    key={`${item.id}-${index}`}
                     data-card
-                    className={`shrink-0 overflow-hidden ${
-                      isMiddle
+                    className={`shrink-0 overflow-hidden transition-all duration-500 ease-out ${
+                      isActive
                         ? "h-[300px] w-[320px] rounded-[24px] md:h-[380px] md:w-[420px] lg:h-[500px] lg:w-[538px]"
                         : "h-[260px] w-[260px] rounded-[20px] md:h-[320px] md:w-[320px] lg:h-[434px] lg:w-[467px]"
                     }`}
                   >
                     <CarouselCard item={item} />
                   </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-3 lg:hidden">
+              {ITEMS.map((item, index) => {
+                const isActive = activeIndex === index;
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    aria-label={`Go to slide ${index + 1}`}
+                    aria-current={isActive}
+                    onClick={() => goToDot(index)}
+                    className={`h-3 rounded-full transition-all duration-300 ${
+                      isActive ? "w-8 bg-white" : "w-3 bg-white/35"
+                    }`}
+                  />
                 );
               })}
             </div>
