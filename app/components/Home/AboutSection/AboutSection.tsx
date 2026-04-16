@@ -21,7 +21,7 @@ export default function AboutSection() {
 
               {/* main image */}
               <Image
-                src="/AboutSection/about-left.png"
+                src="/HomePage/AboutSection/about-left.png"
                 alt="Product model wearing earbud"
                 fill
                 priority
