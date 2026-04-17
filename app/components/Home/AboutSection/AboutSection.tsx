@@ -1,3 +1,4 @@
+import { Span } from "next/dist/trace";
 import Image from "next/image";
 
 export default function AboutSection() {
@@ -40,7 +41,7 @@ export default function AboutSection() {
             </h2>
 
             <p className="mt-6 max-w-[856px] [font-family:Montserrat,sans-serif] text-[18px] font-medium leading-[1.5] tracking-[0.01em] text-white/80 sm:text-[22px] md:text-[28px] lg:mt-[44px] lg:text-[24px] lg:leading-[54px]">
-              A stylish lifestyle accessory that effortlessly combines comfort
+            <span className="font-semibold text-white">A stylish lifestyle accessory that effortlessly </span>  combines comfort
               with elegance. You can wear them anywhere and at any time, making
               them a versatile addition to your wardrobe.
             </p>

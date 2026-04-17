@@ -21,7 +21,7 @@ export default function StatsBar(): JSX.Element {
       {/* Stat 1 */}
       <div className="flex flex-col items-center gap-1 sm:gap-2 text-center min-w-0">
         <div
-          className="font-space font-[700] text-[#D9D9D9] tracking-[0.03em] leading-[1.2]"
+          className="font-space font-[700] text-[#D9D9D9]  tracking-[0.03em] leading-[1.2]"
           style={{ fontSize: "clamp(14px, 2.5vw, 30px)" }}
         >
           55,000+

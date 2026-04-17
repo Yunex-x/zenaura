@@ -3,12 +3,13 @@
 import React, { JSX, useState } from "react";
 
 const FILTERS = [
-  { label: "Shop All", value: "all" },
-  { label: "Earplugs", value: "earplugs" },
-  { label: "Bundles", value: "bundles" },
-  { label: "Accessories", value: "accessories" },
-  { label: "Limited Edition", value: "limited" },
-  { label: "Collaboration", value: "collaboration" },
+  { label: "ALL", value: "all" },
+  { label: "All PRODUCTS", value: "products" },
+  { label: "BUNDLE&SAVE", value: "bundles" },
+  { label: "ZEN EXPERIENCE", value: "experience" },
+  { label: "ZEN SWITCH", value: "switch" },
+  { label: "ZEN QUIET", value: "quiet" },
+  { label: "ZEN SLEEP", value: "sleep" },
 ];
 
 export default function ShopFilterBar({
@@ -50,6 +51,7 @@ export default function ShopFilterBar({
                       : "bg-[#171717] text-white font-normal hover:bg-[#222222]"
                   }
                 `}
+                type="button"
               >
                 {filter.label}
 
