@@ -15,7 +15,7 @@ export default function AboutSection() {
           {/* Image side */}
           <div className="relative mx-auto flex w-full max-w-[645px] justify-center lg:justify-start">
             <div className="relative h-[420px] w-[280px] sm:h-[520px] sm:w-[360px] md:h-[620px] md:w-[430px] lg:h-[967px] lg:w-[645px]">
-              
+
 
               {/* mask gradient */}
               <div className="absolute inset-0 scale-x-[-1] bg-[linear-gradient(180deg,rgba(217,217,217,0)_46.9%,rgba(115,115,115,0.0)_70%,rgba(115,115,115,0)_93.12%)]" />
@@ -26,6 +26,7 @@ export default function AboutSection() {
                 alt="Product model wearing earbud"
                 fill
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 645px"
                 className="object-cover"
               />
 
@@ -41,7 +42,7 @@ export default function AboutSection() {
             </h2>
 
             <p className="mt-6 max-w-[856px] [font-family:Montserrat,sans-serif] text-[18px] font-medium leading-[1.5] tracking-[0.01em] text-white/80 sm:text-[22px] md:text-[28px] lg:mt-[44px] lg:text-[24px] lg:leading-[54px]">
-            <span className="font-semibold text-white">A stylish lifestyle accessory that effortlessly </span>  combines comfort
+              <span className="font-semibold text-white">A stylish lifestyle accessory that effortlessly </span>  combines comfort
               with elegance. You can wear them anywhere and at any time, making
               them a versatile addition to your wardrobe.
             </p>

@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { JSX, useEffect, useMemo, useRef, useState } from "react";import { Minus, Plus, Trash2, X } from "lucide-react";
+import { JSX, useMemo, useRef, useState } from "react";
+import { Minus, Plus, Trash2, X } from "lucide-react";
 
 type CartItem = {
   id: string;
@@ -191,7 +192,7 @@ export default function CartSidebar({
 
     if (!card) return;
 
-    const gap = 16;
+    const gap = 12;
     const amount = card.offsetWidth + gap;
 
     suggestedTrackRef.current.scrollBy({
@@ -204,7 +205,7 @@ export default function CartSidebar({
 
   return (
     <aside className="flex h-dvh w-full flex-col bg-[#111012]">
-      <div className="flex min-h-0 flex-1 flex-col px-4 py-4 sm:px-5 sm:py-5 lg:px-8 lg:py-8">
+      <div className="flex min-h-0 flex-1 flex-col px-3 py-4 sm:px-5 sm:py-5 lg:px-8 lg:py-8">
         <header className="flex items-center gap-3 pb-5 sm:pb-6">
           <h2 className="flex-1 font-[Poppins] text-[28px] font-semibold leading-none text-white sm:text-[30px] lg:text-[32px]">
             Your Cart
@@ -236,16 +237,16 @@ export default function CartSidebar({
             </section>
 
             <section className="pt-2">
-              <div className="mb-4 flex items-center gap-4">
-                <h3 className="flex-1 bg-[linear-gradient(93.31deg,#FFFFFF_40.77%,#98979C_83.66%)] bg-clip-text font-[Montserrat] text-[20px] font-bold uppercase leading-[1.1] tracking-[-0.03em] text-transparent sm:text-[22px] lg:text-[24px]">
+              <div className="mb-4 flex items-center gap-3">
+                <h3 className="flex-1 bg-[linear-gradient(93.31deg,#FFFFFF_40.77%,#98979C_83.66%)] bg-clip-text font-[Montserrat] text-[18px] font-bold uppercase leading-[1.1] tracking-[-0.03em] text-transparent sm:text-[22px] lg:text-[24px]">
                   You May Also Like
                 </h3>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <button
                     type="button"
                     onClick={() => scrollSuggestedBy("left")}
-                    className="flex h-10 w-16 items-center justify-center rounded-[89px] border border-white/20 text-white/60 lg:w-[120px]"
+                    className="flex h-10 w-14 items-center justify-center rounded-[89px] border border-white/20 text-white/60 lg:w-[120px]"
                     aria-label="Previous suggestions"
                   >
                     <ArrowLeft />
@@ -254,7 +255,7 @@ export default function CartSidebar({
                   <button
                     type="button"
                     onClick={() => scrollSuggestedBy("right")}
-                    className="flex h-10 w-16 items-center justify-center rounded-[89px] bg-white text-[#845CF2] lg:w-[120px]"
+                    className="flex h-10 w-14 items-center justify-center rounded-[89px] bg-white text-[#845CF2] lg:w-[120px]"
                     aria-label="Next suggestions"
                   >
                     <ArrowRight />
@@ -265,7 +266,8 @@ export default function CartSidebar({
               <div
                 ref={suggestedTrackRef}
                 className="
-                  flex gap-4 overflow-x-auto scroll-smooth
+                  flex gap-3 overflow-x-auto scroll-smooth pb-2
+                  snap-x snap-mandatory
                   [scrollbar-width:none] [-ms-overflow-style:none]
                   [&::-webkit-scrollbar]:hidden
                 "
@@ -274,8 +276,7 @@ export default function CartSidebar({
                   <div
                     key={product.id}
                     data-suggested-card
-                    className="w-[260px] shrink-0 sm:w-[280px] md:w-[300px]"
-                  >
+className="w-[calc(100vw-40px)] max-w-[340px] shrink-0 snap-start sm:w-[280px] md:w-[380px] lg:w-[380px]"                  >
                     <SuggestedProductCard
                       product={product}
                       formatPrice={formatPrice}
@@ -284,7 +285,6 @@ export default function CartSidebar({
                   </div>
                 ))}
               </div>
-
             </section>
 
             <section className="rounded-2xl bg-[#1B1A1A] px-4 py-6 sm:px-5 sm:py-7 lg:px-[14px] lg:py-[42px]">
@@ -315,7 +315,7 @@ export default function CartSidebar({
           <button
             type="button"
             onClick={handleCheckout}
-            className="flex h-14 w-full items-center justify-center rounded-md bg-[#882EFF] px-6 text-center font-[Poppins] text-[16px] font-semibold text-white transition hover:opacity-95 sm:h-16 sm:text-[18px] lg:text-[20px]"
+            className="flex h-14 w-full items-center justify-center rounded-xl bg-[#882EFF] px-6 text-center font-[Poppins] text-[16px] font-semibold text-white transition hover:opacity-95 sm:h-16 sm:text-[18px] lg:text-[20px]"
           >
             Continue to Payment
           </button>
@@ -348,18 +348,18 @@ function CartItemCard({
             src={item.image}
             alt={item.title}
             fill
-            className="object-cover"
+            className="object-contain p-2"
             sizes="(max-width: 640px) 88px, (max-width: 1024px) 100px, 117px"
           />
         </div>
 
         <div className="min-w-0 flex-1">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-            <h3 className="max-w-[320px] font-[Montserrat] text-[16px] font-semibold leading-[1.25] text-white sm:text-[17px] lg:text-[18px]">
+          <div className="flex flex-col gap-2">
+            <h3 className="max-w-[320px] font-[Montserrat] text-[16px] font-semibold leading-[1.22] text-white sm:text-[17px] lg:text-[18px]">
               {item.title}
             </h3>
 
-            <p className="whitespace-nowrap font-[Poppins] text-[18px] font-normal tracking-[0.02em] text-white sm:text-[19px] lg:text-[20px]">
+            <p className="font-[Poppins] text-[17px] font-normal tracking-[0.02em] text-white sm:text-[19px] lg:text-[20px]">
               {formatPrice(item.price)}
             </p>
           </div>
@@ -429,25 +429,25 @@ function SuggestedProductCard({
   onAddSuggested,
 }: SuggestedProductCardProps): JSX.Element {
   return (
-    <article className="rounded-2xl bg-[#1B1A1A] p-4">
+    <article className="rounded-2xl bg-[#1B1A1A] p-3 sm:p-4">
       <div className="flex gap-3">
-        <div className="relative h-[92px] w-[92px] shrink-0 overflow-hidden rounded-lg bg-[#100F12] sm:h-[110px] sm:w-[110px]">
+        <div className="relative h-[86px] w-[86px] shrink-0 overflow-hidden rounded-lg bg-[#100F12] sm:h-[110px] sm:w-[110px]">
           <Image
             src={product.image}
             alt={product.title}
             fill
-            className="object-cover"
-            sizes="(max-width: 640px) 92px, 110px"
+            className="object-contain p-2"
+            sizes="(max-width: 640px) 86px, 110px"
           />
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col">
           <div className="flex flex-col gap-2">
-            <h4 className="line-clamp-2 font-[Montserrat] text-[18px] font-semibold leading-[1.05] tracking-[-0.03em] text-white sm:text-[20px]">
+            <h4 className="line-clamp-2 font-[Montserrat] text-[15px] font-semibold leading-[1.12] tracking-[-0.02em] text-white sm:text-[20px]">
               {product.title}
             </h4>
 
-            <span className="font-[Poppins] text-[11px] font-medium text-white">
+            <span className="font-[Poppins] text-[12px] font-medium leading-none text-white/90">
               {`Color : ${product.colorLabel ?? "Default"}`}
             </span>
 
@@ -461,18 +461,20 @@ function SuggestedProductCard({
             />
           </div>
 
-          <div className="mt-auto flex items-end justify-between gap-2 pt-3">
-            <p className="font-[Poppins] text-[18px] font-normal tracking-[0.02em] text-white sm:text-[20px]">
-              {formatPrice(product.price)}
-            </p>
+          <div className="mt-auto pt-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-[Poppins] text-[16px] font-normal leading-none tracking-[0.02em] text-white sm:text-[20px]">
+                {formatPrice(product.price)}
+              </p>
 
-            <button
-              type="button"
-              onClick={() => onAddSuggested(product.id)}
-              className="flex h-9 min-w-[72px] shrink-0 items-center justify-center rounded-full bg-white px-4 font-[Poppins] text-[13px] font-medium text-black transition hover:opacity-95 sm:h-10 sm:min-w-[80px] sm:text-[14px]"
-            >
-              Add
-            </button>
+              <button
+                type="button"
+                onClick={() => onAddSuggested(product.id)}
+                className="flex h-10 min-w-[84px] shrink-0 items-center justify-center rounded-full bg-white px-5 font-[Poppins] text-[14px] font-medium text-black transition hover:opacity-95 sm:h-10 sm:min-w-[88px]"
+              >
+                Add
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -5,14 +5,44 @@ import { AnimatePresence, motion } from "framer-motion";
 import PosterCard from "./PosterCard";
 
 const ITEMS = [
-  { id: "1", tag: "ZEN QUITE 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
-  { id: "2", tag: "ZEN SWITCH 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
-  { id: "3", tag: "ZEN DREAM", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
-  { id: "4", tag: "ZEN QUITE 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
-  { id: "5", tag: "ZEN SWITCH 2", quote: "\u201CThe shape of the product simply changed my listening\u201D", cta: "Buy Zen Switch2 Now", image: "/HomePage/ShowcaseSection/showcase-poster.png" },
+  {
+    id: "1",
+    tag: "ZEN QUITE 2",
+    quote: "“The shape of the product simply changed my listening”",
+    cta: "Buy Zen Switch2 Now",
+    image: "/HomePage/ShowcaseSection/showcase-poster.png",
+  },
+  {
+    id: "2",
+    tag: "ZEN SWITCH 2",
+    quote: "“The shape of the product simply changed my listening”",
+    cta: "Buy Zen Switch2 Now",
+    image: "/HomePage/ShowcaseSection/showcase-poster.png",
+  },
+  {
+    id: "3",
+    tag: "ZEN DREAM",
+    quote: "“The shape of the product simply changed my listening”",
+    cta: "Buy Zen Switch2 Now",
+    image: "/HomePage/ShowcaseSection/showcase-poster.png",
+  },
+  {
+    id: "4",
+    tag: "ZEN QUITE 2",
+    quote: "“The shape of the product simply changed my listening”",
+    cta: "Buy Zen Switch2 Now",
+    image: "/HomePage/ShowcaseSection/showcase-poster.png",
+  },
+  {
+    id: "5",
+    tag: "ZEN SWITCH 2",
+    quote: "“The shape of the product simply changed my listening”",
+    cta: "Buy Zen Switch2 Now",
+    image: "/HomePage/ShowcaseSection/showcase-poster.png",
+  },
 ];
 
-/* ── Arrow components matching ExploreMore style ── */
+/* ── Arrow components ── */
 function ArrowOutline({ onClick }: { onClick: () => void }) {
   return (
     <button
@@ -29,7 +59,11 @@ function ArrowOutline({ onClick }: { onClick: () => void }) {
         height: "clamp(40px, 5vw, 72px)",
       }}
     >
-      <svg className="w-[24px] h-[12px] sm:w-[32px] sm:h-[14px] lg:w-[46px] lg:h-[20px]" viewBox="0 0 46 20" fill="none">
+      <svg
+        className="w-[24px] h-[12px] sm:w-[32px] sm:h-[14px] lg:w-[46px] lg:h-[20px]"
+        viewBox="0 0 46 20"
+        fill="none"
+      >
         <path
           d="M45 10H1M1 10L10 1M1 10L10 19"
           stroke="currentColor"
@@ -58,7 +92,11 @@ function ArrowSolid({ onClick }: { onClick: () => void }) {
         height: "clamp(40px, 5vw, 72px)",
       }}
     >
-      <svg className="w-[24px] h-[12px] sm:w-[32px] sm:h-[14px] lg:w-[46px] lg:h-[20px]" viewBox="0 0 46 20" fill="none">
+      <svg
+        className="w-[24px] h-[12px] sm:w-[32px] sm:h-[14px] lg:w-[46px] lg:h-[20px]"
+        viewBox="0 0 46 20"
+        fill="none"
+      >
         <path
           d="M1 10H45M45 10L36 1M45 10L36 19"
           stroke="currentColor"
@@ -71,7 +109,11 @@ function ArrowSolid({ onClick }: { onClick: () => void }) {
   );
 }
 
-export default function PosterCarousel({ items = ITEMS }: { items?: typeof ITEMS }) {
+export default function PosterCarousel({
+  items = ITEMS,
+}: {
+  items?: typeof ITEMS;
+}) {
   const data = useMemo(() => items, [items]);
   const [index, setIndex] = useState(2);
   const [direction, setDirection] = useState(1);
@@ -91,16 +133,29 @@ export default function PosterCarousel({ items = ITEMS }: { items?: typeof ITEMS
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
+
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [prev, next]);
 
+  const getWrappedDistance = (itemIndex: number) => {
+    const raw = itemIndex - index;
+    const altPositive = raw + data.length;
+    const altNegative = raw - data.length;
+
+    return [raw, altPositive, altNegative].reduce((closest, current) =>
+      Math.abs(current) < Math.abs(closest) ? current : closest
+    );
+  };
+
+  const CARD_WIDTH = 320;
+  const GAP = 28;
+  const STEP = CARD_WIDTH + GAP;
+
   return (
     <div className="relative w-full">
-
-      {/* ── Header row: title left, arrows right (ExploreMore style) ── */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12 lg:mb-16 xl:mb-[88px]">
-        {/* Title */}
+      {/* Header */}
+      <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-start sm:justify-between sm:gap-6 md:mb-12 lg:mb-16 xl:mb-[88px]">
         <div>
           <h2
             className="font-montserrat font-semibold text-white tracking-[0.02em]"
@@ -109,7 +164,7 @@ export default function PosterCarousel({ items = ITEMS }: { items?: typeof ITEMS
             Worn by You, Loved
           </h2>
           <h3
-            className="mt-1 sm:mt-2 font-montserrat font-semibold tracking-[0.02em]"
+            className="mt-1 font-montserrat font-semibold tracking-[0.02em] sm:mt-2"
             style={{ fontSize: "clamp(28px, 4.2vw, 58px)", lineHeight: "1.15" }}
           >
             <span className="text-white">by</span>{" "}
@@ -117,14 +172,13 @@ export default function PosterCarousel({ items = ITEMS }: { items?: typeof ITEMS
           </h3>
         </div>
 
-        {/* Arrows */}
-        <div className="flex items-center gap-3 sm:gap-4 lg:gap-5 flex-shrink-0">
+        <div className="flex flex-shrink-0 items-center gap-3 sm:gap-4 lg:gap-5">
           <ArrowOutline onClick={prev} />
           <ArrowSolid onClick={next} />
         </div>
       </div>
 
-      {/* ── MOBILE / TABLET (< lg): single card at a time ── */}
+      {/* MOBILE / TABLET */}
       <div className="lg:hidden w-full">
         <div className="flex justify-center px-2 sm:px-4">
           <AnimatePresence initial={false} custom={direction} mode="wait">
@@ -135,51 +189,71 @@ export default function PosterCarousel({ items = ITEMS }: { items?: typeof ITEMS
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -direction * 50 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="w-full max-w-[360px] sm:max-w-[400px] md:max-w-[440px] aspect-[428/715]"
+              className="w-full max-w-[360px] aspect-[428/715] sm:max-w-[400px] md:max-w-[440px]"
             >
               <PosterCard item={data[index]} active />
             </motion.div>
           </AnimatePresence>
         </div>
-
       </div>
 
-      {/* ── DESKTOP (lg+): all cards in a row ── */}
-      <div className="hidden lg:block w-full overflow-hidden">
-        <div className="flex items-center justify-center gap-3 xl:gap-5 2xl:gap-8 select-none">
-          {data.map((item, i) => {
-            const distance = Math.abs(i - index);
-            const isCenter = distance === 0;
-            const isNear = distance === 1;
+      {/* DESKTOP CENTER MODE */}
+{/* DESKTOP CENTER MODE */}
+<div className="hidden lg:block w-full overflow-visible">
+  <div className="relative mx-auto flex h-[900px] w-full max-w-[1600px] items-center justify-center overflow-visible">
+    <motion.div
+      animate={{ x: 0 }}
+      transition={{ duration: 0.45, ease: "easeInOut" }}
+      className="relative h-full w-full overflow-visible"
+    >
+      {data.map((item, i) => {
+        const distance = getWrappedDistance(i);
+        const isCenter = distance === 0;
 
-            return (
-              <motion.div
-                key={item.id}
-                animate={{
-                  scale: isCenter ? 1 : isNear ? 0.9 : 0.75,
-                  opacity: isCenter ? 1 : isNear ? 0.6 : 0.2,
-                  y: isCenter ? -16 : 0,
-                }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="flex-shrink-0"
-                style={{
-                  width: isCenter
-                    ? "clamp(300px, 24vw, 428px)"
-                    : isNear
-                      ? "clamp(250px, 20vw, 360px)"
-                      : "clamp(200px, 16vw, 300px)",
-                  aspectRatio: "428 / 715",
-                  zIndex: isCenter ? 40 : 10,
-                }}
-                role="group"
-              >
-                <PosterCard item={item} active={isCenter} />
-              </motion.div>
-            );
-          })}
-        </div>
+        let scale = 0.8;
+        let opacity = 0.2;
+        let y = 0;
 
-      </div>
-    </div>
+        if (distance === 0) {
+          scale = 1.16;
+          opacity = 1;
+          y = -18;
+        } else if (Math.abs(distance) === 1) {
+          scale = 0.88;
+          opacity = 0.55;
+          y = 4;
+        } else if (Math.abs(distance) === 2) {
+          scale = 0.76;
+          opacity = 0.18;
+          y = 8;
+        }
+
+        return (
+          <motion.div
+            key={item.id}
+            animate={{
+              x: distance * STEP,
+              scale,
+              opacity,
+              y,
+            }}
+            transition={{ duration: 0.45, ease: "easeInOut" }}
+            className="absolute left-1/2 top-1/2 origin-center overflow-visible"
+            style={{
+              width: `${CARD_WIDTH}px`,
+              aspectRatio: "428 / 715",
+              zIndex: isCenter ? 50 : 10 - Math.abs(distance),
+              marginLeft: `${-CARD_WIDTH / 2}px`,
+              marginTop: `${-715 / 2}px`,
+              pointerEvents: isCenter ? "auto" : "none",
+            }}
+          >
+            <PosterCard item={item} active={isCenter} />
+          </motion.div>
+        );
+      })}
+    </motion.div>
+  </div>
+</div>    </div>
   );
 }

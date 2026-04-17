@@ -38,6 +38,7 @@ export default function ExploreCard({
           src={item.image || ""}
           alt={item.title || "image"}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 294px"
           className="object-cover transition duration-500 group-hover:scale-105"
         />
       </div>
@@ -58,10 +59,9 @@ export default function ExploreCard({
             shrink-0 w-11 h-11 rounded-full border border-[#6F2CFF]
             flex items-center justify-center text-[#8E52FF]
             transition-all duration-300
-            ${
-              isSelected
-                ? "shadow-[0_0_18px_rgba(111,44,255,0.35)]"
-                : "opacity-80"
+            ${isSelected
+              ? "shadow-[0_0_18px_rgba(111,44,255,0.35)]"
+              : "opacity-80"
             }
             group-hover:scale-110
           `}
