@@ -22,207 +22,212 @@ export default function LovedCard({
   position: "left" | "center" | "right";
   isActive: boolean;
 }) {
-  const ICON_BG = "rgba(255,255,255,0.01)";
-  const ICON_BORDER = "rgba(255,255,255,0.06)";
-  const ICON_FG = "#575757";
+  const imageScale =
+    position === "center" ? (isActive ? 1.2 : 1.08) : isActive ? 1.08 : 0.98;
+
+  const imageY =
+    position === "center" ? (isActive ? -26 : -16) : isActive ? -18 : -10;
 
   return (
-    <motion.div
-      aria-hidden={!isActive}
+    <motion.article
       initial={false}
-      className="group relative w-full aspect-[538/660] overflow-visible rounded-sm"
-      style={{ background: "#1B1A1A" }}
+      animate={{
+        scale: isActive ? 1 : 0.94,
+        opacity: isActive ? 1 : 0.82,
+        y: isActive ? 0 : 8,
+      }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative w-full max-w-[538px]"
+      aria-hidden={!isActive}
     >
-      {/* TOP RIGHT ICONS */}
-      <div className="absolute right-4 top-4 z-50 flex flex-col gap-3 sm:right-5 sm:top-5 lg:right-6 lg:top-6 lg:gap-4">
-        <button
-          type="button"
-          aria-label="favorite"
-          className="flex h-[42px] w-[42px] items-center justify-center rounded-full transition-all sm:h-[48px] sm:w-[48px] lg:h-[56px] lg:w-[56px]"
-          style={{
-            background: ICON_BG,
-            border: `1px solid ${ICON_BORDER}`,
-            opacity: 0.9,
-          }}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden
-            className="h-4 w-4 lg:h-[18px] lg:w-[18px]"
-          >
-            <path
-              d="M12 21s-7.333-4.667-10-8.333C-1 6.667 4.333 3 7.333 6c1.667 1.667 4.667 4 4.667 4s3-2.333 4.667-4C19.667 3 25 6.667 22 12.667 19.333 16.333 12 21 12 21z"
-              fill={ICON_FG}
-            />
-          </svg>
-        </button>
+<div className="
+  relative
+  h-[400px]
+  sm:h-[460px]
+  md:h-[450px]
+  lg:h-[380px]
+  xl:h-[420px]
+  w-full
+  overflow-visible
+  rounded-[2px]
+  bg-[#141414]
+">        {/* subtle premium card shading */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.03),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.02)_0%,rgba(0,0,0,0)_20%,rgba(0,0,0,0.18)_100%)]" />
 
-        <button
-          type="button"
-          aria-label="add-to-cart"
-          className="flex h-[42px] w-[42px] items-center justify-center rounded-full transition-all sm:h-[48px] sm:w-[48px] lg:h-[56px] lg:w-[56px]"
-          style={{
-            background: ICON_BG,
-            border: `1px solid ${ICON_BORDER}`,
-            opacity: 0.9,
-          }}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden
-            className="h-4 w-4 lg:h-[18px] lg:w-[18px]"
-          >
-            <path
-              d="M6 6h15l-1.5 9h-12z"
-              stroke={ICON_FG}
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-            />
-            <circle cx="10" cy="20" r="1.4" fill={ICON_FG} />
-            <circle cx="18" cy="20" r="1.4" fill={ICON_FG} />
-          </svg>
-        </button>
-      </div>
+        {/* right actions */}
+        <div className="absolute right-4 top-5 z-30 flex flex-col gap-3 sm:right-5 sm:top-6 lg:right-6 lg:gap-4">
+          <ActionIcon label="favorite">
+            <svg viewBox="0 0 24 24" aria-hidden className="h-[18px] w-[18px]">
+              <path
+                d="M12 20.5s-6.9-4.33-9.35-7.73C.02 9.04 2.24 5.5 6.15 5.5c2.07 0 3.41 1.05 4.29 2.2.88-1.15 2.22-2.2 4.29-2.2 3.91 0 6.13 3.54 3.5 7.27C18.9 16.17 12 20.5 12 20.5Z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </ActionIcon>
 
-      {/* IMAGE AREA */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-[-12%] w-[87%] -translate-x-1/2"
-        style={{
-          aspectRatio: "467 / 434",
-          overflow: "visible",
-        }}
-      >
-        <motion.div
-          initial={false}
-          animate={{
-  width: isActive ? "70%" : "54%",
-  height: isActive ? "90%" : "60%",
-  y: isActive ? "-14%" : "-4%",
-  scale: isActive ? 1.05 : 1,
-}}
-          whileHover={
-  isActive
-    ? {
-        width: "62%",
-        height: "82%",
-        y: "-14%",
-        scale: 1,
-      }
-    : {}
-}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="absolute left-1/2 top-0 z-30 -translate-x-1/2"
-          style={{ overflow: "visible" }}
-        >
-          <div className="relative h-full w-full overflow-visible">
+          <ActionIcon label="add-to-cart">
+            <svg viewBox="0 0 24 24" aria-hidden className="h-[18px] w-[18px]">
+              <path
+                d="M3.75 5.25h2.1l1.5 9h10.35l1.5-6.75H7.05"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="10" cy="18.25" r="1.35" fill="currentColor" />
+              <circle cx="17.25" cy="18.25" r="1.35" fill="currentColor" />
+            </svg>
+          </ActionIcon>
+        </div>
+
+        {/* product visual */}
+        <div className="pointer-events-none absolute inset-x-0 top-[-18%] z-20 flex justify-center overflow-visible">
+          <motion.div
+            initial={false}
+            animate={{
+              scale: imageScale,
+              y: imageY,
+              rotate: position === "left" ? -5 : position === "right" ? 5 : 0,
+            }}
+            whileHover={
+              isActive
+                ? {
+                  y: imageY - 6,
+                  scale: imageScale + 0.03,
+                }
+                : {}
+            }
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className={`relative ${position === "center"
+              ? "h-[180px] w-[180px] sm:h-[200px] sm:w-[200px] lg:h-[180px] lg:w-[180px] xl:h-[200px] xl:w-[200px]"
+              : "h-[180px] w-[180px] sm:h-[200px] sm:w-[200px] lg:h-[180px] lg:w-[180px] xl:h-[200px] xl:w-[200px]"
+              } `}
+          >
             <Image
               src={product.image}
               alt={product.title}
               fill
-              className="object-contain"
-              sizes="(min-width:1024px) 400px, 300px"
               priority
+              sizes="(min-width: 1280px) 430px, (min-width: 768px) 350px, 300px"
+              className="object-contain"
             />
-          </div>
-        </motion.div>
-      </div>
-
-      {/* CARD CONTENT */}
-      <div className="absolute bottom-[6%] left-4 right-4 z-20 sm:left-5 sm:right-5 lg:left-6 lg:right-6">
-        <div className="flex items-start justify-between">
-          <div className="min-w-0 flex-1">
-            <div className="mb-1.5 flex items-center gap-1.5 sm:mb-2 sm:gap-2 lg:mb-3 lg:gap-3">
-              <div
-                className="flex items-center gap-0.5 text-[#FFA024]"
-                style={{ fontSize: "clamp(10px, 1.2vw, 16px)" }}
-              >
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-              </div>
-
-              <div
-                className="text-white/60"
-                style={{ fontSize: "clamp(10px, 1.1vw, 14px)" }}
-              >
-                {product.reviews}
-              </div>
-            </div>
-
-            <div
-              className="font-montserrat leading-[1.2] text-white"
-              style={{
-                fontSize: "clamp(14px, 1.8vw, 22px)",
-                fontWeight: 600,
-              }}
-            >
-              {product.title}
-            </div>
-
-            <div
-              className="mt-1 text-white/60 sm:mt-2"
-              style={{ fontSize: "clamp(11px, 1.2vw, 15px)" }}
-            >
-              {product.subtitle}
-            </div>
-          </div>
-
-          {product.tag && (
-            <div className="ml-2 mt-1 flex-shrink-0 sm:ml-3 lg:ml-4">
-              <div
-                className="rounded-[8px] bg-[rgba(255,255,255,0.06)] px-2 py-0.5 text-white sm:px-3 sm:py-1"
-                style={{ fontSize: "clamp(10px, 1vw, 13px)" }}
-              >
-                {product.tag}
-              </div>
-            </div>
-          )}
+          </motion.div>
         </div>
 
-        <div className="mt-3 flex items-center justify-between gap-2 sm:mt-4 sm:gap-3 lg:mt-6 lg:gap-4">
-          <div className="min-w-0">
-            <div
-              className="font-poppins text-white"
-              style={{
-                fontSize: "clamp(16px, 1.8vw, 24px)",
-                fontWeight: 600,
-              }}
-            >
-              {product.price}
-            </div>
-
-            {product.compareAt && (
-              <div
-                className="text-white/30 line-through"
-                style={{ fontSize: "clamp(12px, 1.2vw, 16px)" }}
-              >
-                {product.compareAt}
-              </div>
-            )}
-          </div>
-
-          <button
-            type="button"
-            aria-label={`Buy ${product.title}`}
-            className={`flex-shrink-0 whitespace-nowrap rounded-[40px] font-montserrat transition ${
-              isActive
-                ? "bg-[#845CF2] text-white"
-                : "border border-white/20 bg-transparent text-white/80"
-            }`}
-            style={{
-              fontSize: "clamp(12px, 1.2vw, 16px)",
-              fontWeight: 700,
-              padding: "clamp(8px, 1vw, 12px) clamp(16px, 2.5vw, 32px)",
-            }}
-          >
-            Buy Now
-          </button>
+{/* content */}
+<div className="absolute inset-x-0 bottom-0 z-20 px-4 pb-5 sm:px-5 sm:pb-6 lg:px-7 lg:pb-7">
+  <div className="flex min-h-[210px] flex-col justify-end">
+    {/* rating + tag */}
+    <div className="mb-4 flex items-start justify-between gap-3">
+      <div>
+        <div className="flex items-center gap-1 text-[#F6A623]">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <span key={i} className="text-[15px] leading-none">
+              ★
+            </span>
+          ))}
         </div>
+        <p className="mt-1 text-[14px] font-medium text-white/58">
+          {product.reviews ?? "12 reviews"}
+        </p>
       </div>
-    </motion.div>
+
+      {product.tag ? (
+        <span className="mt-1 shrink-0 rounded-[10px] border border-white/14 bg-white/[0.06] px-4 py-2 text-[14px] font-medium text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md">
+          {product.tag}
+        </span>
+      ) : null}
+    </div>
+
+    {/* title + subtitle */}
+    <div className="min-w-0">
+      <h3
+        className="
+          text-[22px]
+          sm:text-[26px]
+          md:text-[30px]
+          lg:text-[10px]
+          xl:text-[18px]
+          2xl:text-[22px]
+          leading-[1.05]
+          tracking-[0.04em]
+          font-semibold
+          text-white
+        "
+      >
+        {product.title}
+      </h3>
+
+      <p
+        className="
+          mt-4
+          text-[13px]
+          sm:text-[14px]
+          md:text-[15px]
+          lg:text-[10px]
+          xl:text-[14px]
+          text-white/60
+          leading-[1.35]
+        "
+      >
+        {product.subtitle}
+      </p>
+    </div>
+
+    {/* price + button */}
+    <div className="mt-7 flex items-end justify-between gap-4">
+      <div>
+        <div className="text-[28px] font-semibold leading-none tracking-[-0.04em] text-white">
+          {product.price}
+        </div>
+        {product.compareAt ? (
+          <div className="mt-2 text-[18px] leading-none text-white/24 line-through">
+            {product.compareAt}
+          </div>
+        ) : null}
+      </div>
+
+      <motion.button
+        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: isActive ? 1.02 : 1.01 }}
+        type="button"
+        aria-label={`Buy ${product.title}`}
+        className={`inline-flex h-[52px] min-w-[136px] lg:min-w-[146px] items-center justify-center rounded-full px-8 text-[18px] font-semibold tracking-[0.02em] transition-all duration-300 ${
+          isActive
+            ? "bg-[#8B5CF6] text-white shadow-[0_12px_30px_rgba(139,92,246,0.35)]"
+            : "border border-white/28 bg-transparent text-white/72"
+        }`}
+      >
+        Buy Now
+      </motion.button>
+    </div>
+  </div>
+</div>
+        {/* very soft bottom fade */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-black/22 to-transparent" />
+      </div>
+    </motion.article>
+  );
+}
+
+function ActionIcon({
+  children,
+  label,
+}: {
+  children: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      className="flex h-[54px] w-[54px] items-center justify-center rounded-full border border-white/14 bg-white/[0.02] text-white/38 backdrop-blur-sm transition-all duration-300 hover:border-white/25 hover:bg-white/[0.05] hover:text-white/60"
+    >
+      {children}
+    </button>
   );
 }

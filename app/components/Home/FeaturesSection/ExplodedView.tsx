@@ -17,14 +17,16 @@ export default function ExplodedView({
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
       className="
-        w-[70vw] h-[70vw]
-        max-w-[320px] max-h-[320px]
-        sm:max-w-[400px] sm:max-h-[400px]
-        md:max-w-[500px] md:max-h-[500px]
-        lg:max-w-[600px] lg:max-h-[600px]
-        xl:max-w-[748px] xl:max-h-[748px]
-        mx-auto pointer-events-none
-      "
+  w-[88vw] h-[88vw]
+  max-w-[560px] max-h-[560px]
+  sm:w-[82vw] sm:h-[82vw]
+  sm:max-w-[640px] sm:max-h-[640px]
+  md:w-[70vw] md:h-[70vw]
+  md:max-w-[760px] md:max-h-[760px]
+  lg:max-w-[600px] lg:max-h-[600px]
+  xl:max-w-[748px] xl:max-h-[748px]
+  mx-auto pointer-events-none
+"
     >
       <div className="relative w-full h-full">
         <Image

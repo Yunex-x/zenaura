@@ -90,11 +90,148 @@ const imageVariants: Variants = {
     },
   },
 };
+function ArrowLeftSvg() {
+  return (
+    <svg
+      className="h-[12px] w-[24px] sm:h-[14px] sm:w-[30px] lg:h-[20px] lg:w-[46px]"
+      viewBox="0 0 46 20"
+      fill="none"
+    >
+      <path
+        d="M45 10H1M1 10L10 1M1 10L10 19"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ArrowRightSvg() {
+  return (
+    <svg
+      className="h-[12px] w-[24px] sm:h-[14px] sm:w-[30px] lg:h-[20px] lg:w-[46px]"
+      viewBox="0 0 46 20"
+      fill="none"
+    >
+      <path
+        d="M1 10H45M45 10L36 1M45 10L36 19"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export default function HeroSlide({ product, direction }: Props) {
-  return (
-    <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
+return (
+  <div className="relative w-full">
+{/* ================= MOBILE ================= */}
+<div className="relative mx-auto block h-[374px] w-full max-w-[393px] overflow-hidden md:hidden">
+  {/* glow only, no extra background */}
+  <div className="absolute right-[36px] top-[76px] h-[155px] w-[155px] rounded-full bg-[rgba(170,106,255,0.28)] blur-[72px]" />
+  <div className="absolute left-[-18px] top-[52px] h-[120px] w-[34px] rotate-[75deg] bg-[rgba(170,106,255,0.14)] blur-[42px]" />
 
+  {/* text */}
+  <motion.div
+    className="absolute left-[16px] top-[58px] z-20 w-[178px]"
+    variants={textContainerVariants}
+    initial="hidden"
+    animate="visible"
+    custom={direction}
+  >
+    <motion.h1
+      custom={direction}
+      variants={textItemVariants}
+      className="
+        font-montserrat
+        font-semibold
+        text-white
+        tracking-[0.04em]
+        leading-[0.98]
+        text-[21px]
+        
+      
+      "
+    >
+      {product.title}
+    </motion.h1>
+
+    {product.subtitle && (
+      <motion.p
+        custom={direction}
+        variants={textItemVariants}
+        className="
+          mt-[24px]
+          font-poppins
+          text-white/58
+          text-[12px]
+          leading-[1.55]
+          tracking-[0.02em]
+        "
+      >
+        {product.subtitle}
+      </motion.p>
+    )}
+
+    <motion.div
+      variants={ctaVariants}
+      initial="hidden"
+      animate="visible"
+      className="mt-[34px]"
+    >
+      <motion.a
+        href="#buy"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="
+          inline-flex h-[43px] w-[138px]  items-center justify-center
+          rounded-full
+          bg-[linear-gradient(90deg,#9667FF_0%,#7B5AF5_100%)]
+          font-montserrat text-[16px] font-bold text-white
+          shadow-[0_10px_30px_rgba(132,92,242,0.22)]
+        "
+      >
+        Buy Now
+      </motion.a>
+    </motion.div>
+  </motion.div>
+
+  {/* product visual */}
+  <motion.div
+    custom={direction}
+    variants={imageVariants}
+    initial="hidden"
+    animate="visible"
+    className="absolute right-[-2px] top-[42px] z-10 h-[338px] w-[212px]"
+  >
+    <motion.div
+      className="relative h-full w-full"
+      animate={{
+        y: [0, -6, 0],
+        rotate: [0, 0.4, 0, -0.4, 0],
+      }}
+      transition={{
+        y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+        rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+      }}
+    >
+      <Image
+        src={product.image}
+        alt={product.title}
+        fill
+        priority
+        className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.45)]"
+        sizes="212px"
+      />
+    </motion.div>
+  </motion.div>
+</div>
+    {/* ================= DESKTOP ================= */}
+    <div className="hidden w-full md:flex flex-row items-center justify-between gap-6 sm:gap-8">
       {/* ── Left content with staggered reveal ── */}
       <motion.div
         className="w-full md:w-1/2 max-w-[670px] px-4 sm:px-6 md:pl-6 lg:pl-12"
@@ -103,74 +240,74 @@ export default function HeroSlide({ product, direction }: Props) {
         animate="visible"
         custom={direction}
       >
-        {/* Title — split into lines for staggered entrance */}
-<motion.h1
-  custom={direction}
-  variants={textItemVariants}
-  className="
-    font-montserrat
-    font-[600]
-    whitespace-pre-line
-    tracking-[-0.02em]
-    bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)]
-    bg-clip-text
-    text-transparent
-    max-w-[589px]
-  "
-  style={{
-    fontSize: "clamp(34px, 4.1vw, 64px)",
-    lineHeight: "clamp(42px, 4.8vw, 78px)",
-  }}
->
-  {product.title}
-</motion.h1>
+        <motion.h1
+          custom={direction}
+          variants={textItemVariants}
+          className="
+            font-montserrat
+            font-[600]
+            whitespace-pre-line
+            tracking-[-0.02em]
+            bg-[linear-gradient(90deg,#FFFFFF_63.39%,rgba(62,62,62,0.21)_143.55%)]
+            bg-clip-text
+            text-transparent
+            max-w-[589px]
+          "
+          style={{
+            fontSize: "clamp(34px, 4.1vw, 64px)",
+            lineHeight: "clamp(42px, 4.8vw, 78px)",
+          }}
+        >
+          {product.title}
+        </motion.h1>
 
+        {product.subtitle && (
+          <motion.p
+            custom={direction}
+            variants={textItemVariants}
+            className="mt-4 sm:mt-5 lg:mt-6 font-poppins text-white/70 max-w-[760px]"
+            style={{
+              fontSize: "18px",
+              lineHeight: "44px",
+              letterSpacing: "0.02em",
+            }}
+          >
+            {product.subtitle}
+          </motion.p>
+        )}
 
-{product.subtitle && (
-  <motion.p
-    custom={direction}
-    variants={textItemVariants}
-className="mt-4 sm:mt-5 lg:mt-6 font-poppins text-white/70 max-w-[760px]"style={{
-  fontSize: "18px",
-  lineHeight: "44px",
-  letterSpacing: "0.02em",
-}}  >
-    {product.subtitle}
-  </motion.p>
-)}
-        {/* CTA — springs in with glow */}
         <motion.div
           variants={ctaVariants}
           initial="hidden"
           animate="visible"
           className="mt-6 sm:mt-7 lg:mt-16 mb-[150px]"
         >
- <motion.a
-  href="#buy"
-  whileHover={{ scale: 1.03 }}
-  whileTap={{ scale: 0.97 }}
-  className="
-    inline-flex items-center justify-center
-    rounded-full
-    font-montserrat font-[700]
-    text-white
-    bg-[linear-gradient(90deg,#9667FF_0%,#7B5AF5_100%)]
-    shadow-[0_8px_24px_rgba(132,92,242,0.28)]
-    transition-all duration-300
-  "
-  style={{
-    width: "clamp(180px, 14vw, 211px)",
-    height: "clamp(58px, 4.8vw, 68px)",
-    fontSize: "clamp(18px, 1.7vw, 22px)",
-    lineHeight: "1",
-  }}
->
-  Buy Now
-</motion.a>
+          <motion.a
+            href="#buy"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="
+              inline-flex items-center justify-center
+              rounded-full
+              font-montserrat font-[700]
+              text-white
+              bg-[linear-gradient(90deg,#9667FF_0%,#7B5AF5_100%)]
+              shadow-[0_8px_24px_rgba(132,92,242,0.28)]
+              transition-all duration-300
+            "
+            style={{
+              width: "clamp(180px, 14vw, 211px)",
+              height: "clamp(58px, 4.8vw, 68px)",
+              fontSize: "clamp(18px, 1.7vw, 22px)",
+              lineHeight: "1",
+            }}
+          >
+            Buy Now
+          </motion.a>
         </motion.div>
       </motion.div>
 
-      {/* ── Right visual — spring entrance with floating idle animation ── */}
+      {/* ── Right visual ── */}
       <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end md:pr-6 lg:pr-12">
         <motion.div
           custom={direction}
@@ -183,7 +320,6 @@ className="mt-4 sm:mt-5 lg:mt-6 font-poppins text-white/70 max-w-[760px]"style={
             height: "clamp(260px, 40vw, 700px)",
           }}
         >
-          {/* Soft glow behind the product */}
           <motion.div
             className="absolute inset-[10%] rounded-full pointer-events-none"
             initial={{ opacity: 0, scale: 0.6 }}
@@ -197,11 +333,11 @@ className="mt-4 sm:mt-5 lg:mt-6 font-poppins text-white/70 max-w-[760px]"style={
               delay: 0.3,
             }}
             style={{
-              background: "radial-gradient(circle, rgba(132,92,242,0.2) 0%, transparent 70%)",
+              background:
+                "radial-gradient(circle, rgba(132,92,242,0.2) 0%, transparent 70%)",
             }}
           />
 
-          {/* Floating idle animation on the image */}
           <motion.div
             className="relative w-full h-full"
             animate={{
@@ -225,5 +361,5 @@ className="mt-4 sm:mt-5 lg:mt-6 font-poppins text-white/70 max-w-[760px]"style={
         </motion.div>
       </div>
     </div>
-  );
-}
+  </div>
+);}

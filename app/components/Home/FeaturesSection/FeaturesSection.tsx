@@ -80,7 +80,80 @@ const ICON_RULER = (
     <path d="M23 10.333v7" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
+function MobileFeatureCard({
+  title,
+  subtitle,
+  iconSvg,
+}: {
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  iconSvg?: React.ReactNode;
+}) {
+  return (
+    <div
+      className="
+        relative shrink-0
+        w-[292px] h-[200px]   
+        sm:w-[320px] sm:h-[210px]
+        md:w-[340px] md:h-[220px]
 
+        rounded-[18px]
+        border border-white/10
+        bg-[#080808]/70
+        backdrop-blur-[18px]
+
+        px-6 pt-6 pb-5   
+        shadow-[0_20px_60px_rgba(0,0,0,0.35)]
+
+        flex flex-col justify-between   
+      "
+    >
+      {/* top */}
+      <div>
+        {/* icon */}
+        <div className="flex h-[56px] w-[56px] items-center justify-center rounded-full bg-white/[0.04]">
+          <div className="h-[26px] w-[26px] [&>svg]:h-full [&>svg]:w-full">
+            {iconSvg}
+          </div>
+        </div>
+
+        {/* title */}
+        <div
+          className="
+            mt-4
+            font-montserrat
+            text-white
+            font-semibold
+            tracking-[-0.03em]
+            text-[22px]
+            sm:text-[24px]
+            md:text-[26px]
+            leading-[1.15]
+          "
+        >
+          {title}
+        </div>
+      </div>
+
+      {/* bottom (description always inside) */}
+      {subtitle && (
+        <div
+          className="
+            font-montserrat
+            text-white/45
+            text-[12px]
+            sm:text-[13px]
+            md:text-[14px]
+            leading-[1.35]
+            tracking-[-0.01em]
+          "
+        >
+          {subtitle}
+        </div>
+      )}
+    </div>
+  );
+}
 export default function FeaturesSection(): JSX.Element {
   return (
     <section className="relative w-screen max-w-full bg-[#0D0D0D] overflow-hidden">
@@ -124,34 +197,48 @@ export default function FeaturesSection(): JSX.Element {
         <div className="h-10 sm:h-14 md:h-20 lg:h-[100px] xl:h-[160px]" />
 
         {/* ═══ MOBILE / TABLET (< lg): stacked ═══ */}
-        <div className="lg:hidden">
-          <div className="flex justify-center mb-8 sm:mb-10 md:mb-12">
-            <ExplodedView />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
-            <FeatureStat
-              iconSvg={ICON_LINK}
-              title={<span>14 million+ ZENAURA</span>}
-              subtitle="Trusted worldwide for hearing protection and well-being."
-            />
-            <FeatureStat
-              iconSvg={ICON_CLOCK}
-              title={<span>40+ industry-leading engineers</span>}
-              subtitle="Driving innovation in sound and design."
-            />
-            <FeatureStat
-              iconSvg={ICON_GEAR}
-              title={<span>30,000+ hours of testing</span>}
-              subtitle="Proven in practice, with real people in real scenarios."
-            />
-            <FeatureStat
-              iconSvg={ICON_RULER}
-              title={<span>6,000+ acoustic measurements</span>}
-              subtitle="Perfected for intelligent, reliable noise reduction."
-            />
-          </div>
-        </div>
+{/* ═══ MOBILE / TABLET (< lg): image-first + horizontal cards ═══ */}
+<div className="relative lg:hidden">
+  {/* image area */}
+  <div className="relative mx-auto h-[580px] w-full max-w-[393px] sm:h-[860px] md:h-[840px] md:max-w-[760px] overflow-hidden">
+    {/* left purple glow */}
+    <div className="pointer-events-none absolute left-[-80px] top-[70px] h-[420px] w-[180px] rounded-full bg-[rgba(170,106,255,0.14)] blur-[90px]" />
 
+    {/* exploded image */}
+    <div className="absolute left-1/2 top-[20px] -translate-x-1/2 md:top-[40px]">
+      <ExplodedView />
+    </div>
+
+    {/* bottom cards rail */}
+    <div className="absolute bottom-0 left-0 right-0 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex w-max gap-4 px-4 sm:px-5 md:px-6">
+        <MobileFeatureCard
+          iconSvg={ICON_LINK}
+          title="14 million+ ZENAURA"
+          subtitle="Trusted worldwide for hearing protection and well-being."
+        />
+
+        <MobileFeatureCard
+          iconSvg={ICON_CLOCK}
+          title="40+ Industry Engineers"
+          subtitle="Trusted worldwide for hearing protection and well-being."
+        />
+
+        <MobileFeatureCard
+          iconSvg={ICON_GEAR}
+          title="30,000+ Hours Testing"
+          subtitle="Proven in practice, with real people in real scenarios."
+        />
+
+        <MobileFeatureCard
+          iconSvg={ICON_RULER}
+          title="6,000+ Acoustic Measurements"
+          subtitle="Perfected for intelligent, reliable noise reduction."
+        />
+      </div>
+    </div>
+  </div>
+</div>
         {/* ═══ DESKTOP (lg+): positioned layout with connector SVGs ═══ */}
         <div className="hidden lg:block relative" style={{ height: "clamp(550px, 54vw, 748px)" }}>
 

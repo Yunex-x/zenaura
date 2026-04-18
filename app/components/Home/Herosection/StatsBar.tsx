@@ -3,74 +3,76 @@ import React, { JSX } from "react";
 export default function StatsBar(): JSX.Element {
   return (
     <div
-      className="
-  absolute left-2 right-2 sm:left-3 sm:right-3 md:left-[4%] md:right-[4%] lg:left-[4%] lg:right-[4%] xl:left-[160px] xl:right-[160px]
-  bottom-3 sm:bottom-4 md:bottom-6 lg:bottom-[40px] xl:bottom-[60px]
-  border border-white/10 bg-white/8 backdrop-blur-xl supports-[backdrop-filter]:bg-white/1
-  rounded-[12px] sm:rounded-[16px] md:rounded-[20px] lg:rounded-[24px]
-  py-3 sm:py-4 lg:py-0 lg:h-[90px]
-  px-3 sm:px-4 md:px-6
-  shadow-[0_8px_30px_rgba(0,0,0,0.18)]
-  z-30
-  flex items-center justify-around
-"
-      
-      role="region"
-      aria-label="Statistics"
-    >
-      {/* Stat 1 */}
-      <div className="flex flex-col items-center gap-1 sm:gap-2 text-center min-w-0">
-        <div
-          className="font-space font-[700] text-[#D9D9D9]  tracking-[0.03em] leading-[1.2]"
-          style={{ fontSize: "clamp(14px, 2.5vw, 30px)" }}
-        >
-          55,000+
-        </div>
-        <div
-          className="font-poppins font-[400] text-white/60 tracking-[0.04em] leading-[1.2]"
-          style={{ fontSize: "clamp(9px, 1.2vw, 14px)" }}
-        >
-          Five-star reviews
-        </div>
-      </div>
+  className="
+    absolute left-1/2 -translate-x-1/2
+    bottom-[30px] md:bottom-[40px] xl:bottom-[60px]
 
-      {/* Divider */}
-      <div className="w-[1px] h-[24px] sm:h-[30px] md:h-[36px] lg:h-[45px] bg-white/10 flex-shrink-0" />
+    w-[92%] max-w-[1150px]
 
-      {/* Stat 2 */}
-      <div className="flex flex-col items-center gap-1 sm:gap-2 text-center min-w-0">
-        <div
-          className="font-space font-[700] text-[#D9D9D9] tracking-[0.03em] leading-[1.2]"
-          style={{ fontSize: "clamp(14px, 2.5vw, 30px)" }}
-        >
-          2‑Year
-        </div>
-        <div
-          className="font-poppins font-[400] text-white/60 tracking-[0.04em] leading-[1.2]"
-          style={{ fontSize: "clamp(9px, 1.2vw, 14px)" }}
-        >
-          Warranty
-        </div>
-      </div>
+    flex items-center justify-between
 
-      {/* Divider */}
-      <div className="w-[1px] h-[24px] sm:h-[30px] md:h-[36px] lg:h-[45px] bg-white/10 flex-shrink-0" />
+    px-6 md:px-10
+    h-[70px] md:h-[82px]
 
-      {/* Stat 3 */}
-      <div className="flex flex-col items-center gap-1 sm:gap-2 text-center min-w-0">
-        <div
-          className="font-space font-[700] text-[#D9D9D9] tracking-[0.03em] leading-[1.2]"
-          style={{ fontSize: "clamp(14px, 2.5vw, 30px)" }}
-        >
-          100‑Days
-        </div>
-        <div
-          className="font-poppins font-[400] text-white/60 tracking-[0.04em] leading-[1.2]"
-          style={{ fontSize: "clamp(9px, 1.2vw, 14px)" }}
-        >
-          Hassle-free returns
-        </div>
-      </div>
+    rounded-[22px]
+    border border-white/10
+
+    bg-[#0B0B0B]/40
+    backdrop-blur-[22px]
+
+    shadow-[0_20px_60px_rgba(0,0,0,0.5)]
+
+    overflow-hidden
+    z-30
+  "
+>
+      {/* subtle top gradient highlight */}
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(0,0,0,0.2))]" />
+
+      {/* soft purple glow (right side like Figma) */}
+      <div className="pointer-events-none absolute right-[-60px] top-[-40px] w-[220px] h-[160px] bg-[#8E52FF]/20 blur-[60px]" />
+
+      <StatItem value="55,000+" label="Five-star reviews" />
+      <Divider />
+      <StatItem value="2-Year" label="Warranty" />
+      <Divider />
+      <StatItem value="100-Days" label="Hassle-free returns" />
     </div>
+  );
+}
+
+/* ================= ITEMS ================= */
+
+function StatItem({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="relative flex flex-1 flex-col items-center text-center">
+      <span
+        className="
+          text-[18px] md:text-[22px]
+          font-semibold
+          text-white
+          tracking-[0.02em]
+        "
+      >
+        {value}
+      </span>
+
+      <span
+        className="
+          mt-[3px]
+          text-[11px] md:text-[13px]
+          text-white/45
+          tracking-[0.03em]
+        "
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
+
+function Divider() {
+  return (
+    <div className="w-[1px] h-[28px] md:h-[36px] bg-white/10" />
   );
 }

@@ -12,7 +12,7 @@ export default function LovedSection(): JSX.Element {
       />
 
       {/* Title */}
-      <div className="w-full text-center mb-12 sm:mb-12 md:mb-28 px-4">
+      <div className="w-full text-center mb-40 px-4">
         <h2
           className="font-montserrat font-[700] text-white bg-clip-text"
           style={{

@@ -36,16 +36,36 @@ const PRODUCTS = [
 
 function ArrowLeftSvg() {
   return (
-    <svg className="w-[24px] h-[12px] sm:w-[30px] sm:h-[14px] lg:w-[46px] lg:h-[20px]" viewBox="0 0 46 20" fill="none">
-      <path d="M45 10H1M1 10L10 1M1 10L10 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      className="w-[24px] h-[12px] sm:w-[30px] sm:h-[14px] lg:w-[46px] lg:h-[20px]"
+      viewBox="0 0 46 20"
+      fill="none"
+    >
+      <path
+        d="M45 10H1M1 10L10 1M1 10L10 19"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
 function ArrowRightSvg() {
   return (
-    <svg className="w-[24px] h-[12px] sm:w-[30px] sm:h-[14px] lg:w-[46px] lg:h-[20px]" viewBox="0 0 46 20" fill="none">
-      <path d="M1 10H45M45 10L36 1M45 10L36 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      className="w-[24px] h-[12px] sm:w-[30px] sm:h-[14px] lg:w-[46px] lg:h-[20px]"
+      viewBox="0 0 46 20"
+      fill="none"
+    >
+      <path
+        d="M1 10H45M45 10L36 1M45 10L36 19"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -91,6 +111,7 @@ export default function HeroCarousel(): JSX.Element {
       if (e.key === "ArrowLeft") paginate(-1);
       if (e.key === "ArrowRight") paginate(1);
     };
+
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [paginate]);
@@ -98,72 +119,117 @@ export default function HeroCarousel(): JSX.Element {
   return (
     <div className="relative w-full overflow-hidden">
       {/* Content viewport */}
-      <div className="relative w-full min-h-[380px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[600px] xl:min-h-[640px] flex items-center">
+      <div className="relative flex w-full items-center min-h-[304px]  md:min-h-[500px] lg:min-h-[600px] xl:min-h-[640px]">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
-            key={PRODUCTS[index].id}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: "spring", stiffness: 200, damping: 28, mass: 0.8 },
-              opacity: { duration: 0.4, ease: "easeInOut" },
-              scale: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-              filter: { duration: 0.4 },
-            }}
-            className="w-full"
-          >
+  key={PRODUCTS[index].id}
+  custom={direction}
+  variants={slideVariants}
+  initial="enter"
+  animate="center"
+  exit="exit"
+  drag="x"
+  dragConstraints={{ left: 0, right: 0 }}
+  dragElastic={0.12}
+  onDragEnd={(_, info) => {
+    const offset = info.offset.x;
+    const velocity = info.velocity.x;
+
+    if (offset < -80 || velocity < -500) {
+      paginate(1);
+    } else if (offset > 80 || velocity > 500) {
+      paginate(-1);
+    }
+  }}
+  transition={{
+    x: { type: "spring", stiffness: 200, damping: 28, mass: 0.8 },
+    opacity: { duration: 0.4, ease: "easeInOut" },
+    scale: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    filter: { duration: 0.4 },
+  }}
+  className="w-full touch-pan-y cursor-grab active:cursor-grabbing"
+>
             <HeroSlide product={PRODUCTS[index]} direction={direction} />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Controls — ExploreMore style */}
-      <div
-        className="
-  relative md:absolute md:left-0 lg:left-12 md:bottom-2 lg:bottom-4 xl:bottom-6
-  mt-6 sm:mt-7 md:mt-0
-  flex items-center justify-center md:justify-start
-  gap-3 sm:gap-4 lg:gap-5
-  z-40 w-full md:w-auto
-"
-      >
-        <motion.button
-          aria-label="Previous product"
-          onClick={() => paginate(-1)}
-          whileHover={{ scale: 1.05, borderColor: "rgba(255,255,255,0.4)" }}
-          whileTap={{ scale: 0.95 }}
-          className="
-            rounded-full border border-white/20
-            flex items-center justify-center
-            text-white/70 transition-colors duration-300
-            hover:text-white
-          "
-          style={{ width: "clamp(80px, 13vw, 184px)", height: "clamp(40px, 5vw, 72px)" }}
-        >
-          <ArrowLeftSvg />
-        </motion.button>
+      {/* Mobile dots / Desktop arrows */}
+      <div className="relative z-40 w-full">
+        {/* mobile dots */}
+        <div className="mt-5 flex items-center justify-center gap-2 md:hidden">
+          {PRODUCTS.map((item, i) => {
+            const active = i === index;
 
-        <motion.button
-          aria-label="Next product"
-          onClick={() => paginate(1)}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.94 }}
-          className="
-            rounded-full bg-white
-            flex items-center justify-center
-            text-[#8E52FF]
-            shadow-[0_0_20px_rgba(142,82,255,0.15)]
-            hover:shadow-[0_0_30px_rgba(142,82,255,0.3)]
-            transition-shadow duration-300
-          "
-          style={{ width: "clamp(80px, 13vw, 184px)", height: "clamp(40px, 5vw, 72px)" }}
-        >
-          <ArrowRightSvg />
-        </motion.button>
+            return (
+              <button
+                key={item.id}
+                type="button"
+                aria-label={`Go to slide ${i + 1}`}
+                onClick={() => {
+                  setDirection(i > index ? 1 : -1);
+                  setIndex(i);
+                }}
+                className={`rounded-full transition-all duration-300 ${
+                  active
+                    ? "h-[8px] w-[28px] bg-[#8E52FF]"
+                    : "h-[8px] w-[8px] bg-white/25"
+                }`}
+              />
+            );
+          })}
+        </div>
 
+        {/* desktop arrows */}
+        <div
+          className="
+            hidden md:flex
+            md:absolute md:left-0 lg:left-12 md:bottom-2 lg:bottom-4 xl:bottom-6
+            items-center justify-start
+            gap-3 sm:gap-4 lg:gap-5
+            w-auto
+          "
+        >
+          <motion.button
+            aria-label="Previous product"
+            onClick={() => paginate(-1)}
+            whileHover={{ scale: 1.05, borderColor: "rgba(255,255,255,0.4)" }}
+            whileTap={{ scale: 0.95 }}
+            className="
+              rounded-full border border-white/20
+              flex items-center justify-center
+              text-white/70 transition-colors duration-300
+              hover:text-white
+            "
+            style={{
+              width: "clamp(80px, 13vw, 184px)",
+              height: "clamp(40px, 5vw, 72px)",
+            }}
+          >
+            <ArrowLeftSvg />
+          </motion.button>
+
+          <motion.button
+            aria-label="Next product"
+            onClick={() => paginate(1)}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.94 }}
+            className="
+              rounded-full bg-white
+              flex items-center justify-center
+              text-[#8E52FF]
+              shadow-[0_0_20px_rgba(142,82,255,0.15)]
+              hover:shadow-[0_0_30px_rgba(142,82,255,0.3)]
+              transition-shadow duration-300
+            "
+            style={{
+              width: "clamp(80px, 13vw, 184px)",
+              height: "clamp(40px, 5vw, 72px)",
+            }}
+          >
+            <ArrowRightSvg />
+          </motion.button>
+        </div>
       </div>
     </div>
   );

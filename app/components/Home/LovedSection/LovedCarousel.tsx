@@ -102,7 +102,7 @@ export default function LovedCarousel({ products }: { products?: Product[] }) {
 
       {/* Desktop */}
       <div className="hidden lg:flex w-full justify-center">
-        <div className="grid grid-cols-3 gap-4 xl:gap-6 2xl:gap-8 px-4 xl:px-8 2xl:px-12 w-full max-w-[1700px]">
+        <div className="grid grid-cols-3 whitespace-nowrap gap-4 xl:gap-6 2xl:gap-8 px-4 xl:px-8 2xl:px-12 w-full max-w-[1700px]">
           {items.map((product, i) => {
             const active = isActive(i);
 
