@@ -127,7 +127,7 @@ export default function SleepSection() {
   return (
     <section className="w-full overflow-x-hidden bg-[#0D0D0D] py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-[1800px] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
-        <div className="mb-8 flex flex-col gap-5 sm:mb-10 sm:flex-row sm:items-center sm:justify-between lg:mb-12">
+        <div className="mb-8 flex flex-col gap-5 sm:mb-10 sm:flex-row sm:items-center sm:justify-between mb-35">
           <h2
             className="font-montserrat bg-clip-text text-[28px] font-[700] uppercase leading-[1.05] text-transparent sm:text-[40px] md:text-[52px] lg:text-[64px]"
             style={{

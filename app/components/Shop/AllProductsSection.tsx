@@ -133,10 +133,10 @@ export default function AllProductsSection() {
   });
 
   return (
-    <section className="relative w-full bg-[#0D0D0D] overflow-hidden py-10 sm:py-14 md:py-16 lg:py-20">
-      <div className="mx-auto w-full max-w-[1800px] px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full bg-[#0D0D0D]  overflow-hidden py-10 sm:py-14 md:py-16 lg:py-20">
+      <div className="mx-auto w-full max-w-[1800px] px-4 sm:px-6  lg:px-8">
         {/* Heading + Controls */}
-        <div className="mb-8 flex flex-col gap-5 sm:mb-10 sm:gap-6 lg:mb-12 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mb-8 flex flex-col gap-5 sm:mb-10 sm:gap-6 mb-35 lg:flex-row lg:items-center lg:justify-between">
           <h2
             className="font-montserrat font-[700] uppercase bg-clip-text text-transparent"
             style={{

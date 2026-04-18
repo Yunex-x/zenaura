@@ -64,6 +64,7 @@ const socialLinks = [
 export default function Footer(): JSX.Element {
   return (
     <footer className="relative w-full overflow-hidden bg-black text-white">
+<div className="pointer-events-none absolute top-0 left-0 right-0 h-[44px] bg-gradient-to-b from-[#0D0D0D] to-transparent z-20" />
       {/* =========================
           LAYER 1: DECORATIVE BACKGROUND
       ========================== */}
