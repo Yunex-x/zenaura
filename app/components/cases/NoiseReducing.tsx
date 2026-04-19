@@ -89,7 +89,7 @@ export default function ZenQuietSection(): JSX.Element {
 -mt-16
   sm:text-[16px] sm:leading-[26px]
 
-  md:text-[18px] md:leading-[30px]
+  md:text-[18px] md:leading-[26px]
 
   lg:text-[22px] lg:leading-[39px]
 

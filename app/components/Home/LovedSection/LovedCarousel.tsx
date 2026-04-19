@@ -5,9 +5,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import LovedCard, { Product } from "./LovedCard";
 import { useCarousel } from "@/app/hooks/useCarousel";
 
+/* =========================
+   Icons
+========================= */
+
 function ArrowLeftSvg() {
   return (
-    <svg className="w-[24px] h-[12px] sm:w-[30px] sm:h-[14px] lg:w-[46px] lg:h-[20px]" viewBox="0 0 46 20" fill="none">
+    <svg
+      className="w-[24px] h-[12px] sm:w-[30px] sm:h-[14px] lg:w-[46px] lg:h-[20px]"
+      viewBox="0 0 46 20"
+      fill="none"
+    >
       <path
         d="M45 10H1M1 10L10 1M1 10L10 19"
         stroke="currentColor"
@@ -21,7 +29,11 @@ function ArrowLeftSvg() {
 
 function ArrowRightSvg() {
   return (
-    <svg className="w-[24px] h-[12px] sm:w-[30px] sm:h-[14px] lg:w-[46px] lg:h-[20px]" viewBox="0 0 46 20" fill="none">
+    <svg
+      className="w-[24px] h-[12px] sm:w-[30px] sm:h-[14px] lg:w-[46px] lg:h-[20px]"
+      viewBox="0 0 46 20"
+      fill="none"
+    >
       <path
         d="M1 10H45M45 10L36 1M45 10L36 19"
         stroke="currentColor"
@@ -33,6 +45,29 @@ function ArrowRightSvg() {
   );
 }
 
+/* =========================
+   Types
+========================= */
+
+type AddToCartPayload = {
+  productId: string;
+  title: string;
+  price: number;
+  quantity: number;
+  image: string;
+  colorLabel: string;
+  colorHex: string;
+};
+
+type LovedCarouselProps = {
+  products?: Product[];
+  onAddToCart?: (item: AddToCartPayload) => void; // ⚠️ optional (fix crash)
+};
+
+/* =========================
+   Mock Data
+========================= */
+
 const MOCK_PRODUCTS: Product[] = [
   {
     id: "l1",
@@ -43,6 +78,8 @@ const MOCK_PRODUCTS: Product[] = [
     compareAt: "€24.99",
     reviews: "12 reviews",
     image: "/HomePage/lovedsection/loved-1.png",
+    colorLabel: "Black",
+    colorHex: "#111111",
   },
   {
     id: "l2",
@@ -53,6 +90,8 @@ const MOCK_PRODUCTS: Product[] = [
     compareAt: "€24.99",
     reviews: "12 reviews",
     image: "/HomePage/lovedsection/loved-2.png",
+    colorLabel: "Orange",
+    colorHex: "#FF8000",
   },
   {
     id: "l3",
@@ -63,27 +102,65 @@ const MOCK_PRODUCTS: Product[] = [
     compareAt: "€24.99",
     reviews: "12 reviews",
     image: "/HomePage/lovedsection/loved-3.png",
+    colorLabel: "Purple",
+    colorHex: "#8B5CF6",
   },
 ];
 
-export default function LovedCarousel({ products }: { products?: Product[] }) {
+/* =========================
+   Helpers
+========================= */
+
+const parsePrice = (value: string): number => {
+  const cleaned = value.replace(/[^\d.,]/g, "").replace(",", ".");
+  const num = Number(cleaned);
+  return Number.isNaN(num) ? 0 : num;
+};
+
+/* =========================
+   Component
+========================= */
+
+export default function LovedCarousel({
+  products,
+  onAddToCart,
+}: LovedCarouselProps) {
   const items = products?.length ? products : MOCK_PRODUCTS;
 
-  const {
-    index,
-    direction,
-    next,
-    prev,
-    getPosition,
-    isActive,
-  } = useCarousel({
+  const { index, direction, next, prev, getPosition, isActive } = useCarousel({
     length: items.length,
     initialIndex: 1,
   });
 
+  /* =========================
+     Add To Cart Handler
+  ========================= */
+
+  const handleAddProduct = (product: Product): void => {
+    // ⚠️ FIX: prevent crash if undefined
+    if (!onAddToCart) {
+      console.warn("onAddToCart not provided");
+      return;
+    }
+
+    onAddToCart({
+      productId: product.id,
+      title: product.title,
+      price: parsePrice(product.price),
+      quantity: 1,
+      image: product.image,
+      colorLabel: product.colorLabel ?? "Default",
+      colorHex: product.colorHex ?? "#111111",
+    });
+  };
+
+  /* =========================
+     Render
+  ========================= */
+
   return (
     <div className="w-full flex flex-col items-center">
-      {/* Mobile / Tablet */}
+      {/* ================= MOBILE ================= */}
       <div className="lg:hidden w-full flex justify-center px-4 sm:px-6">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -95,12 +172,17 @@ export default function LovedCarousel({ products }: { products?: Product[] }) {
             transition={{ duration: 0.35, ease: "easeInOut" }}
             className="w-full max-w-[400px] sm:max-w-[460px] md:max-w-[500px]"
           >
-            <LovedCard product={items[index]} position="center" isActive />
+            <LovedCard
+              product={items[index]}
+              position="center"
+              isActive
+              onAddToCart={() => handleAddProduct(items[index])}
+            />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Desktop */}
+      {/* ================= DESKTOP ================= */}
       <div className="hidden lg:flex w-full justify-center">
         <div className="grid grid-cols-3 whitespace-nowrap gap-4 xl:gap-6 2xl:gap-8 px-4 xl:px-8 2xl:px-12 w-full max-w-[1700px]">
           {items.map((product, i) => {
@@ -122,6 +204,7 @@ export default function LovedCarousel({ products }: { products?: Product[] }) {
                   product={product}
                   position={getPosition(i)}
                   isActive={active}
+                  onAddToCart={() => handleAddProduct(product)}
                 />
               </motion.div>
             );
@@ -129,7 +212,7 @@ export default function LovedCarousel({ products }: { products?: Product[] }) {
         </div>
       </div>
 
-      {/* Arrows */}
+      {/* ================= ARROWS ================= */}
       <div className="relative mt-6 sm:mt-8 md:mt-10 lg:mt-12 w-full flex items-center justify-center">
         <div className="flex items-center gap-3 sm:gap-4 lg:gap-5">
           <button

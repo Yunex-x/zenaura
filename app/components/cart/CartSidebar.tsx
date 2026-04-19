@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { JSX, useMemo, useRef, useState } from "react";
+import { JSX, useMemo, useRef } from "react";
 import { Minus, Plus, Trash2, X } from "lucide-react";
 
 type CartItem = {
@@ -44,143 +44,67 @@ type CartSidebarProps = {
   onCheckout?: () => void;
 };
 
-const mockCartData: CartData = {
-  currency: "USD",
+const emptyCartData: CartData = {
+  items: [],
+  suggestedProducts: [],
   shippingLabel: "Free",
   shippingAmount: 0,
-  items: [
-    {
-      id: "cart-item-1",
-      productId: "prod-1",
-      title: "McLaren Racing x Zen Switch 2",
-      variantTitle: "Black",
-      price: 49.99,
-      quantity: 1,
-      image: "/cart/cart-item-1.png",
-      colorLabel: "Black",
-      colorHex: "#111111",
-    },
-    {
-      id: "cart-item-2",
-      productId: "prod-2",
-      title: "McLaren Racing x Zen Switch 2",
-      variantTitle: "Black",
-      price: 49.99,
-      quantity: 1,
-      image: "/cart/cart-item-1.png",
-      colorLabel: "Black",
-      colorHex: "#111111",
-    },
-  ],
-  suggestedProducts: [
-    {
-      id: "suggested-1",
-      title: "Zen Eclipse",
-      price: 49.99,
-      image: "/cart/cart-item-1.png",
-      colorLabel: "Black",
-      colorHex: "#111111",
-    },
-    {
-      id: "suggested-2",
-      title: "Zen Eclipse",
-      price: 49.99,
-      image: "/cart/cart-item-1.png",
-      colorLabel: "Black",
-      colorHex: "#111111",
-    },
-    {
-      id: "suggested-3",
-      title: "Zen Eclipse",
-      price: 49.99,
-      image: "/cart/cart-item-1.png",
-      colorLabel: "Black",
-      colorHex: "#111111",
-    },
-  ],
+  currency: "EUR",
 };
 
 export default function CartSidebar({
   isOpen = true,
   onClose,
-  data = mockCartData,
+  data,
   onIncreaseQty,
   onDecreaseQty,
   onRemoveItem,
   onAddSuggested,
   onCheckout,
 }: CartSidebarProps): JSX.Element | null {
-  const [localItems, setLocalItems] = useState<CartItem[]>(data.items);
   const suggestedTrackRef = useRef<HTMLDivElement | null>(null);
 
-  const items = localItems;
+  const safeData: CartData = {
+    items: data?.items ?? [],
+    suggestedProducts: data?.suggestedProducts ?? [],
+    shippingLabel: data?.shippingLabel ?? "Free",
+    shippingAmount: data?.shippingAmount ?? 0,
+    currency: data?.currency ?? "EUR",
+  };
+
+  const items = safeData.items;
 
   const subtotal = useMemo(() => {
     return items.reduce((total, item) => total + item.price * item.quantity, 0);
   }, [items]);
 
-  const total = subtotal + data.shippingAmount;
+  const total = subtotal + safeData.shippingAmount;
 
   const formatPrice = (value: number): string => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: data.currency,
+      currency: safeData.currency,
     }).format(value);
   };
 
   const handleIncreaseQty = (itemId: string): void => {
-    if (onIncreaseQty) {
-      onIncreaseQty(itemId);
-      return;
-    }
-
-    setLocalItems((prev) =>
-      prev.map((item) =>
-        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+    onIncreaseQty?.(itemId);
   };
 
   const handleDecreaseQty = (itemId: string): void => {
-    if (onDecreaseQty) {
-      onDecreaseQty(itemId);
-      return;
-    }
-
-    setLocalItems((prev) =>
-      prev.map((item) =>
-        item.id === itemId
-          ? { ...item, quantity: Math.max(1, item.quantity - 1) }
-          : item
-      )
-    );
+    onDecreaseQty?.(itemId);
   };
 
   const handleRemoveItem = (itemId: string): void => {
-    if (onRemoveItem) {
-      onRemoveItem(itemId);
-      return;
-    }
-
-    setLocalItems((prev) => prev.filter((item) => item.id !== itemId));
+    onRemoveItem?.(itemId);
   };
 
   const handleAddSuggested = (productId: string): void => {
-    if (onAddSuggested) {
-      onAddSuggested(productId);
-      return;
-    }
-
-    console.log("Add suggested product:", productId);
+    onAddSuggested?.(productId);
   };
 
   const handleCheckout = (): void => {
-    if (onCheckout) {
-      onCheckout();
-      return;
-    }
-
-    console.log("Continue to payment");
+    onCheckout?.();
   };
 
   const scrollSuggestedBy = (direction: "left" | "right"): void => {
@@ -224,77 +148,86 @@ export default function CartSidebar({
         <div className="min-h-0 flex-1 overflow-y-auto pr-1">
           <div className="flex flex-col gap-5">
             <section className="flex flex-col gap-4 sm:gap-5">
-              {items.map((item) => (
-                <CartItemCard
-                  key={item.id}
-                  item={item}
-                  formatPrice={formatPrice}
-                  onIncreaseQty={handleIncreaseQty}
-                  onDecreaseQty={handleDecreaseQty}
-                  onRemoveItem={handleRemoveItem}
-                />
-              ))}
-            </section>
-
-            <section className="pt-2">
-              <div className="mb-4 flex items-center gap-3">
-                <h3 className="flex-1 bg-[linear-gradient(93.31deg,#FFFFFF_40.77%,#98979C_83.66%)] bg-clip-text font-[Montserrat] text-[18px] font-bold uppercase leading-[1.1] tracking-[-0.03em] text-transparent sm:text-[22px] lg:text-[24px]">
-                  You May Also Like
-                </h3>
-
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <button
-                    type="button"
-                    onClick={() => scrollSuggestedBy("left")}
-                    className="flex h-10 w-14 items-center justify-center rounded-[89px] border border-white/20 text-white/60 lg:w-[120px]"
-                    aria-label="Previous suggestions"
-                  >
-                    <ArrowLeft />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => scrollSuggestedBy("right")}
-                    className="flex h-10 w-14 items-center justify-center rounded-[89px] bg-white text-[#845CF2] lg:w-[120px]"
-                    aria-label="Next suggestions"
-                  >
-                    <ArrowRight />
-                  </button>
+              {items.length > 0 ? (
+                items.map((item) => (
+                  <CartItemCard
+                    key={item.id}
+                    item={item}
+                    formatPrice={formatPrice}
+                    onIncreaseQty={handleIncreaseQty}
+                    onDecreaseQty={handleDecreaseQty}
+                    onRemoveItem={handleRemoveItem}
+                  />
+                ))
+              ) : (
+                <div className="rounded-2xl bg-[#1B1A1A] px-4 py-8 text-center text-white/70">
+                  Your cart is empty.
                 </div>
-              </div>
-
-              <div
-                ref={suggestedTrackRef}
-                className="
-                  flex gap-3 overflow-x-auto scroll-smooth pb-2
-                  snap-x snap-mandatory
-                  [scrollbar-width:none] [-ms-overflow-style:none]
-                  [&::-webkit-scrollbar]:hidden
-                "
-              >
-                {data.suggestedProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    data-suggested-card
-className="w-[calc(100vw-40px)] max-w-[340px] shrink-0 snap-start sm:w-[280px] md:w-[380px] lg:w-[380px]"                  >
-                    <SuggestedProductCard
-                      product={product}
-                      formatPrice={formatPrice}
-                      onAddSuggested={handleAddSuggested}
-                    />
-                  </div>
-                ))}
-              </div>
+              )}
             </section>
+
+            {safeData.suggestedProducts.length > 0 && (
+              <section className="pt-2">
+                <div className="mb-4 flex items-center gap-3">
+                  <h3 className="flex-1 bg-[linear-gradient(93.31deg,#FFFFFF_40.77%,#98979C_83.66%)] bg-clip-text font-[Montserrat] text-[18px] font-bold uppercase leading-[1.1] tracking-[-0.03em] text-transparent sm:text-[22px] lg:text-[24px]">
+                    You May Also Like
+                  </h3>
+
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <button
+                      type="button"
+                      onClick={() => scrollSuggestedBy("left")}
+                      className="flex h-10 w-14 items-center justify-center rounded-[89px] border border-white/20 text-white/60 lg:w-[120px]"
+                      aria-label="Previous suggestions"
+                    >
+                      <ArrowLeft />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => scrollSuggestedBy("right")}
+                      className="flex h-10 w-14 items-center justify-center rounded-[89px] bg-white text-[#845CF2] lg:w-[120px]"
+                      aria-label="Next suggestions"
+                    >
+                      <ArrowRight />
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  ref={suggestedTrackRef}
+                  className="
+                    flex gap-3 overflow-x-auto scroll-smooth pb-2
+                    snap-x snap-mandatory
+                    [scrollbar-width:none] [-ms-overflow-style:none]
+                    [&::-webkit-scrollbar]:hidden
+                  "
+                >
+                  {safeData.suggestedProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      data-suggested-card
+                      className="w-[calc(100vw-40px)] max-w-[340px] shrink-0 snap-start sm:w-[280px] md:w-[380px] lg:w-[380px]"
+                    >
+                      <SuggestedProductCard
+                        product={product}
+                        formatPrice={formatPrice}
+                        onAddSuggested={handleAddSuggested}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
             <section className="rounded-2xl bg-[#1B1A1A] px-4 py-6 sm:px-5 sm:py-7 lg:px-[14px] lg:py-[42px]">
               <div className="flex flex-col gap-4 sm:gap-5">
                 <div className="flex items-center justify-between gap-4 text-[14px] text-white/70">
                   <span className="font-[Poppins]">Shipping</span>
                   <span className="font-[Poppins]">
-                    {data.shippingAmount === 0
-                      ? data.shippingLabel
-                      : formatPrice(data.shippingAmount)}
+                    {safeData.shippingAmount === 0
+                      ? safeData.shippingLabel
+                      : formatPrice(safeData.shippingAmount)}
                   </span>
                 </div>
 

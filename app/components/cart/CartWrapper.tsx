@@ -24,7 +24,9 @@ export default function CartWrapper() {
       <div
         onClick={closeCart}
         className={`fixed inset-0 z-[110] bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
-          isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+          isOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
         }`}
       />
 
@@ -33,7 +35,17 @@ export default function CartWrapper() {
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <CartSidebar isOpen={isOpen} onClose={closeCart} />
+        <CartSidebar
+          isOpen={isOpen}
+          onClose={closeCart}
+          data={{
+            items: [],
+            suggestedProducts: [],
+            shippingLabel: "Free",
+            shippingAmount: 0,
+            currency: "EUR",
+          }}
+        />
       </div>
     </>
   );
