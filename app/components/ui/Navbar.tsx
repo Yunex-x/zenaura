@@ -49,7 +49,7 @@ export default function Navbar(): JSX.Element {
                     className="relative inline-flex flex-col items-center justify-center whitespace-nowrap pt-1"
                   >
                     <span
-                      className={`font-poppins text-[16px] leading-[30px] md:text-[18px] lg:text-[20px] ${
+                      className={`font-poppins text-[16px] leading-[30px] md:text-[18px] lg:text-[14px] xl:text-[22px] ${
                         active ? "font-[500] text-white" : "font-[300] text-white/70"
                       }`}
                     >

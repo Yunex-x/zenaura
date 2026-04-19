@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LovedCard, { Product } from "../../Home/LovedSection/LovedCard";
 import { useCarousel } from "@/app/hooks/useCarousel";
@@ -103,6 +103,27 @@ export default function ShopCarouselSection({
     initialIndex: 1,
   });
 
+  const desktopTrackRef = useRef<HTMLDivElement | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const container = desktopTrackRef.current;
+    const activeCard = cardRefs.current[index];
+
+    if (!container || !activeCard) return;
+
+    const containerWidth = container.clientWidth;
+    const cardLeft = activeCard.offsetLeft;
+    const cardWidth = activeCard.offsetWidth;
+
+    const targetScroll = cardLeft - containerWidth / 2 + cardWidth / 2;
+
+    container.scrollTo({
+      left: Math.max(0, targetScroll),
+      behavior: "smooth",
+    });
+  }, [index]);
+
   const handleAddProduct = (product: Product): void => {
     onAddToCart?.({
       productId: product.id,
@@ -183,19 +204,29 @@ export default function ShopCarouselSection({
         </div>
 
         <div className="hidden lg:block">
-          <div className="scrollbar-none flex gap-8 overflow-x-auto pt-32">
+          <div
+            ref={desktopTrackRef}
+            className="scrollbar-none flex gap-8 overflow-x-auto overflow-y-hidden pt-32"
+          >
             {products.map((product, i) => {
               const active = isActive(i);
 
               return (
                 <motion.div
                   key={product.id}
+                  ref={(el) => {
+                    cardRefs.current[i] = el;
+                  }}
                   animate={{
                     scale: active ? 1.04 : 0.94,
                     y: active ? -18 : 0,
                     opacity: active ? 1 : 0.8,
                   }}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{
+                    scale: 1.04,
+                    y: -18,
+                    opacity: 1,
+                  }}
                   whileTap={{ scale: 0.98 }}
                   className="w-[360px] flex-shrink-0 xl:w-[400px]"
                 >
