@@ -57,9 +57,9 @@ export default function ShopFilterBar({
 
                 {isActive && (
                   <span
-                    className="absolute left-0 right-0 -bottom-6 h-[2px] bg-[#845CF2]"
-                    aria-hidden
-                  />
+  className="hidden lg:block absolute left-0 right-0 -bottom-6 h-[2px] bg-[#845CF2]"
+  aria-hidden
+/>
                 )}
               </button>
             );

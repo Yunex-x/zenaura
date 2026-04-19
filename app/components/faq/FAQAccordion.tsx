@@ -2,7 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { FAQItem } from "@/app/faq/page";
+// Define FAQItem type locally if not available elsewhere
+export type FAQItem = {
+  id: number;
+  question: string;
+  answer: string;
+};
 
 function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -58,23 +63,25 @@ function ArrowIcon({ isOpen }: { isOpen: boolean }) {
 
 export default function FAQAccordion({
   id,
-  items,
-  search,
+  items = [],
+  search = "",
   title = "Frequently Asked Questions",
   emptyMessage = "No questions found.",
   singleOpen = false,
 }: {
   id?: string;
-  items: FAQItem[];
-  search: string;
+  items?: FAQItem[];
+  search?: string;
   title?: string;
   emptyMessage?: string;
   singleOpen?: boolean;
 }) {
-  const [openId, setOpenId] = useState<number | null>(items[0]?.id ?? null);
+  const [openId, setOpenId] = useState<number | null>(
+    items.length ? items[0].id : null
+  );
 
   useEffect(() => {
-    if (items.length === 0) {
+    if (!items.length) {
       setOpenId(null);
       return;
     }
@@ -95,7 +102,10 @@ export default function FAQAccordion({
   };
 
   return (
-    <section id={id} className="flex w-full justify-center py-16 sm:py-20 lg:py-24">
+    <section
+      id={id}
+      className="flex w-full justify-center py-16 sm:py-20 lg:py-24"
+    >
       <div className="flex w-full max-w-[1262px] flex-col items-center gap-14 px-4 sm:gap-16 lg:gap-[88px]">
         <h2
           className="w-full bg-clip-text text-center text-transparent font-montserrat font-[700] uppercase"
@@ -111,7 +121,7 @@ export default function FAQAccordion({
         </h2>
 
         <div className="flex w-full flex-col gap-8 sm:gap-10 lg:gap-[61px]">
-          {items.length === 0 ? (
+          {!items.length ? (
             <p className="text-center text-[16px] text-white/60 sm:text-[18px] lg:text-[20px]">
               {emptyMessage}
             </p>
