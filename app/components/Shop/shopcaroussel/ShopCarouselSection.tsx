@@ -5,16 +5,39 @@ import { AnimatePresence, motion } from "framer-motion";
 import LovedCard, { Product } from "../../Home/LovedSection/LovedCard";
 import { useCarousel } from "@/app/hooks/useCarousel";
 
+/* ================= TYPES ================= */
+
+type AddToCartPayload = {
+  productId: string;
+  title: string;
+  price: number;
+  quantity: number;
+  image: string;
+  colorLabel: string;
+  colorHex: string;
+};
+
+type Props = {
+  title: string;
+  products: Product[];
+  onAddToCart?: (item: AddToCartPayload) => void;
+};
+
 /* ================= ARROWS ================= */
 
 function ArrowLeftSvg() {
   return (
     <svg
-      className="w-[28px] h-[12px] sm:w-[42px] sm:h-[16px] lg:w-[80px] lg:h-[20px]"
+      className="h-[12px] w-[28px] sm:h-[16px] sm:w-[42px] lg:h-[20px] lg:w-[80px]"
       viewBox="0 0 80 20"
       fill="none"
     >
-      <path d="M79 10H1M1 10L10 1M1 10L10 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path
+        d="M79 10H1M1 10L10 1M1 10L10 19"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -22,11 +45,16 @@ function ArrowLeftSvg() {
 function ArrowRightSvg() {
   return (
     <svg
-      className="w-[28px] h-[12px] sm:w-[42px] sm:h-[16px] lg:w-[80px] lg:h-[20px]"
+      className="h-[12px] w-[28px] sm:h-[16px] sm:w-[42px] lg:h-[20px] lg:w-[80px]"
       viewBox="0 0 80 20"
       fill="none"
     >
-      <path d="M1 10H79M79 10L70 1M79 10L70 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path
+        d="M1 10H79M79 10L70 1M79 10L70 19"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -34,8 +62,9 @@ function ArrowRightSvg() {
 function ArrowOutline({ onClick }: { onClick?: () => void }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className="w-[110px] h-[44px] sm:w-[160px] sm:h-[56px] lg:w-[233px] lg:h-[80px] rounded-[89px] border border-white/20 flex items-center justify-center text-white/60 hover:border-white/35 hover:text-white transition"
+      className="flex h-[44px] w-[110px] items-center justify-center rounded-[89px] border border-white/20 text-white/60 transition hover:border-white/35 hover:text-white sm:h-[56px] sm:w-[160px] lg:h-[80px] lg:w-[233px]"
     >
       <ArrowLeftSvg />
     </button>
@@ -45,35 +74,53 @@ function ArrowOutline({ onClick }: { onClick?: () => void }) {
 function ArrowSolid({ onClick }: { onClick?: () => void }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className="w-[110px] h-[44px] sm:w-[160px] sm:h-[56px] lg:w-[233px] lg:h-[80px] rounded-[89px] bg-white flex items-center justify-center text-[#845CF2] shadow-lg hover:scale-[1.02] transition"
+      className="flex h-[44px] w-[110px] items-center justify-center rounded-[89px] bg-white text-[#845CF2] shadow-lg transition hover:scale-[1.02] sm:h-[56px] sm:w-[160px] lg:h-[80px] lg:w-[233px]"
     >
       <ArrowRightSvg />
     </button>
   );
 }
 
-/* ================= COMPONENT ================= */
+/* ================= HELPERS ================= */
 
-type Props = {
-  title: string;
-  products: Product[];
+const parsePrice = (value: string): number => {
+  const cleaned = value.replace(/[^\d.,]/g, "").replace(",", ".");
+  const num = Number(cleaned);
+  return Number.isNaN(num) ? 0 : num;
 };
 
-export default function ShopCarouselSection({ title, products }: Props) {
+/* ================= COMPONENT ================= */
+
+export default function ShopCarouselSection({
+  title,
+  products,
+  onAddToCart,
+}: Props) {
   const { index, direction, next, prev, getPosition, isActive } = useCarousel({
     length: products.length,
     initialIndex: 1,
   });
 
+  const handleAddProduct = (product: Product): void => {
+    onAddToCart?.({
+      productId: product.id,
+      title: product.title,
+      price: parsePrice(product.price),
+      quantity: 1,
+      image: product.image,
+      colorLabel: product.colorLabel ?? "Default",
+      colorHex: product.colorHex ?? "#111111",
+    });
+  };
+
   return (
     <section className="w-full bg-[#0D0D0D] py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-[1800px] px-4 sm:px-6 lg:px-8">
-
-        {/* HEADER */}
-        <div className="flex flex-col gap-5 mb-30 lg:mb-16 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mb-30 flex flex-col gap-5 lg:mb-16 lg:flex-row lg:items-center lg:justify-between">
           <h2
-            className="font-montserrat font-[700] uppercase bg-clip-text text-transparent"
+            className="bg-clip-text font-montserrat font-[700] uppercase text-transparent"
             style={{
               backgroundImage:
                 "linear-gradient(93.31deg, #FFFFFF 40.77%, #98979C 83.66%)",
@@ -83,14 +130,12 @@ export default function ShopCarouselSection({ title, products }: Props) {
             {title}
           </h2>
 
-          {/* arrows desktop only */}
-          <div className="hidden lg:flex gap-4">
+          <div className="hidden gap-4 lg:flex">
             <ArrowOutline onClick={prev} />
             <ArrowSolid onClick={next} />
           </div>
         </div>
 
-        {/* MOBILE */}
         <div className="flex flex-col items-center lg:hidden">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -107,28 +152,38 @@ export default function ShopCarouselSection({ title, products }: Props) {
               exit={{ opacity: 0, x: -direction * 60 }}
               className="w-full max-w-[420px]"
             >
-              <LovedCard product={products[index]} position="center" isActive />
+              <LovedCard
+                product={products[index]}
+                position="center"
+                isActive
+                onAddToCart={() => handleAddProduct(products[index])}
+              />
             </motion.div>
           </AnimatePresence>
 
-          {/* DOTS */}
           <div className="mt-5 flex gap-2">
             {products.map((_, i) => (
               <button
                 key={i}
-                onClick={() => (i > index ? next() : prev())}
-                className={`rounded-full ${i === index
-                    ? "w-[28px] h-[8px] bg-[#8B5CF6]"
-                    : "w-[8px] h-[8px] bg-white/25"
-                  }`}
+                type="button"
+                onClick={() => {
+                  if (i === index) return;
+                  if (i > index) next();
+                  else prev();
+                }}
+                className={`rounded-full ${
+                  i === index
+                    ? "h-[8px] w-[28px] bg-[#8B5CF6]"
+                    : "h-[8px] w-[8px] bg-white/25"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>
         </div>
 
-        {/* DESKTOP */}
         <div className="hidden lg:block">
-          <div className="flex overflow-x-auto gap-8 scrollbar-none pt-32">
+          <div className="scrollbar-none flex gap-8 overflow-x-auto pt-32">
             {products.map((product, i) => {
               const active = isActive(i);
 
@@ -142,19 +197,19 @@ export default function ShopCarouselSection({ title, products }: Props) {
                   }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex-shrink-0 w-[360px] xl:w-[400px]"
+                  className="w-[360px] flex-shrink-0 xl:w-[400px]"
                 >
                   <LovedCard
                     product={product}
                     position={getPosition(i)}
                     isActive={active}
+                    onAddToCart={() => handleAddProduct(product)}
                   />
                 </motion.div>
               );
             })}
           </div>
         </div>
-
       </div>
     </section>
   );
