@@ -200,10 +200,7 @@ export default function FeaturesSection(): JSX.Element {
 {/* ═══ MOBILE / TABLET (< lg): image-first + horizontal cards ═══ */}
 <div className="relative lg:hidden">
   {/* image area */}
-  <div className="relative mx-auto h-[580px] w-full max-w-[393px] sm:h-[860px] md:h-[840px] md:max-w-[760px] overflow-hidden">
-    {/* left purple glow */}
-    <div className="pointer-events-none absolute left-[-80px] top-[70px] h-[420px] w-[180px] rounded-full bg-[rgba(170,106,255,0.14)] blur-[90px]" />
-
+<div className="relative h-[580px] w-full max-w-[393px] mx-auto sm:h-[860px] md:h-[840px] md:max-w-none overflow-hidden">
     {/* exploded image */}
     <div className="absolute left-1/2 top-[20px] -translate-x-1/2 md:top-[40px]">
       <ExplodedView />
