@@ -1,4 +1,7 @@
+"use client";
+
 import { JSX } from "react";
+import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
 function RatingRow(): JSX.Element {
@@ -83,25 +86,57 @@ function TestimonialCard({
 }
 
 export default function TestimonialsSection(): JSX.Element {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
   return (
-    <section className="w-full bg-[#0D0D0D] py-20">
+    <motion.section
+      className="w-full bg-[#0D0D0D] py-20"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      style={{ position: "relative" }}
+    >
       <div className="mx-auto w-full max-w-[1920px] px-5 md:px-8 lg:px-[150px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:gap-[40px]">
-          <TestimonialCard
-            title="I wish I had found them sooner!"
-            text={`I can’t imagine not using my Zen Experience Plus again. I struggle with noise sensitivity and distraction from ADHD, where a lot of weight is on sound too much. Being able to drown out background noise so that I can focus on conversations has been a game changer.
+          <motion.div variants={cardVariants} className="flex-1">
+            <TestimonialCard
+              title="I wish I had found them sooner!"
+              text={`I can’t imagine not using my Zen Experience Plus again. I struggle with noise sensitivity and distraction from ADHD, where a lot of weight is on sound too much. Being able to drown out background noise so that I can focus on conversations has been a game changer.
 
 Also, wearing them underneath headphones makes the entire noise canceling experience better. Now I can hear my music perfectly but no outside sounds.`}
-          />
+            />
+          </motion.div>
 
-          <TestimonialCard
-            title="Amazing earplugs for sound sensitivity"
-            text={`These are great for daily use if you’re bothered by high-pitched sounds.
+          <motion.div variants={cardVariants} className="flex-1">
+            <TestimonialCard
+              title="Amazing earplugs for sound sensitivity"
+              text={`These are great for daily use if you’re bothered by high-pitched sounds.
 
 Another great thing is that your internal sounds (chewing, breathing) aren’t as amplified as with most earplugs. You can barely tell they’re in, until you take them out. That’s when you realize how loud things used to be without them.`}
-          />
+            />
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

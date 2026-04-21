@@ -1,5 +1,8 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function PosterCard({
   item,
@@ -8,11 +11,30 @@ export default function PosterCard({
   item: { image: string; tag?: string; quote?: string; cta?: string };
   active?: boolean;
 }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Scroll‑linked values – animation runs while card enters/exits viewport
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"],
+  });
+
+  const cardY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const cardOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.5, 1, 1, 0.5]);
+  const cardScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.94, 1.02, 0.94]);
+
   return (
-    <div
+    <motion.div
+      ref={cardRef}
       className={`relative h-full w-full rounded-sm overflow-hidden bg-[#0B0B0B] ${
         active ? "shadow-[0_30px_60px_rgba(0,0,0,0.6)]" : ""
       }`}
+      style={{
+        y: cardY,
+        opacity: cardOpacity,
+        scale: cardScale,
+        position: "relative",
+      }}
     >
       {/* Poster image */}
       <div className="absolute inset-0">
@@ -72,6 +94,6 @@ export default function PosterCard({
           {item.cta}
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

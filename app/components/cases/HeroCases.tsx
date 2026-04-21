@@ -1,9 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import { JSX } from "react";
+import { motion } from "framer-motion";
 
 export default function ShopHero(): JSX.Element {
   return (
-    <section className="relative w-full overflow-hidden bg-[#0D0D0D]">
+    <motion.section
+      className="relative w-full overflow-hidden bg-[#0D0D0D]"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.2 }}
+      style={{ position: "relative" }}
+    >
       {/* background glow */}
       <div className="absolute left-[-120px] top-[-80px] h-[420px] w-[420px] rounded-full bg-[#6f3df4]/20 blur-[140px]" />
       <div className="absolute bottom-[-120px] right-[8%] h-[320px] w-[320px] rounded-full bg-[#6f3df4]/10 blur-[140px]" />
@@ -38,6 +48,7 @@ export default function ShopHero(): JSX.Element {
               alt="Earplugs"
               fill
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 352px"
               className="object-contain"
             />
           </div>
@@ -65,7 +76,7 @@ export default function ShopHero(): JSX.Element {
           </h1>
 
           <p className="mt-5 max-w-[390px] text-[18px] mb-8 leading-[30px] text-white/60">
-            Earplugs with noise reduction, designed for 
+            Earplugs with noise reduction, designed for
             <br />
             noise sensitivity and all
             day comfort
@@ -83,6 +94,7 @@ export default function ShopHero(): JSX.Element {
             alt="Earplugs"
             fill
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
             className="object-contain object-center"
           />
 
@@ -103,6 +115,6 @@ export default function ShopHero(): JSX.Element {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export type Product = {
   id: string;
@@ -26,19 +28,36 @@ export default function LovedCard({
   isActive: boolean;
   onAddToCart: () => void;
 }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"],
+  });
+
+  const cardY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const cardOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.6, 1, 1, 0.6]);
+  const cardScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1.02, 0.96]);
+
   const imageScale =
     position === "center" ? (isActive ? 1.2 : 1.08) : isActive ? 1.08 : 0.98;
-
   const imageY =
     position === "center" ? (isActive ? -26 : -16) : isActive ? -18 : -10;
 
   return (
     <motion.article
+      ref={cardRef}
       initial={false}
       animate={{
         scale: isActive ? 1 : 0.94,
         opacity: isActive ? 1 : 0.82,
         y: isActive ? 0 : 8,
+      }}
+      style={{
+        y: cardY,
+        opacity: cardOpacity,
+        scale: cardScale,
+        position: "relative",
       }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className="group relative w-full max-w-[538px]"

@@ -1,9 +1,18 @@
+"use client";
+
 import { JSX } from "react";
+import { motion } from "framer-motion";
 
 export default function BannerSection(): JSX.Element {
   return (
-    <section className="w-full">
-      
+    <motion.section
+      className="w-full"
+      initial={{ opacity: 0, y: 40, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.2 }}
+      style={{ position: "relative" }}
+    >
       <div
         className="
           relative
@@ -30,14 +39,14 @@ export default function BannerSection(): JSX.Element {
           "
         />
 
-        {/* OPTIONAL OVERLAY (باش تزيد contrast) */}
+        {/* OPTIONAL OVERLAY */}
         <div className="absolute inset-0 bg-black/10" />
 
-        {/* CONTENT (إلا بغيتي تحط شي text فوق) */}
+        {/* CONTENT (you can add text/CTA here) */}
         <div className="relative z-10 h-full flex items-center justify-center">
-          {/* تقدر تزيد title / CTA هنا */}
+          {/* Optional: add a title or button */}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useRef } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import LovedCard, { Product } from "./LovedCard";
 import { useCarousel } from "@/app/hooks/useCarousel";
 
@@ -61,7 +61,7 @@ type AddToCartPayload = {
 
 type LovedCarouselProps = {
   products?: Product[];
-  onAddToCart?: (item: AddToCartPayload) => void; // ⚠️ optional (fix crash)
+  onAddToCart?: (item: AddToCartPayload) => void;
 };
 
 /* =========================
@@ -126,23 +126,36 @@ export default function LovedCarousel({
   onAddToCart,
 }: LovedCarouselProps) {
   const items = products?.length ? products : MOCK_PRODUCTS;
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  // Scroll‑linked scrub values (continuous parallax)
+  const { scrollYProgress } = useScroll({
+    target: carouselRef,
+    offset: ["start end", "end start"],
+  });
+  const carouselY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const carouselScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.98, 1.02, 0.98]);
+
+  // Entrance animation (runs once when carousel enters viewport)
+  const entranceVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   const { index, direction, next, prev, getPosition, isActive } = useCarousel({
     length: items.length,
     initialIndex: 1,
   });
 
-  /* =========================
-     Add To Cart Handler
-  ========================= */
-
   const handleAddProduct = (product: Product): void => {
-    // ⚠️ FIX: prevent crash if undefined
     if (!onAddToCart) {
       console.warn("onAddToCart not provided");
       return;
     }
-
     onAddToCart({
       productId: product.id,
       title: product.title,
@@ -154,17 +167,25 @@ export default function LovedCarousel({
     });
   };
 
-  /* =========================
-     Render
-  ========================= */
-
   return (
-    <div className="w-full flex flex-col items-center">
+    <motion.div
+      ref={carouselRef}
+      className="w-full flex flex-col items-center"
+      variants={entranceVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-30px" }}
+      style={{
+        y: carouselY,
+        scale: carouselScale,
+        position: "relative",
+      }}
+    >
       {/* ================= MOBILE ================= */}
       <div className="lg:hidden w-full flex justify-center px-4 sm:px-6">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
-            key={items[index].id}
+            key={items[index]?.id}
             custom={direction}
             initial={{ opacity: 0, x: direction * 60 }}
             animate={{ opacity: 1, x: 0 }}
@@ -184,10 +205,9 @@ export default function LovedCarousel({
 
       {/* ================= DESKTOP ================= */}
       <div className="hidden lg:flex w-full justify-center">
-        <div className="grid grid-cols-3 whitespace-nowrap gap-4 xl:gap-6 2xl:gap-8 px-4 xl:px-8 2xl:px-12 w-full max-w-[1700px]">
+        <div className="grid grid-cols-3 whitespace-nowrap  gap-4 xl:gap-6 2xl:gap-8 px-4 xl:px-8 2xl:px-12 w-full max-w-[1700px]">
           {items.map((product, i) => {
             const active = isActive(i);
-
             return (
               <motion.div
                 key={product.id}
@@ -240,6 +260,6 @@ export default function LovedCarousel({
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

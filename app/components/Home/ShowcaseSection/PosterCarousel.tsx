@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useCallback, useEffect, useMemo, useState, useRef } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import PosterCard from "./PosterCard";
 
 const ITEMS = [
@@ -117,6 +117,25 @@ export default function PosterCarousel({
   const data = useMemo(() => items, [items]);
   const [index, setIndex] = useState(2);
   const [direction, setDirection] = useState(1);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  // Scroll‑linked scrub for the whole carousel
+  const { scrollYProgress } = useScroll({
+    target: carouselRef,
+    offset: ["start end", "end start"],
+  });
+  const carouselY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const carouselScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.98, 1.01, 0.98]);
+
+  // Entrance animation (fades in once when carousel enters viewport)
+  const entranceVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   const prev = useCallback(() => {
     setDirection(-1);
@@ -133,7 +152,6 @@ export default function PosterCarousel({
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
-
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [prev, next]);
@@ -142,7 +160,6 @@ export default function PosterCarousel({
     const raw = itemIndex - index;
     const altPositive = raw + data.length;
     const altNegative = raw - data.length;
-
     return [raw, altPositive, altNegative].reduce((closest, current) =>
       Math.abs(current) < Math.abs(closest) ? current : closest
     );
@@ -153,9 +170,21 @@ export default function PosterCarousel({
   const STEP = CARD_WIDTH + GAP;
 
   return (
-    <div className="relative w-full">
-      {/* Header */}
-      <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-start sm:justify-between sm:gap-6 md:mb-12 lg:mb-16 xl:mb-[88px]">
+    <motion.div
+      ref={carouselRef}
+      className="relative w-full"
+      variants={entranceVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-30px" }}
+      style={{
+        y: carouselY,
+        scale: carouselScale,
+        position: "relative",
+      }}
+    >
+      {/* Header (unchanged) */}
+      <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-start sm:justify-between sm:gap-6 md:mb-12 lg:mb-8 ">
         <div>
           <h2
             className="font-montserrat font-semibold text-white tracking-[0.02em]"
@@ -197,63 +226,63 @@ export default function PosterCarousel({
         </div>
       </div>
 
-      {/* DESKTOP CENTER MODE */}
-{/* DESKTOP CENTER MODE */}
-<div className="hidden lg:block w-full overflow-visible">
-  <div className="relative mx-auto flex h-[900px] w-full max-w-[1600px] items-center justify-center overflow-visible">
-    <motion.div
-      animate={{ x: 0 }}
-      transition={{ duration: 0.45, ease: "easeInOut" }}
-      className="relative h-full w-full overflow-visible"
-    >
-      {data.map((item, i) => {
-        const distance = getWrappedDistance(i);
-        const isCenter = distance === 0;
-
-        let scale = 0.8;
-        let opacity = 0.2;
-        let y = 0;
-
-        if (distance === 0) {
-          scale = 1.16;
-          opacity = 1;
-          y = -18;
-        } else if (Math.abs(distance) === 1) {
-          scale = 0.88;
-          opacity = 0.55;
-          y = 4;
-        } else if (Math.abs(distance) === 2) {
-          scale = 0.76;
-          opacity = 0.18;
-          y = 8;
-        }
-
-        return (
+      {/* DESKTOP CENTER MODE – unchanged logic, only outer container gets scroll effects */}
+      <div className="hidden lg:block w-full overflow-visible">
+        <div className="relative mx-auto flex h-[900px] w-full max-w-[1600px] -mb-32 items-center justify-center overflow-visible">
           <motion.div
-            key={item.id}
-            animate={{
-              x: distance * STEP,
-              scale,
-              opacity,
-              y,
-            }}
+            animate={{ x: 0 }}
             transition={{ duration: 0.45, ease: "easeInOut" }}
-            className="absolute left-1/2 top-1/2 origin-center overflow-visible"
-            style={{
-              width: `${CARD_WIDTH}px`,
-              aspectRatio: "428 / 715",
-              zIndex: isCenter ? 50 : 10 - Math.abs(distance),
-              marginLeft: `${-CARD_WIDTH / 2}px`,
-              marginTop: `${-715 / 2}px`,
-              pointerEvents: isCenter ? "auto" : "none",
-            }}
+            className="relative h-full w-full overflow-visible"
           >
-            <PosterCard item={item} active={isCenter} />
+            {data.map((item, i) => {
+              const distance = getWrappedDistance(i);
+              const isCenter = distance === 0;
+
+              let scale = 0.8;
+              let opacity = 0.2;
+              let y = 0;
+
+              if (distance === 0) {
+                scale = 1.16;
+                opacity = 1;
+                y = -18;
+              } else if (Math.abs(distance) === 1) {
+                scale = 0.88;
+                opacity = 0.55;
+                y = 4;
+              } else if (Math.abs(distance) === 2) {
+                scale = 0.76;
+                opacity = 0.18;
+                y = 8;
+              }
+
+              return (
+                <motion.div
+                  key={item.id}
+                  animate={{
+                    x: distance * STEP,
+                    scale,
+                    opacity,
+                    y,
+                  }}
+                  transition={{ duration: 0.45, ease: "easeInOut" }}
+                  className="absolute left-1/2 top-1/2 origin-center overflow-visible"
+                  style={{
+                    width: `${CARD_WIDTH}px`,
+                    aspectRatio: "428 / 715",
+                    zIndex: isCenter ? 50 : 10 - Math.abs(distance),
+                    marginLeft: `${-CARD_WIDTH / 2}px`,
+                    marginTop: `${-715 / 2}px`,
+                    pointerEvents: isCenter ? "auto" : "none",
+                  }}
+                >
+                  <PosterCard item={item} active={isCenter} />
+                </motion.div>
+              );
+            })}
           </motion.div>
-        );
-      })}
+        </div>
+      </div>
     </motion.div>
-  </div>
-</div>    </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { JSX, useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 type UseCaseItem = {
   id: number;
@@ -211,12 +212,50 @@ export default function OtherUseCasesSection(): JSX.Element {
     centerByLoopedIndex(baseLength + index, "smooth");
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  const carouselVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 },
+    },
+  };
+
   return (
-    <section className="w-full overflow-hidden bg-black py-16 lg:py-24">
+    <motion.section
+      className="w-full overflow-hidden bg-black py-16 lg:py-24"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      style={{ position: "relative" }}
+    >
       <div className="mx-auto w-full max-w-[1920px] px-5 md:px-8 lg:px-[120px]">
         <div className="mx-auto w-full max-w-[2011px]">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-            <h2
+            <motion.h2
+              variants={itemVariants}
               className="
                 max-w-[712px]
                 bg-[linear-gradient(93.31deg,#FFFFFF_40.77%,#98979C_83.66%)]
@@ -234,15 +273,18 @@ export default function OtherUseCasesSection(): JSX.Element {
               "
             >
               Other Use Cases
-            </h2>
+            </motion.h2>
 
-            <div className="hidden items-center mt-6 gap-6 self-start lg:flex">
+            <motion.div
+              variants={itemVariants}
+              className="hidden items-center mt-6 gap-6 self-start lg:flex"
+            >
               <button
                 type="button"
                 onClick={goToPrev}
                 aria-label="Previous slide"
                 className="
-                  relative flex h-[80px] w-[233px] lg:w-[100px] lg:h-[60px] xl:w-[233px] xl:h-[80px]   items-center justify-center
+                  relative flex h-[80px] w-[233px] lg:w-[100px] lg:h-[60px] xl:w-[233px] xl:h-[80px] items-center justify-center
                   rounded-[89px] border border-white/20
                   bg-transparent transition hover:bg-white/[0.03]
                 "
@@ -269,10 +311,13 @@ export default function OtherUseCasesSection(): JSX.Element {
                   <span className="absolute right-0 top-0 block h-[2.5px] w-[18px] origin-right -rotate-45 bg-[#845CF2]" />
                 </span>
               </button>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="mt-12 lg:mt-[88px]">
+          <motion.div
+            variants={carouselVariants}
+            className="mt-12 lg:mt-[88px]"
+          >
             <div
               ref={trackRef}
               className="
@@ -301,7 +346,10 @@ export default function OtherUseCasesSection(): JSX.Element {
               })}
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-3 lg:hidden">
+            <motion.div
+              variants={itemVariants}
+              className="mt-8 flex items-center justify-center gap-3 lg:hidden"
+            >
               {ITEMS.map((item, index) => {
                 const isActive = activeIndex === index;
 
@@ -318,11 +366,11 @@ export default function OtherUseCasesSection(): JSX.Element {
                   />
                 );
               })}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
