@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 type CTAItem = {
   title: string;
@@ -29,12 +30,50 @@ const items: CTAItem[] = [
 ];
 
 export default function ContactCTA() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.1 },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 60, scale: 0.92, rotateY: -10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateY: 0,
+      transition: { type: "spring", stiffness: 200, damping: 20 },
+    },
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
-    <section className="flex w-full justify-center py-[80px] lg:py-[120px]">
+    <motion.section
+      className="flex w-full justify-center py-[80px] lg:py-[120px]"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      style={{ position: "relative" }}
+    >
       <div className="w-full max-w-[1262px] px-4 sm:px-6 lg:px-0">
-        <div className="flex flex-col items-center gap-[56px] lg:gap-[88px]">
+        <motion.div
+          className="flex flex-col items-center gap-[56px] lg:gap-[88px]"
+          variants={containerVariants}
+        >
           {/* TITLE */}
-          <div className="flex w-full justify-center">
+          <motion.div variants={titleVariants} className="flex w-full justify-center">
             <h2
               className="bg-clip-text text-center font-montserrat font-[700] text-transparent"
               style={{
@@ -52,50 +91,52 @@ export default function ContactCTA() {
             >
               Still need help?
             </h2>
-          </div>
+          </motion.div>
 
           {/* CARDS */}
-<div className="grid w-full grid-cols-1 justify-items-center  lg:grid-cols-2">            {items.map((item, i) => (
-              <article
+          <motion.div
+            className="grid w-full grid-cols-1 justify-items-center lg:grid-cols-2"
+            variants={containerVariants}
+          >
+            {items.map((item, i) => (
+              <motion.article
                 key={i}
-className="
-  flex min-h-[114px] w-full max-w-[520px]
-  items-center justify-between gap-4
-  bg-[#1B1A1A] px-4 py-4
-  sm:px-5
-  lg:min-h-[112px] lg:px-5 lg:py-3
-"              >
+                variants={cardVariants}
+                className="
+                  flex min-h-[114px] w-full max-w-[520px]
+                  items-center justify-between gap-4
+                  bg-[#1B1A1A] px-4 py-4
+                  sm:px-5
+                  lg:min-h-[112px] lg:px-5 lg:py-3
+                "
+              >
                 {/* LEFT */}
-<div className="flex min-w-0 flex-1 flex-col items-start gap-[12px]">
-  
-  {/* ICON */}
-  <div
-    className="
-      flex h-[40px] w-[40px] items-center justify-center
-      rounded-[12px] border border-white/20 bg-white/[0.01]
-    "
-  >
-    <Image
-      src={item.icon}
-      alt={item.title}
-      width={18}
-      height={18}
-      className="object-contain"
-    />
-  </div>
+                <div className="flex min-w-0 flex-1 flex-col items-start gap-[12px]">
+                  <div
+                    className="
+                      flex h-[40px] w-[40px] items-center justify-center
+                      rounded-[12px] border border-white/20 bg-white/[0.01]
+                    "
+                  >
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      width={18}
+                      height={18}
+                      className="object-contain"
+                    />
+                  </div>
 
-  {/* TEXT */}
-  <div className="flex flex-col items-start gap-[6px]">
-    <h3 className="font-poppins text-[16px] font-medium leading-[24px] text-white">
-      {item.title}
-    </h3>
+                  <div className="flex flex-col items-start gap-[6px]">
+                    <h3 className="font-poppins text-[16px] font-medium leading-[24px] text-white">
+                      {item.title}
+                    </h3>
+                    <p className="font-poppins text-[14px] leading-[21px] tracking-[0.02em] text-white/60">
+                      {item.subtitle}
+                    </p>
+                  </div>
+                </div>
 
-    <p className="font-poppins text-[14px] leading-[21px] tracking-[0.02em] text-white/60">
-      {item.subtitle}
-    </p>
-  </div>
-
-</div>
                 {/* BUTTON */}
                 <button
                   type="button"
@@ -115,11 +156,11 @@ className="
                 >
                   {item.buttonLabel}
                 </button>
-              </article>
+              </motion.article>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

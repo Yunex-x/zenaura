@@ -119,7 +119,6 @@ export default function BestEarplugsSection(): JSX.Element {
               xl:h-[938px]
             "
           >
-            <div className="absolute inset-0 bg-[url('/use-cases/checker.png')] opacity-30 bg-cover" />
 
             <Image
               src="/use-cases/earplugs-detail.png"

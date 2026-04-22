@@ -334,11 +334,10 @@ export default function OtherUseCasesSection(): JSX.Element {
                   <div
                     key={`${item.id}-${index}`}
                     data-card
-                    className={`shrink-0 overflow-hidden transition-all duration-500 ease-out ${
-                      isActive
+                    className={`shrink-0 overflow-hidden transition-all duration-500 ease-out ${isActive
                         ? "h-[300px] w-[320px] rounded-[24px] md:h-[380px] md:w-[420px] lg:h-[500px] lg:w-[538px]"
                         : "h-[260px] w-[260px] rounded-[20px] md:h-[320px] md:w-[320px] lg:h-[434px] lg:w-[467px]"
-                    }`}
+                      }`}
                   >
                     <CarouselCard item={item} />
                   </div>
@@ -360,9 +359,8 @@ export default function OtherUseCasesSection(): JSX.Element {
                     aria-label={`Go to slide ${index + 1}`}
                     aria-current={isActive}
                     onClick={() => goToDot(index)}
-                    className={`h-3 rounded-full transition-all duration-300 ${
-                      isActive ? "w-8 bg-white" : "w-3 bg-white/35"
-                    }`}
+                    className={`h-3 rounded-full transition-all duration-300 ${isActive ? "w-8 bg-white" : "w-3 bg-white/35"
+                      }`}
                   />
                 );
               })}
@@ -377,7 +375,6 @@ export default function OtherUseCasesSection(): JSX.Element {
 function CarouselCard({ item }: { item: UseCaseItem }): JSX.Element {
   return (
     <div className="group relative h-full w-full overflow-hidden rounded-[inherit]">
-      <div className="absolute inset-0 bg-[url('/use-cases/checker.png')] bg-cover bg-center opacity-20" />
 
       <Image
         src={item.image}

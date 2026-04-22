@@ -345,10 +345,9 @@ export default function RelatedBlogsSection(): JSX.Element {
                     data-card
                     className={`
                       shrink-0 transform transition-all duration-500 ease-out
-                      ${
-                        isCenter
-                          ? "w-[260px] sm:w-[300px] md:w-[360px] lg:w-[430px] xl:w-[494px] opacity-100"
-                          : "w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px] xl:w-[464px] opacity-70"
+                      ${isCenter
+                        ? "w-[260px] sm:w-[300px] md:w-[360px] lg:w-[430px] xl:w-[494px] opacity-100"
+                        : "w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px] xl:w-[464px] opacity-70"
                       }
                     `}
                   >
@@ -356,14 +355,12 @@ export default function RelatedBlogsSection(): JSX.Element {
                       <div
                         className={`
                           relative w-full overflow-hidden rounded-[20px] transition-all duration-500 ease-out
-                          ${
-                            isCenter
-                              ? "h-[240px] sm:h-[280px] md:h-[320px] lg:h-[390px] xl:h-[462px]"
-                              : "h-[220px] sm:h-[260px] md:h-[300px] lg:h-[360px] xl:h-[432px]"
+                          ${isCenter
+                            ? "h-[240px] sm:h-[280px] md:h-[320px] lg:h-[390px] xl:h-[462px]"
+                            : "h-[220px] sm:h-[260px] md:h-[300px] lg:h-[360px] xl:h-[432px]"
                           }
                         `}
                       >
-                        <div className="absolute inset-0 bg-[url('/use-cases/checker.png')] bg-cover bg-center opacity-20" />
 
                         <Image
                           src={item.image}
@@ -413,9 +410,8 @@ export default function RelatedBlogsSection(): JSX.Element {
                     aria-label={`Go to slide ${index + 1}`}
                     aria-current={isActive}
                     onClick={() => goToDot(index)}
-                    className={`h-3 rounded-full transition-all duration-300 ${
-                      isActive ? "w-8 bg-white" : "w-3 bg-white/35"
-                    }`}
+                    className={`h-3 rounded-full transition-all duration-300 ${isActive ? "w-8 bg-white" : "w-3 bg-white/35"
+                      }`}
                   />
                 );
               })}

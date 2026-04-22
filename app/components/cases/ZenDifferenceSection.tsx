@@ -106,6 +106,7 @@ export default function ZenDifferenceSection(): JSX.Element {
                 src="/use-cases/zen-diff-top.png"
                 alt=""
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 25vw, 250px"
                 className="object-contain scale-x-[-1]"
               />
             </motion.div>
@@ -119,6 +120,7 @@ export default function ZenDifferenceSection(): JSX.Element {
                 src="/use-cases/zen-diff-bottom.png"
                 alt=""
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 25vw, 140px"
                 className="object-contain"
               />
             </motion.div>
@@ -157,9 +159,8 @@ export default function ZenDifferenceSection(): JSX.Element {
                   >
                     {/* feature text */}
                     <div
-                      className={`relative z-20 flex min-h-[62px] items-center border-b border-[rgba(93,93,93,0.16)] pr-3 ${
-                        index === rows.length - 1 ? "border-b-0" : ""
-                      }`}
+                      className={`relative z-20 flex min-h-[62px] items-center border-b border-[rgba(93,93,93,0.16)] pr-3 ${index === rows.length - 1 ? "border-b-0" : ""
+                        }`}
                     >
                       <p className="max-w-[132px] font-[Poppins] text-[14px] font-medium leading-[22px] text-white sm:max-w-[160px]">
                         {row}
@@ -168,9 +169,8 @@ export default function ZenDifferenceSection(): JSX.Element {
 
                     {/* zen check */}
                     <div
-                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${
-                        index === rows.length - 1 ? "border-b-0" : ""
-                      }`}
+                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${index === rows.length - 1 ? "border-b-0" : ""
+                        }`}
                     >
                       <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#882EFF]">
                         <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />
@@ -179,9 +179,8 @@ export default function ZenDifferenceSection(): JSX.Element {
 
                     {/* foamies check */}
                     <div
-                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${
-                        index === rows.length - 1 ? "border-b-0" : ""
-                      }`}
+                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${index === rows.length - 1 ? "border-b-0" : ""
+                        }`}
                     >
                       <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
                         <Check
@@ -214,9 +213,8 @@ export default function ZenDifferenceSection(): JSX.Element {
                       <motion.div
                         key={row}
                         variants={itemVariants}
-                        className={`border-b border-black/20 py-5 text-[18px] font-semibold text-white xl:py-6 xl:text-[20px] ${
-                          index === rows.length - 1 ? "border-b-0 pb-0" : ""
-                        }`}
+                        className={`border-b border-black/20 py-5 text-[18px] font-semibold text-white xl:py-6 xl:text-[20px] ${index === rows.length - 1 ? "border-b-0 pb-0" : ""
+                          }`}
                       >
                         {row}
                       </motion.div>

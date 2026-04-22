@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function FAQHero({
   search,
@@ -15,11 +16,47 @@ export default function FAQHero({
   hasFocusedResult: boolean;
   onExitSearch: () => void;
 }) {
+  const containerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.15 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const searchVariants = {
+    hidden: { opacity: 0, scale: 0.95, filter: "blur(4px)" },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: { duration: 0.5, delay: 0.2 },
+    },
+    pulse: {
+      scale: [1, 1.02, 1],
+      transition: { duration: 1.5, repeat: Infinity, repeatType: "reverse" },
+    },
+  };
+
   return (
-    <section className="flex w-full justify-center pt-20 sm:pt-24 lg:pt-[120px]">
+    <motion.section
+      className="flex w-full justify-center pt-20 sm:pt-24 lg:pt-[120px]"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      style={{ position: "relative" }}
+    >
       <div className="flex w-full max-w-[792px] flex-col items-center gap-16 px-4 sm:gap-20">
         <div className="flex w-full flex-col items-center gap-10 text-center sm:gap-14">
-          <h1
+          <motion.h1
+            variants={itemVariants}
             className="bg-clip-text text-transparent font-montserrat font-[700] uppercase"
             style={{
               backgroundImage:
@@ -30,14 +67,21 @@ export default function FAQHero({
             }}
           >
             Question? We’re all ears
-          </h1>
+          </motion.h1>
 
-          <p className="max-w-[456px] text-[16px] leading-[1.8] tracking-[0.02em] text-white/60 sm:text-[18px] lg:text-[20px]">
+          <motion.p
+            variants={itemVariants}
+            className="max-w-[456px] text-[16px] leading-[1.8] tracking-[0.02em] text-white/60 sm:text-[18px] lg:text-[20px]"
+          >
             Find quick answers about ZENAURA earplugs, orders, and support.
-          </p>
+          </motion.p>
         </div>
 
-        <div className="w-full max-w-[748px]">
+        <motion.div
+          variants={searchVariants}
+          whileHover="pulse"
+          className="w-full max-w-[748px]"
+        >
           <div className="flex h-[60px] w-full items-center rounded-[14px] border border-white/10 bg-white/8 px-5 sm:h-[70px] sm:px-6 lg:h-[80px]">
             <div className="flex w-full items-center gap-3">
               <svg
@@ -45,19 +89,8 @@ export default function FAQHero({
                 viewBox="0 0 24 24"
                 fill="none"
               >
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="7"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M20 20L17 17"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
+                <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M20 20L17 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
 
               <input
@@ -83,8 +116,8 @@ export default function FAQHero({
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-// Define FAQItem type locally if not available elsewhere
+
 export type FAQItem = {
   id: number;
   question: string;
@@ -15,13 +15,10 @@ function escapeRegExp(value: string) {
 
 function highlightText(text: string, query: string) {
   const trimmed = query.trim();
-
   if (!trimmed) return text;
-
   const safeQuery = escapeRegExp(trimmed);
   const regex = new RegExp(`(${safeQuery})`, "gi");
   const parts = text.split(regex);
-
   return parts.map((part, index) =>
     part.toLowerCase() === trimmed.toLowerCase() ? (
       <span
@@ -43,12 +40,7 @@ function ArrowIcon({ isOpen }: { isOpen: boolean }) {
       transition={{ duration: 0.25, ease: "easeInOut" }}
       className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white/[0.01]"
     >
-      <svg
-        className="h-5 w-5 text-white"
-        viewBox="0 0 20 20"
-        fill="none"
-        aria-hidden
-      >
+      <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="none" aria-hidden>
         <path
           d="M5 8L10 13L15 8"
           stroke="currentColor"
@@ -85,12 +77,10 @@ export default function FAQAccordion({
       setOpenId(null);
       return;
     }
-
     if (singleOpen) {
       setOpenId(items[0].id);
       return;
     }
-
     const currentStillExists = items.some((item) => item.id === openId);
     if (!currentStillExists) {
       setOpenId(items[0].id);
@@ -101,13 +91,36 @@ export default function FAQAccordion({
     setOpenId((prev) => (prev === id ? null : id));
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, scale: 0.9, filter: "blur(4px)" },
+    visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.6 } },
+  };
+
   return (
-    <section
+    <motion.section
       id={id}
       className="flex w-full justify-center py-16 sm:py-20 lg:py-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      style={{ position: "relative" }}
     >
       <div className="flex w-full max-w-[1262px] flex-col items-center gap-14 px-4 sm:gap-16 lg:gap-[88px]">
-        <h2
+        <motion.h2
+          variants={titleVariants}
           className="w-full bg-clip-text text-center text-transparent font-montserrat font-[700] uppercase"
           style={{
             backgroundImage:
@@ -118,9 +131,12 @@ export default function FAQAccordion({
           }}
         >
           {title}
-        </h2>
+        </motion.h2>
 
-        <div className="flex w-full flex-col gap-8 sm:gap-10 lg:gap-[61px]">
+        <motion.div
+          className="flex w-full flex-col gap-8 sm:gap-10 lg:gap-[61px]"
+          variants={containerVariants}
+        >
           {!items.length ? (
             <p className="text-center text-[16px] text-white/60 sm:text-[18px] lg:text-[20px]">
               {emptyMessage}
@@ -128,9 +144,8 @@ export default function FAQAccordion({
           ) : (
             items.map((item) => {
               const isOpen = openId === item.id;
-
               return (
-                <div key={item.id} className="w-full">
+                <motion.div key={item.id} variants={itemVariants} className="w-full">
                   <button
                     type="button"
                     onClick={() => toggleItem(item.id)}
@@ -141,7 +156,6 @@ export default function FAQAccordion({
                     <span className="text-[18px] leading-[1.2] text-white font-montserrat font-[600] sm:text-[22px] lg:text-[24px]">
                       {highlightText(item.question, search)}
                     </span>
-
                     <ArrowIcon isOpen={isOpen} />
                   </button>
 
@@ -163,12 +177,12 @@ export default function FAQAccordion({
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })
           )}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 type ContactItem = {
   title: string;
@@ -11,35 +12,51 @@ type ContactItem = {
 };
 
 const contacts: ContactItem[] = [
-  {
-    title: "Collaborations",
-    email: "ambassadors@zenearplugs.com",
-    icon: "/icons/collaborations.png",
-  },
-  {
-    title: "Partnerships",
-    email: "partnerships@zenearplugs.com",
-    icon: "/icons/partnership.svg",
-  },
-  {
-    title: "Business",
-    email: "business@zenearplugs.com",
-    icon: "/icons/business.svg",
-    size: 48,
-  },
-  {
-    title: "Press",
-    email: "press@zenearplugs.com",
-    icon: "/icons/press.svg",
-  },
+  { title: "Collaborations", email: "ambassadors@zenearplugs.com", icon: "/icons/collaborations.png" },
+  { title: "Partnerships", email: "partnerships@zenearplugs.com", icon: "/icons/partnership.svg" },
+  { title: "Business", email: "business@zenearplugs.com", icon: "/icons/business.png"},
+  { title: "Press", email: "press@zenearplugs.com", icon: "/icons/press.svg" },
 ];
 
 export default function OtherContacts() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    },
+  };
+
+  const cardVariants = {
+    hidden: (i: number) => ({
+      opacity: 0,
+      x: i % 2 === 0 ? -60 : 60,
+      rotateY: i % 2 === 0 ? -15 : 15,
+    }),
+    visible: {
+      opacity: 1,
+      x: 0,
+      rotateY: 0,
+      transition: { type: "spring", stiffness: 180, damping: 20 },
+    },
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, scale: 0.9, filter: "blur(6px)" },
+    visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.6 } },
+  };
+
   return (
-    <section className="flex w-full justify-center py-[80px] lg:py-[120px]">
+    <motion.section
+      className="flex w-full justify-center py-[80px] lg:py-[120px]"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      style={{ position: "relative" }}
+    >
       <div className="w-full max-w-[1520px] px-4 sm:px-6 lg:px-0">
         <div className="flex flex-col items-center gap-[56px] lg:gap-[88px]">
-          <div className="flex w-full justify-center">
+          <motion.div variants={titleVariants} className="flex w-full justify-center">
             <h2
               className="bg-clip-text text-center font-montserrat font-[700] text-transparent"
               style={{
@@ -56,10 +73,10 @@ export default function OtherContacts() {
             >
               Other Contacts
             </h2>
-          </div>
+          </motion.div>
 
           {/* MOBILE SLIDER */}
-          <div className="w-full sm:hidden">
+          <motion.div className="w-full sm:hidden" variants={containerVariants}>
             <div
               className="
                 flex gap-4 overflow-x-auto
@@ -69,8 +86,10 @@ export default function OtherContacts() {
               "
             >
               {contacts.map((item, i) => (
-                <article
+                <motion.article
                   key={i}
+                  custom={i}
+                  variants={cardVariants}
                   className="
                     group h-[262px] w-[85%] max-w-[320px] shrink-0 snap-center
                     bg-[#1B1A1A] transition-colors duration-300 hover:bg-[#222]
@@ -81,45 +100,35 @@ export default function OtherContacts() {
                       <Image
                         src={item.icon}
                         alt={item.title}
-                        width={item.size ||70 }
+                        width={item.size || 70}
                         height={item.size || 70}
                         className="object-contain"
                       />
                     </div>
-
                     <div className="mt-[50px] flex flex-col items-center gap-[24px] text-center">
-                      <h3
-                        className="font-poppins text-white"
-                        style={{
-                          fontSize: "24px",
-                          lineHeight: "36px",
-                        }}
-                      >
+                      <h3 className="font-poppins text-white" style={{ fontSize: "24px", lineHeight: "36px" }}>
                         {item.title}
                       </h3>
-
-                      <p
-                        className="font-poppins text-white/60"
-                        style={{
-                          fontSize: "16px",
-                          lineHeight: "24px",
-                          letterSpacing: "0.02em",
-                        }}
-                      >
+                      <p className="font-poppins text-white/60" style={{ fontSize: "16px", lineHeight: "24px", letterSpacing: "0.02em" }}>
                         {item.email}
                       </p>
                     </div>
                   </div>
-                </article>
+                </motion.article>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* TABLET + DESKTOP GRID */}
-          <div className="hidden w-full grid-cols-2 justify-items-center gap-6 sm:grid xl:grid-cols-4">
+          <motion.div
+            className="hidden w-full grid-cols-2 justify-items-center gap-6 sm:grid xl:grid-cols-4"
+            variants={containerVariants}
+          >
             {contacts.map((item, i) => (
-              <article
+              <motion.article
                 key={i}
+                custom={i}
+                variants={cardVariants}
                 className="group h-[262px] w-full max-w-[362px] bg-[#1B1A1A] transition-colors duration-300 hover:bg-[#222]"
               >
                 <div className="flex h-full flex-col items-center px-6 pt-[30px]">
@@ -132,35 +141,20 @@ export default function OtherContacts() {
                       className="object-contain"
                     />
                   </div>
-
                   <div className="mt-[50px] flex flex-col items-center gap-[24px] text-center">
-                    <h3
-                      className="font-poppins text-white"
-                      style={{
-                        fontSize: "24px",
-                        lineHeight: "36px",
-                      }}
-                    >
+                    <h3 className="font-poppins text-white" style={{ fontSize: "24px", lineHeight: "36px" }}>
                       {item.title}
                     </h3>
-
-                    <p
-                      className="font-poppins text-white/60"
-                      style={{
-                        fontSize: "16px",
-                        lineHeight: "24px",
-                        letterSpacing: "0.02em",
-                      }}
-                    >
+                    <p className="font-poppins text-white/60" style={{ fontSize: "16px", lineHeight: "24px", letterSpacing: "0.02em" }}>
                       {item.email}
                     </p>
                   </div>
                 </div>
-              </article>
+              </motion.article>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

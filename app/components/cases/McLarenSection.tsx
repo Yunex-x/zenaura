@@ -115,8 +115,8 @@ function ColorSwatches({
             aria-label={color.label}
             onClick={() => onSelect(color.id)}
             className={`${sizeClass} rounded-full ${color.swatchClass} ${isActive
-                ? "ring-2 ring-white ring-offset-2 ring-offset-[#0D0D0D]"
-                : ""
+              ? "ring-2 ring-white ring-offset-2 ring-offset-[#0D0D0D]"
+              : ""
               } ${color.id === "black"
                 ? "shadow-[inset_0px_4px_6px_rgba(0,0,0,0.4)]"
                 : ""
@@ -344,6 +344,7 @@ export default function ProductHero({
             alt="McLaren Racing x Noise Cancellation"
             fill
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 440px"
             className="object-cover"
           />
         </motion.div>
@@ -436,6 +437,7 @@ export default function ProductHero({
             alt="McLaren Racing x Noise Cancellation"
             fill
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 560px"
             className="object-contain"
           />
         </motion.div>
