@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useRef } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+  Variants,
+} from "framer-motion";
 import LovedCard, { Product } from "./LovedCard";
 import { useCarousel } from "@/app/hooks/useCarousel";
 
@@ -118,6 +124,22 @@ const parsePrice = (value: string): number => {
 };
 
 /* =========================
+   Animation Fix
+========================= */
+
+const entranceVariants: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
+/* =========================
    Component
 ========================= */
 
@@ -128,28 +150,23 @@ export default function LovedCarousel({
   const items = products?.length ? products : MOCK_PRODUCTS;
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Scroll‑linked scrub values (continuous parallax)
   const { scrollYProgress } = useScroll({
     target: carouselRef,
     offset: ["start end", "end start"],
   });
+
   const carouselY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const carouselScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.98, 1.02, 0.98]);
+  const carouselScale = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [0.98, 1.02, 0.98]
+  );
 
-  // Entrance animation (runs once when carousel enters viewport)
-  const entranceVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const { index, direction, next, prev, getPosition, isActive } = useCarousel({
-    length: items.length,
-    initialIndex: 1,
-  });
+  const { index, direction, next, prev, getPosition, isActive } =
+    useCarousel({
+      length: items.length,
+      initialIndex: 1,
+    });
 
   const handleAddProduct = (product: Product): void => {
     if (!onAddToCart) {
@@ -181,7 +198,7 @@ export default function LovedCarousel({
         position: "relative",
       }}
     >
-      {/* ================= MOBILE ================= */}
+      {/* MOBILE */}
       <div className="lg:hidden w-full flex justify-center px-4 sm:px-6">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -190,7 +207,10 @@ export default function LovedCarousel({
             initial={{ opacity: 0, x: direction * 60 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -direction * 60 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
+            transition={{
+              duration: 0.35,
+              ease: "easeInOut" as const,
+            }}
             className="w-full max-w-[400px] sm:max-w-[460px] md:max-w-[500px]"
           >
             <LovedCard
@@ -203,9 +223,9 @@ export default function LovedCarousel({
         </AnimatePresence>
       </div>
 
-      {/* ================= DESKTOP ================= */}
+      {/* DESKTOP */}
       <div className="hidden lg:flex w-full justify-center">
-        <div className="grid grid-cols-3 whitespace-nowrap  gap-4 xl:gap-6 2xl:gap-8 px-4 xl:px-8 2xl:px-12 w-full max-w-[1700px]">
+        <div className="grid grid-cols-3 gap-4 xl:gap-6 2xl:gap-8 px-4 xl:px-8 2xl:px-12 w-full max-w-[1700px]">
           {items.map((product, i) => {
             const active = isActive(i);
             return (
@@ -217,7 +237,10 @@ export default function LovedCarousel({
                   scale: active ? 1 : 0.94,
                   y: active ? -18 : 0,
                 }}
-                transition={{ duration: 0.45, ease: "easeOut" }}
+                transition={{
+                  duration: 0.45,
+                  ease: "easeOut" as const,
+                }}
                 style={{ zIndex: active ? 50 : 10 }}
               >
                 <LovedCard
@@ -232,7 +255,7 @@ export default function LovedCarousel({
         </div>
       </div>
 
-      {/* ================= ARROWS ================= */}
+      {/* ARROWS */}
       <div className="relative mt-6 sm:mt-8 md:mt-10 lg:mt-12 w-full flex items-center justify-center">
         <div className="flex items-center gap-3 sm:gap-4 lg:gap-5">
           <button
