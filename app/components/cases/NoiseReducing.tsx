@@ -99,8 +99,11 @@ export default function ZenQuietSection(): JSX.Element {
             md:flex-row md:items-start md:gap-16
           "
         >
-          {/* Image */}
-          <motion.div variants={imageVariants} className="w-full md:w-[50%] flex justify-center md:justify-start">
+          {/* Image - added mb-8 on mobile, remove on desktop */}
+          <motion.div
+            variants={imageVariants}
+            className="w-full md:w-[50%] flex justify-center md:justify-start mb-8 md:mb-0"
+          >
             <div
               className="
                 relative
