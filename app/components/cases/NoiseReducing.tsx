@@ -22,7 +22,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -32,7 +32,7 @@ const imageVariants = {
     opacity: 1,
     scale: 1,
     x: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const, delay: 0.2 },
   },
 };
 
@@ -41,7 +41,7 @@ const textVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.25 },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const, delay: 0.25 },
   },
 };
 
@@ -99,7 +99,7 @@ export default function ZenQuietSection(): JSX.Element {
             md:flex-row md:items-start md:gap-16
           "
         >
-          {/* Image - added mb-8 on mobile, remove on desktop */}
+          {/* Image */}
           <motion.div
             variants={imageVariants}
             className="w-full md:w-[50%] flex justify-center md:justify-start mb-8 md:mb-0"
