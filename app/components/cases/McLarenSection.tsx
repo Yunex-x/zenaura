@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { JSX, useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 type ProductColor = {
   id: string;
@@ -114,16 +114,19 @@ function ColorSwatches({
             type="button"
             aria-label={color.label}
             onClick={() => onSelect(color.id)}
-            className={`${sizeClass} rounded-full ${color.swatchClass} ${isActive
-              ? "ring-2 ring-white ring-offset-2 ring-offset-[#0D0D0D]"
-              : ""
-              } ${color.id === "black"
+            className={`${sizeClass} rounded-full ${color.swatchClass} ${
+              isActive
+                ? "ring-2 ring-white ring-offset-2 ring-offset-[#0D0D0D]"
+                : ""
+            } ${
+              color.id === "black"
                 ? "shadow-[inset_0px_4px_6px_rgba(0,0,0,0.4)]"
                 : ""
-              } ${color.id === "black" || color.id === "gold"
+            } ${
+              color.id === "black" || color.id === "gold"
                 ? "border border-[#7E7E7E]"
                 : ""
-              }`}
+            }`}
           />
         );
       })}
@@ -162,8 +165,8 @@ export default function ProductHero({
     });
   };
 
-  // Animation variants
-  const containerVariants = {
+  // Animation variants with proper typing and 'as const' for ease arrays
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -174,22 +177,26 @@ export default function ProductHero({
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 25 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
 
-  const imageVariants = {
+  const imageVariants: Variants = {
     hidden: { opacity: 0, scale: 0.92, y: 20 },
     visible: {
       opacity: 1,
       scale: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.15 },
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] as const,
+        delay: 0.15,
+      },
     },
   };
 
@@ -205,7 +212,10 @@ export default function ProductHero({
       {/* =========================
           MOBILE / MD DOWN
           ========================= */}
-      <motion.div variants={itemVariants} className="mx-auto flex w-full max-w-[393px] flex-col px-4 pt-5 pb-8 lg:hidden">
+      <motion.div
+        variants={itemVariants}
+        className="mx-auto flex w-full max-w-[393px] flex-col px-4 pt-5 pb-8 lg:hidden"
+      >
         <div className="flex flex-col gap-[6px]">
           <h1 className="max-w-[328px] bg-[linear-gradient(104.81deg,#FFFFFF_34.43%,#7D7D7D_94.04%)] bg-clip-text font-[Montserrat] text-[32px] font-bold leading-[120%] tracking-[-0.02em] text-transparent">
             McLaren Racing x
@@ -245,7 +255,10 @@ export default function ProductHero({
           </div>
         </div>
 
-        <motion.div variants={imageVariants} className="relative mx-auto h-[300px] w-[654px] max-w-full">
+        <motion.div
+          variants={imageVariants}
+          className="relative mx-auto h-[300px] w-[654px] max-w-full"
+        >
           <Image
             src="/use-cases/mclaren.png"
             alt="McLaren Racing x Zen Switch 2"
@@ -302,7 +315,10 @@ export default function ProductHero({
       {/* =========================
           LG
           ========================= */}
-      <motion.div variants={itemVariants} className="mx-auto hidden w-full max-w-[1180px] grid-cols-[0.9fr_1.05fr_0.75fr] items-center gap-6 px-8 py-14 lg:grid xl:hidden">
+      <motion.div
+        variants={itemVariants}
+        className="mx-auto hidden w-full max-w-[1180px] grid-cols-[0.9fr_1.05fr_0.75fr] items-center gap-6 px-8 py-14 lg:grid xl:hidden"
+      >
         <div className="flex flex-col justify-center">
           <h1 className="max-w-[260px] bg-[linear-gradient(104.81deg,#FFFFFF_34.43%,#7D7D7D_94.04%)] bg-clip-text font-[Montserrat] text-[40px] font-bold leading-[1.05] tracking-[-0.03em] text-transparent">
             McLaren Racing x
@@ -338,7 +354,10 @@ export default function ProductHero({
           </div>
         </div>
 
-        <motion.div variants={imageVariants} className="relative mx-auto h-[470px] w-[440px]">
+        <motion.div
+          variants={imageVariants}
+          className="relative mx-auto h-[470px] w-[440px]"
+        >
           <Image
             src="/use-cases/mclaren.png"
             alt="McLaren Racing x Noise Cancellation"
@@ -395,7 +414,10 @@ export default function ProductHero({
       {/* =========================
           XL+
           ========================= */}
-      <motion.div variants={itemVariants} className="mx-auto hidden w-full max-w-[1320px] grid-cols-[0.95fr_1.1fr_0.8fr] items-center gap-8 px-10 py-16 xl:grid">
+      <motion.div
+        variants={itemVariants}
+        className="mx-auto hidden w-full max-w-[1320px] grid-cols-[0.95fr_1.1fr_0.8fr] items-center gap-8 px-10 py-16 xl:grid"
+      >
         <div className="flex flex-col justify-center">
           <h1 className="max-w-[430px] bg-[linear-gradient(104.81deg,#FFFFFF_34.43%,#7D7D7D_94.04%)] bg-clip-text font-[Montserrat] text-[66px] font-bold leading-[1.06] tracking-[-0.03em] text-transparent">
             McLaren Racing x
@@ -431,7 +453,10 @@ export default function ProductHero({
           </div>
         </div>
 
-        <motion.div variants={imageVariants} className="relative mx-auto h-[560px] w-[560px]">
+        <motion.div
+          variants={imageVariants}
+          className="relative mx-auto h-[560px] w-[560px]"
+        >
           <Image
             src="/use-cases/mclaren.png"
             alt="McLaren Racing x Noise Cancellation"
