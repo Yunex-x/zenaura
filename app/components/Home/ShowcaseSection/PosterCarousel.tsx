@@ -119,7 +119,6 @@ export default function PosterCarousel({
   const [direction, setDirection] = useState(1);
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Scroll‑linked scrub for the whole carousel
   const { scrollYProgress } = useScroll({
     target: carouselRef,
     offset: ["start end", "end start"],
@@ -127,13 +126,13 @@ export default function PosterCarousel({
   const carouselY = useTransform(scrollYProgress, [0, 1], [30, -30]);
   const carouselScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.98, 1.01, 0.98]);
 
-  // Entrance animation (fades in once when carousel enters viewport)
+  // ✅ FIX HERE
   const entranceVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.17, 0.67, 0.83, 0.67] },
+      transition: { duration: 0.6, ease: [0.17, 0.67, 0.83, 0.67] as const },
     },
   };
 
@@ -183,6 +182,7 @@ export default function PosterCarousel({
         position: "relative",
       }}
     >
+      {/* باقي الكود untouched */}
       {/* Header (unchanged) */}
       <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-start sm:justify-between sm:gap-6 md:mb-12 lg:mb-8 ">
         <div>
