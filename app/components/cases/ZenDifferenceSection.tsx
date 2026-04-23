@@ -1,7 +1,7 @@
 "use client";
 
 import { JSX } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { Check } from "lucide-react";
 
@@ -15,8 +15,8 @@ const rows = [
 ];
 
 export default function ZenDifferenceSection(): JSX.Element {
-  // Animation variants
-  const containerVariants = {
+  // Animation variants with proper typing and 'as const' for ease arrays
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -27,25 +27,25 @@ export default function ZenDifferenceSection(): JSX.Element {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
 
-  const titleVariants = {
+  const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
 
-  const imageVariants = {
+  const imageVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8, rotate: -10 },
     visible: {
       opacity: 1,
@@ -55,12 +55,12 @@ export default function ZenDifferenceSection(): JSX.Element {
     },
   };
 
-  const tableVariants = {
+  const tableVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const, delay: 0.1 },
     },
   };
 
@@ -159,8 +159,9 @@ export default function ZenDifferenceSection(): JSX.Element {
                   >
                     {/* feature text */}
                     <div
-                      className={`relative z-20 flex min-h-[62px] items-center border-b border-[rgba(93,93,93,0.16)] pr-3 ${index === rows.length - 1 ? "border-b-0" : ""
-                        }`}
+                      className={`relative z-20 flex min-h-[62px] items-center border-b border-[rgba(93,93,93,0.16)] pr-3 ${
+                        index === rows.length - 1 ? "border-b-0" : ""
+                      }`}
                     >
                       <p className="max-w-[132px] font-[Poppins] text-[14px] font-medium leading-[22px] text-white sm:max-w-[160px]">
                         {row}
@@ -169,8 +170,9 @@ export default function ZenDifferenceSection(): JSX.Element {
 
                     {/* zen check */}
                     <div
-                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${index === rows.length - 1 ? "border-b-0" : ""
-                        }`}
+                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${
+                        index === rows.length - 1 ? "border-b-0" : ""
+                      }`}
                     >
                       <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#882EFF]">
                         <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />
@@ -179,8 +181,9 @@ export default function ZenDifferenceSection(): JSX.Element {
 
                     {/* foamies check */}
                     <div
-                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${index === rows.length - 1 ? "border-b-0" : ""
-                        }`}
+                      className={`relative z-20 flex min-h-[62px] items-center justify-center border-b border-[rgba(93,93,93,0.16)] ${
+                        index === rows.length - 1 ? "border-b-0" : ""
+                      }`}
                     >
                       <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
                         <Check
@@ -213,8 +216,9 @@ export default function ZenDifferenceSection(): JSX.Element {
                       <motion.div
                         key={row}
                         variants={itemVariants}
-                        className={`border-b border-black/20 py-5 text-[18px] font-semibold text-white xl:py-6 xl:text-[20px] ${index === rows.length - 1 ? "border-b-0 pb-0" : ""
-                          }`}
+                        className={`border-b border-black/20 py-5 text-[18px] font-semibold text-white xl:py-6 xl:text-[20px] ${
+                          index === rows.length - 1 ? "border-b-0 pb-0" : ""
+                        }`}
                       >
                         {row}
                       </motion.div>

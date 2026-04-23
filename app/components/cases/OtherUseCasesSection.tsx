@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { JSX, useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 type UseCaseItem = {
   id: number;
@@ -212,8 +212,8 @@ export default function OtherUseCasesSection(): JSX.Element {
     centerByLoopedIndex(baseLength + index, "smooth");
   };
 
-  // Animation variants
-  const containerVariants = {
+  // Animation variants with proper typing and 'as const' for ease arrays
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -224,21 +224,21 @@ export default function OtherUseCasesSection(): JSX.Element {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
 
-  const carouselVariants = {
+  const carouselVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 },
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const, delay: 0.2 },
     },
   };
 
@@ -334,10 +334,11 @@ export default function OtherUseCasesSection(): JSX.Element {
                   <div
                     key={`${item.id}-${index}`}
                     data-card
-                    className={`shrink-0 overflow-hidden transition-all duration-500 ease-out ${isActive
+                    className={`shrink-0 overflow-hidden transition-all duration-500 ease-out ${
+                      isActive
                         ? "h-[300px] w-[320px] rounded-[24px] md:h-[380px] md:w-[420px] lg:h-[500px] lg:w-[538px]"
                         : "h-[260px] w-[260px] rounded-[20px] md:h-[320px] md:w-[320px] lg:h-[434px] lg:w-[467px]"
-                      }`}
+                    }`}
                   >
                     <CarouselCard item={item} />
                   </div>
@@ -359,8 +360,9 @@ export default function OtherUseCasesSection(): JSX.Element {
                     aria-label={`Go to slide ${index + 1}`}
                     aria-current={isActive}
                     onClick={() => goToDot(index)}
-                    className={`h-3 rounded-full transition-all duration-300 ${isActive ? "w-8 bg-white" : "w-3 bg-white/35"
-                      }`}
+                    className={`h-3 rounded-full transition-all duration-300 ${
+                      isActive ? "w-8 bg-white" : "w-3 bg-white/35"
+                    }`}
                   />
                 );
               })}
@@ -375,7 +377,6 @@ export default function OtherUseCasesSection(): JSX.Element {
 function CarouselCard({ item }: { item: UseCaseItem }): JSX.Element {
   return (
     <div className="group relative h-full w-full overflow-hidden rounded-[inherit]">
-
       <Image
         src={item.image}
         alt={item.title}

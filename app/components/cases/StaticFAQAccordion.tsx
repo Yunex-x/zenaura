@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 
 const faqItems = [
   {
@@ -57,7 +57,7 @@ export default function StaticFAQAccordion() {
     setOpenId((prev) => (prev === id ? null : id));
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -65,12 +65,12 @@ export default function StaticFAQAccordion() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
   };
 
-  const titleVariants = {
+  const titleVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9, filter: "blur(4px)" },
     visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.6 } },
   };

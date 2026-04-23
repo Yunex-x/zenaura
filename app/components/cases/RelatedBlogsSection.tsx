@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { JSX, useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 type BlogItem = {
   id: number;
@@ -226,8 +226,8 @@ export default function RelatedBlogsSection(): JSX.Element {
     centerByLoopedIndex(baseLength + index, "smooth");
   };
 
-  // Animation variants
-  const containerVariants = {
+  // Animation variants with proper typing and 'as const' for ease arrays
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -238,21 +238,25 @@ export default function RelatedBlogsSection(): JSX.Element {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
 
-  const carouselVariants = {
+  const carouselVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 },
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as const,
+        delay: 0.2,
+      },
     },
   };
 
@@ -345,9 +349,10 @@ export default function RelatedBlogsSection(): JSX.Element {
                     data-card
                     className={`
                       shrink-0 transform transition-all duration-500 ease-out
-                      ${isCenter
-                        ? "w-[260px] sm:w-[300px] md:w-[360px] lg:w-[430px] xl:w-[494px] opacity-100"
-                        : "w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px] xl:w-[464px] opacity-70"
+                      ${
+                        isCenter
+                          ? "w-[260px] sm:w-[300px] md:w-[360px] lg:w-[430px] xl:w-[494px] opacity-100"
+                          : "w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px] xl:w-[464px] opacity-70"
                       }
                     `}
                   >
@@ -355,13 +360,13 @@ export default function RelatedBlogsSection(): JSX.Element {
                       <div
                         className={`
                           relative w-full overflow-hidden rounded-[20px] transition-all duration-500 ease-out
-                          ${isCenter
-                            ? "h-[240px] sm:h-[280px] md:h-[320px] lg:h-[390px] xl:h-[462px]"
-                            : "h-[220px] sm:h-[260px] md:h-[300px] lg:h-[360px] xl:h-[432px]"
+                          ${
+                            isCenter
+                              ? "h-[240px] sm:h-[280px] md:h-[320px] lg:h-[390px] xl:h-[462px]"
+                              : "h-[220px] sm:h-[260px] md:h-[300px] lg:h-[360px] xl:h-[432px]"
                           }
                         `}
                       >
-
                         <Image
                           src={item.image}
                           alt={item.title}
@@ -375,7 +380,11 @@ export default function RelatedBlogsSection(): JSX.Element {
                         <h3
                           className={`
                             font-[Montserrat] font-semibold leading-[130%] tracking-[0.04em] text-white transition-all duration-500 ease-out
-                            ${isCenter ? "text-[22px] md:text-[24px] xl:text-[26px]" : "text-[20px] md:text-[22px] xl:text-[24px]"}
+                            ${
+                              isCenter
+                                ? "text-[22px] md:text-[24px] xl:text-[26px]"
+                                : "text-[20px] md:text-[22px] xl:text-[24px]"
+                            }
                           `}
                         >
                           {item.title}
@@ -384,7 +393,11 @@ export default function RelatedBlogsSection(): JSX.Element {
                         <p
                           className={`
                             mt-[10px] font-[Poppins] font-medium leading-[150%] tracking-[0.02em] transition-all duration-500 ease-out
-                            ${isCenter ? "text-white/75 text-[15px] xl:text-[16px]" : "text-white/60 text-[14px] xl:text-[16px]"}
+                            ${
+                              isCenter
+                                ? "text-white/75 text-[15px] xl:text-[16px]"
+                                : "text-white/60 text-[14px] xl:text-[16px]"
+                            }
                           `}
                         >
                           {item.description}
@@ -410,8 +423,9 @@ export default function RelatedBlogsSection(): JSX.Element {
                     aria-label={`Go to slide ${index + 1}`}
                     aria-current={isActive}
                     onClick={() => goToDot(index)}
-                    className={`h-3 rounded-full transition-all duration-300 ${isActive ? "w-8 bg-white" : "w-3 bg-white/35"
-                      }`}
+                    className={`h-3 rounded-full transition-all duration-300 ${
+                      isActive ? "w-8 bg-white" : "w-3 bg-white/35"
+                    }`}
                   />
                 );
               })}

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 export default function FAQHero({
   search,
@@ -16,7 +16,7 @@ export default function FAQHero({
   hasFocusedResult: boolean;
   onExitSearch: () => void;
 }) {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
@@ -25,12 +25,12 @@ export default function FAQHero({
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
-  const searchVariants = {
+  const searchVariants: Variants = {
     hidden: { opacity: 0, scale: 0.95, filter: "blur(4px)" },
     visible: {
       opacity: 1,

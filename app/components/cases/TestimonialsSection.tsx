@@ -1,7 +1,7 @@
 "use client";
 
 import { JSX } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Star } from "lucide-react";
 
 function RatingRow(): JSX.Element {
@@ -86,8 +86,8 @@ function TestimonialCard({
 }
 
 export default function TestimonialsSection(): JSX.Element {
-  // Animation variants
-  const containerVariants = {
+  // Animation variants with proper typing and 'as const' for ease array
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -98,12 +98,12 @@ export default function TestimonialsSection(): JSX.Element {
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
 

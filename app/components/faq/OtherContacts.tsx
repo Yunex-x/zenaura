@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 type ContactItem = {
   title: string;
@@ -19,7 +19,7 @@ const contacts: ContactItem[] = [
 ];
 
 export default function OtherContacts() {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -27,7 +27,7 @@ export default function OtherContacts() {
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: (i: number) => ({
       opacity: 0,
       x: i % 2 === 0 ? -60 : 60,
@@ -41,7 +41,7 @@ export default function OtherContacts() {
     },
   };
 
-  const titleVariants = {
+  const titleVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9, filter: "blur(6px)" },
     visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.6 } },
   };

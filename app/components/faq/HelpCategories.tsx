@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 type Item = {
   title: string;
@@ -22,8 +22,8 @@ const items: Item[] = [
 ];
 
 export default function HelpCategories() {
-  // Same animation variants as OtherContacts
-  const containerVariants = {
+  // Same animation variants as OtherContacts with proper typing
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -31,7 +31,7 @@ export default function HelpCategories() {
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: (i: number) => ({
       opacity: 0,
       x: i % 2 === 0 ? -60 : 60,
@@ -45,7 +45,7 @@ export default function HelpCategories() {
     },
   };
 
-  const titleVariants = {
+  const titleVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9, filter: "blur(6px)" },
     visible: {
       opacity: 1,
